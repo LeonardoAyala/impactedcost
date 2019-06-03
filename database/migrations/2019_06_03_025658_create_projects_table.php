@@ -19,8 +19,10 @@ class CreateProjectsTable extends Migration
             $table->string('title');
             $table->mediumText('description');
             $table->date('initial_date');
-            $table->integer('environment_id')->unsigned();
+            $table->bigInteger('environment_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('environment_id')->references('id')->on('environments')->onDelete('cascade');
         });
     }
 
