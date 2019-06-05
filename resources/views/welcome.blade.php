@@ -40,6 +40,12 @@
                 top: 18px;
             }
 
+            .bottom-right {
+                position: absolute;
+                right: 10px;
+                bottom: 18px;
+            }
+
             .content {
                 text-align: center;
             }
@@ -49,6 +55,26 @@
             }
 
             .links > a {
+                color: #636b6f;
+                padding: 0 25px;
+                font-size: 13px;
+                font-weight: 600;
+                letter-spacing: .1rem;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+
+            .links > h3 {
+                color: #636b6f;
+                padding: 0 25px;
+                font-size: 13px;
+                font-weight: 600;
+                letter-spacing: .1rem;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+
+            .footer > p {
                 color: #636b6f;
                 padding: 0 25px;
                 font-size: 13px;
@@ -73,7 +99,7 @@
                         <a href="{{ route('login') }}">Login</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}">Registrarse</a>
                         @endif
                     @endauth
                 </div>
@@ -81,18 +107,24 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Empact
                 </div>
 
                 <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
+                    <h3>Plataforma web para el cálculo de costo impactado de empleados.</h3>
+
+                    <!--a href="https://laravel.com/docs">Docs</a>
                     <a href="https://laracasts.com">Laracasts</a>
                     <a href="https://laravel-news.com">News</a>
                     <a href="https://blog.laravel.com">Blog</a>
                     <a href="https://nova.laravel.com">Nova</a>
                     <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    <a href="https://github.com/laravel/laravel">GitHub</a-->
                 </div>
+
+                <div class="bottom-right footer">
+                    <p>By Leonardo Ayala</p>
+                </diV>
             </div>
         </div>
     </body>

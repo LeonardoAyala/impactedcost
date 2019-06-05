@@ -15,7 +15,7 @@ class CreateEnvironmentsTable extends Migration
     {
         Schema::create('environments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title')->unique();
+            $table->string('title');
             $table->mediumText('description');
             $table->string('code')->unique();
             $table->string('password');

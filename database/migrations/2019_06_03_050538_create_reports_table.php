@@ -24,6 +24,8 @@ class CreateReportsTable extends Migration
             $table->integer('sunday')->default(0);
             $table->date('initial_date');
             $table->bigInteger('project_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+
             $table->timestamps();
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');

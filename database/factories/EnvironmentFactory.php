@@ -17,7 +17,7 @@ $factory->define(Environment::class, function (Faker $faker) {
         'description' => $faker->paragraph(),
         'code' => Str::random(6),
         'password' => Hash::make(Str::random(6)),
-        'user_id' => User::all()->random()->user_id
+        'user_id' => User::all()->random()->id
     ];
 
 });

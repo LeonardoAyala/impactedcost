@@ -3,7 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Environment;
+use App\Project;
+use App\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Faker\Generator as Faker;
+use Auth;
+use Illuminate\Support\Str;
 
 class EnvironmentController extends Controller
 {
@@ -14,7 +20,7 @@ class EnvironmentController extends Controller
      */
     public function index()
     {
-        $environments = Environment::latest()->paginate(5);
+        $environments = Environment::with('user')->latest()->paginate(5);
 
         return view('environments.index', compact('environments'));
     }
@@ -26,7 +32,7 @@ class EnvironmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('environments.create');
     }
 
     /**
@@ -37,7 +43,26 @@ class EnvironmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request ,[
+            'title' => ['required', 'max:25'],
+            'description' => ['required', 'max:100']
+        ]);
+
+        if(Auth::check())
+        {
+            $user = Auth::User();
+            $environment = Environment::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'code' => Str::random(6),
+                'password' => Str::random(6),
+                'user_id' => $user->id
+            ]);
+
+            return redirect('environment/'.$environment->id);
+        }
+
+        return redirect('register');
     }
 
     /**
@@ -48,9 +73,21 @@ class EnvironmentController extends Controller
      */
     public function show(Environment $environment)
     {
-        //
-    }
 
+        $environment = Environment::find($environment->id);
+        $projects = Project::where('environment_id', $environment->id)->with('reports')->orderBy('initial_date', 'desc')->paginate(5);
+
+        return view('environments.show', compact('projects'), compact('environment'));
+    }
+/*
+    public function show(Environment $environment)
+    {
+
+        $projects = Project::where('environment_id', $environment->id)->with('reports')->orderBy('initial_date', 'desc')->paginate(5);
+
+        return view('environments.show', compact('projects'), compact('environment'));
+    }
+*/
     /**
      * Show the form for editing the specified resource.
      *

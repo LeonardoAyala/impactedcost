@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use App\Environment;
+use App\Project;
+use App\Report;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +27,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $environments = [];
+        if(Auth::check())
+        {
+            $user = Auth::User();
+            $environments = Environment::where('user_id', $user->id)->with('projects')->latest()->paginate(5);
+        }
+
+        return view('home', compact('environments'));
     }
 }

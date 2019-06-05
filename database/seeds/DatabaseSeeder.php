@@ -14,7 +14,21 @@ class DatabaseSeeder extends Seeder
         factory(App\User::class, 3)->create()->each(function($user){
             $user->environments()
             ->saveMany(
-                factory(App\Environment::class, rand(1, 3))->make()
+                factory(App\Environment::class, rand(1, 2))->create()->each(function($environment){
+                    $environment->projects()
+                    ->saveMany(
+                        factory(App\Project::class, rand(1, 2))->create()->each(function($project){
+                            $project->reports()
+                            ->saveMany(
+                                factory(App\Report::class, rand(1, 2))->make()
+                            );
+                        })
+
+
+                    );
+                })
+
+
             );
         });
 
