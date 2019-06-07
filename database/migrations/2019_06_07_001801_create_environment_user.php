@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReportsTable extends Migration
+class CreateEnvironmentUser extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,13 @@ class CreateReportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reports', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->date('initial_date');
+        Schema::create('environment_user', function (Blueprint $table) {
+            //$table->bigIncrements('id');
             $table->bigInteger('environment_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('environment_id')->references('id')->on('environments')->onDelete('cascade');
-
             $table->timestamps();
+
+            $table->primary(['environment_id', 'user_id']);
         });
     }
 
@@ -33,6 +30,6 @@ class CreateReportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('environment_user');
     }
 }

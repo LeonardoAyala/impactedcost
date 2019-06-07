@@ -16,4 +16,9 @@ class Project extends Model
         return $this->hasMany(Report::class);
     }
 
+
+    public function getDateAttribute(){
+        $date = \Carbon\Carbon::parse($this->initial_date)->format('d/m/Y');
+        return $date;
+    }
 }

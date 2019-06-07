@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Project;
+use App\Environment;
 use Illuminate\Http\Request;
+use Auth;
 
 class ProjectController extends Controller
 {
@@ -22,9 +24,9 @@ class ProjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Environment $environment)
     {
-        return view('projects.create');
+        return view('projects.create', compact('environment'));
     }
 
     /**
@@ -33,9 +35,46 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Environment $environment ,Request $request)
     {
-        //
+        $this->validate($request ,[
+            'title' => ['required', 'max:25'],
+            'description' => ['required', 'max:100'],
+            'code' => ['required', 'max:10'],
+            'initial_date' => ['required', 'date', 'date_format:d-m-Y']
+        ]);
+
+        /*
+        $rules = [
+            'start_at'      => 'required|date|date_format:Y-m-d|after:yesterday',
+            'end_at'        => 'required|date|date_format:Y-m-d|after:xxxx',
+        ];
+        */
+
+        $date = strtotime($request->initial_date);
+
+
+        if(Auth::check())
+        {
+            $user = Auth::User();
+            $project = Project::create([
+                'code' => $request->code,
+                'title' => $request->title,
+                'description' => $request->description,
+                'initial_date' => date('Y/m/d', $date),
+                'environment_id' => $environment->id
+            ]);
+/*
+            $table->string('code')->unique();
+            $table->string('title');
+            $table->mediumText('description');
+            $table->date('initial_date');
+            $table->bigInteger('environment_id')->unsigned();
+*/
+            return redirect('environment/'.$environment->id);
+        }
+
+        return redirect('register');
     }
 
     /**

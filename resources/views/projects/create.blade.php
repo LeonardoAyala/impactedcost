@@ -8,7 +8,7 @@
                 <div class="card-header">Crear nuevo proyecto</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ url('/project') }}">
+                    <form method="POST" action="{{ url('environment/'.$environment->id.'/project') }}">
                         @csrf
 
                         <div class="form-group row">
@@ -26,6 +26,20 @@
                         </div>
 
                         <div class="form-group row">
+                                <label for="code" class="col-md-4 col-form-label text-md-right">Código</label>
+
+                                <div class="col-md-6">
+                                    <input id="code" type="text" class="form-control @error('code') is-invalid @enderror" name="code" value="{{ old('code') }}" required autocomplete="code" autofocus>
+
+                                    @error('code')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                        <div class="form-group row">
                             <label for="description" class="col-md-4 col-form-label text-md-right">Descripción</label>
 
                             <div class="col-md-6">
@@ -39,7 +53,19 @@
                             </div>
                         </div>
 
-                        <p>Date: <input type="text" class="date" id="datepicker"></p>
+                        <div class="form-group row">
+                                <label for="initial_date" class="col-md-4 col-form-label text-md-right">Fecha de inicio</label>
+
+                                <div class="col-md-6">
+                                    <input id="initial_date" type="text" class="week-picker @error('initial_date') is-invalid @enderror" name="initial_date" value="{{ old('initial_date') }}" required autocomplete="initial_date">
+
+                                    @error('initial_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
@@ -55,3 +81,4 @@
     </div>
 </div>
 @endsection
+

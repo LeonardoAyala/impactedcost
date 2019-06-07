@@ -8,12 +8,15 @@
             <p>{{ str_limit($environment->description, 100) }}</p>
 
             <diV class="align-right">
+                    @if( Auth::User()->id === $environment->user_id)
                     <a class="btn btn-primary" href="{{url('environment/create')}}" role="button">Manejar empleados</a>
                     <a class="btn btn-outline-primary" href="#" role="button">Ver acividad</a>
+                    @endif
             </div>
 
             <br>
 
+            @if( Auth::User()->id === $environment->user_id)
             <div class="card">
                     <div class="card-header">Credenciales</div>
 
@@ -31,6 +34,7 @@
                             </div>
                     </div>
                 </div>
+                @endif
 
                 <br>
 
@@ -46,7 +50,7 @@
                             <div>
                                 <h3 class="mt-0"><a href="">{{ $project->title }}</a></h3>
                                 <p class="lead">
-Created
+                                    Fecha de inicio  {{ $project->date}}
                                 <!--small class="text-muted">{{ $project }}</small-->
                                 </p>
                                 {{ str_limit($project->description, 250) }}
@@ -60,7 +64,7 @@ Created
                     <hr>
                     @endif
                     <diV class="align-right">
-                    <a class="btn btn-primary" href="{{url('project/create')}}" role="button">Crear proyecto</a>
+                    <a class="btn btn-primary" href="{{url('environment/'.$environment->id.'/project/create')}}" role="button">Crear proyecto</a>
                     </div>
                 </div>
             </div>
@@ -71,8 +75,9 @@ Created
                     <div class="card-header">Reportes</div>
 
                     <div class="card-body">
-                        @foreach ($projects as $project)
-                            @foreach ($project->reports as $report)
+
+                            @if(!$reports->isEmpty())
+                            @foreach ($reports as $report)
                             <div class="media">
                                 <div class="d-flex flex-column counters">
                                 </div>
@@ -87,8 +92,14 @@ Created
                             </div>
                             <hr>
                             @endforeach
-                        @endforeach
 
+                            @else
+                            No hay reportes disponibles.
+                            <hr>
+                            @endif
+                            <diV class="align-right">
+                                    <a class="btn btn-primary" href="{{url('environment/'.$environment->id.'/report/create')}}" role="button">Crear reporte</a>
+                            </div>
                     </div>
                 </div>
         </div>

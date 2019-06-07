@@ -41,6 +41,10 @@ class User extends Authenticatable
         return $this->hasMany(Environment::class);
     }
 
+    public function coEnvironments(){
+        return $this->belongsToMany(Environment::class, 'environment_user', 'user_id', 'environment_id')->withTimestamps();
+    }
+
     public function getUrlAttribute(){
         return route("user.show", $this->id);
     }

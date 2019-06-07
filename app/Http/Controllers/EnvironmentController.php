@@ -59,6 +59,8 @@ class EnvironmentController extends Controller
                 'user_id' => $user->id
             ]);
 
+            $user->coEnvironments()->attach($environment);
+
             return redirect('environment/'.$environment->id);
         }
 
@@ -75,9 +77,20 @@ class EnvironmentController extends Controller
     {
 
         $environment = Environment::find($environment->id);
-        $projects = Project::where('environment_id', $environment->id)->with('reports')->orderBy('initial_date', 'desc')->paginate(5);
+        $projects = Project::where('environment_id', $environment->id)->orderBy('initial_date', 'desc')->paginate(5);
 
-        return view('environments.show', compact('projects'), compact('environment'));
+        $reports = Report::where('environment_id', $environment->id)->orderBy('initial_date', 'desc')->paginate(5);
+
+        /*
+        $reports = Report::whereHas('project', function ($query) use ($environment) {
+            $query->where('environment_id', '=', $environment->id);
+        })->get();
+        */
+
+        return view('environments.show')
+        ->with(compact('environment'))
+        ->with(compact('projects'))
+        ->with(compact('reports'));
     }
 /*
     public function show(Environment $environment)
