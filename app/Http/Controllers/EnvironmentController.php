@@ -79,7 +79,7 @@ class EnvironmentController extends Controller
         $environment = Environment::find($environment->id);
         $projects = Project::where('environment_id', $environment->id)->orderBy('initial_date', 'desc')->paginate(5);
 
-        $reports = Report::where('environment_id', $environment->id)->orderBy('initial_date', 'desc')->paginate(5);
+        $reports = Report::where('environment_id', $environment->id)->with('days')->orderBy('initial_date', 'desc')->get();
 
         /*
         $reports = Report::whereHas('project', function ($query) use ($environment) {

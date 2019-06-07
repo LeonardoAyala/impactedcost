@@ -15,4 +15,8 @@ class Report extends Model
     public function environment() {
         return $this->belongsTo(Environment::class);
     }
+
+    public function days() {
+        return $this->hasMany(Day::class);
+    }
 }

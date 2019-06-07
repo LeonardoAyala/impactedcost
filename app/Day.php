@@ -13,7 +13,16 @@ class Day extends Model
     }
 
     public function report(){
-        return $this->hasMany(Report::class);
+        return $this->belongsTo(Report::class);
     }
 
+    public function getDayweekAttribute(){
+        $date = \Carbon\Carbon::parse($this->initial_date)->format('l');
+        return $date;
+    }
+
+    public function getDateAttribute(){
+        $date = \Carbon\Carbon::parse($this->initial_date)->format('d/m/Y');
+        return $date;
+    }
 }

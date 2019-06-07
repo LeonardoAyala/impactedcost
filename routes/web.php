@@ -25,4 +25,6 @@ Route::resource('environment', 'EnvironmentController');
 
 Route::resource('environment.project', 'ProjectController');
 
+Route::resource('environment.report', 'ReportController');
+
 Route::resource('join', 'JoinController');
