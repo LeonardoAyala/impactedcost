@@ -88,7 +88,7 @@
                                 Reportado el {{ $report->created_at }}
                             </p>
 
-                            @foreach ($days as $day)
+                            @foreach ($report->days as $day)
                             <p>
                                 Día: {{$day->dayweek}} {{$day->date}}
                             </p>
