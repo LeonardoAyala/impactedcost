@@ -150,9 +150,9 @@
                                 </tr>
                                 {{ csrf_field() }}
                                 <?php  $no=1; ?>
-                                @foreach ($environments as $environment)
-                                <tr class="environment{{$environment->id}}">
-                                    <td>{{ $no++ }}</td>
+                                @foreach ($projects as $project)
+                                <tr class="project{{$project->id}}">
+                                    <td>{{ $project->code}}</td>
                                     <td><a href="{{ $environment->url }}">{{ $environment->title }}</a></td>
                                     <td>{{ $environment->description }}</td>
                                     <td>{{ $environment->user->name }}</td>
