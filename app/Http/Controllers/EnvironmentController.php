@@ -10,6 +10,7 @@ use Illuminate\Support\Arr;
 use Faker\Generator as Faker;
 use Auth;
 use Illuminate\Support\Str;
+use Yajra\DataTables\DataTables;
 
 class EnvironmentController extends Controller
 {
@@ -20,9 +21,33 @@ class EnvironmentController extends Controller
      */
     public function index()
     {
+        /*
         $environments = Environment::with('user')->latest()->paginate(5);
 
+
         return view('environments.index', compact('environments'));
+        */
+
+        $environments = Environment::with('user')->latest()->get();
+
+/*
+        echo "<pre>";
+
+        print_r($environments);
+        exit();
+        */
+
+        return Datatables::of($environments)
+        ->addColumn('action', function($environments){
+
+            '<a onclick="showData('.$environments->id.')" class="btn btn-sm
+            btn-success">Show</a>'.' '.
+            '<a onclick="editForm('.$environments->id.')" class="btn btn-sm
+            btn-success">Edit</a>'.' '.
+            '<a onclick="deleteData('.$environments->id.')" class="btn btn-sm
+            btn-success">Delete</a>';
+
+        })->make(true);
     }
 
     /**
@@ -132,6 +157,93 @@ class EnvironmentController extends Controller
      */
     public function destroy(Environment $environment)
     {
-        //
+
     }
+
+
+    public function add(Request $request)
+    {
+
+    $this->validate($request ,[
+        'title' => ['required', 'max:25'],
+        'description' => ['required', 'max:100']
+    ]);
+
+
+    if(Auth::check())
+    {
+        $user = Auth::User();
+        $environment = Environment::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'code' => Str::random(6),
+            'password' => Str::random(6),
+            'user_id' => $user->id
+        ]);
+
+        $user->coEnvironments()->attach($environment);
+
+        return response()->json([
+            'environment' => $environment,
+            'url' => $environment->url,
+            'user' => $user
+        ]);
+    }
+
+    return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
+
+  }
+
+  public function change (Request $request){
+    $environment = Environment::find ($request->id);
+
+    $user = $environment->user->name;
+
+    $environment->title = $request->title;
+    $environment->description = $request->description;
+    $environment->code = $request->code;
+    $environment->password = $request->password;
+    $environment->save();
+    return response()->json([
+        'environment' => $environment,
+        'url' => $environment->url,
+        'user' => $user
+    ]);
+  }
+
+  public function delete(Request $request){
+    $environment = Environment::find ($request->id)->delete();
+    return response()->json();
+  }
+
+public function join (Request $request){
+    $this->validate($request ,[
+        'code' => 'required',
+        'password' => 'required'
+    ]);
+
+
+    if(Auth::check())
+    {
+
+        $user = Auth::User();
+        $environment = Environment::where('code', '=', $request->code)->where('password', '=', $request->password)->first();
+
+        if(isset($environment))
+        {
+            $user->coEnvironments()->attach($environment);
+
+            return response()->json([
+                'environment' => $environment,
+                'url' => $environment->url,
+                'user' => $environment->user
+            ]);
+        }
+
+        return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
+    }
+
+    return redirect('register');
+}
+
 }

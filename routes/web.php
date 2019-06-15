@@ -21,10 +21,21 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('environment', 'EnvironmentController');
 
-Route::resource('environment', 'EnvironmentController');
-
 Route::resource('environment.project', 'ProjectController');
 
 Route::resource('environment.report', 'ReportController');
 
 Route::resource('join', 'JoinController');
+
+
+
+
+Route::POST('addEnvironment','EnvironmentController@add');
+Route::POST('editEnvironment','EnvironmentController@change');
+Route::POST('deleteEnvironment','EnvironmentController@delete');
+Route::POST('joinEnvironment','EnvironmentController@join');
+
+Route::resource('post','PostController');
+Route::POST('addPost','PostController@addPost');
+Route::POST('editPost','PostController@editPost');
+Route::POST('deletePost','PostController@deletePost');

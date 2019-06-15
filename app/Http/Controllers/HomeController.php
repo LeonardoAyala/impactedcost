@@ -6,6 +6,7 @@ use Auth;
 use App\Environment;
 use App\Project;
 use App\Report;
+use App\Post;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -31,9 +32,22 @@ class HomeController extends Controller
         if(Auth::check())
         {
             $user = Auth::User();
-            $environments = Environment::where('user_id', $user->id)->with('projects')->latest()->paginate(5);
+            //$environments = Environment::where('user_id', $user->id)->latest()->paginate(10);
+
+
+
+        $environments = Environment::whereHas('coUsers', function ($query) use ($user) {
+            $query->where('user_id', '=', $user->id);
+        })->latest()->paginate(10);
+
+
         }
 
-        return view('home', compact('environments'));
+        $post = Post::paginate(20);
+
+
+        return view('home')
+        ->with(compact('environments'))
+        ->with(compact('post'));
     }
 }
