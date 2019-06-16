@@ -16,9 +16,15 @@ class Project extends Model
         return $this->hasMany(Report::class);
     }
 
-
     public function getDateAttribute(){
         $date = \Carbon\Carbon::parse($this->initial_date)->format('d/m/Y');
         return $date;
     }
+
+
+    public function getUrlAttribute(Environment $environment){
+        return url('environment/'.$environment->id.'/report/'.$this->id);
+    }
+
+
 }

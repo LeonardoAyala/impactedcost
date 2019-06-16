@@ -140,7 +140,7 @@
                                     <th>Descripción</th>
                                     <th>Fecha de inicio</th>
                                     <th class="text-center">
-                                        <a href="#" class="create-modal btn btn-success btn-sm">
+                                        <a href="#" class="create-modal-project btn btn-success btn-sm">
                                             <i class="fas fa-plus"></i>
                                         </a>
                                         <a href="#" class="join-modal btn btn-outline-success btn-sm">
@@ -153,27 +153,29 @@
                                 @foreach ($projects as $project)
                                 <tr class="project{{$project->id}}">
                                     <td>{{ $project->code}}</td>
-                                    <td><a href="{{ $environment->url }}">{{ $environment->title }}</a></td>
-                                    <td>{{ $environment->description }}</td>
-                                    <td>{{ $environment->user->name }}</td>
+                                    <td><a href="{{ $project->url($environment) }}">{{ $project->title }}</a></td>
+                                    <td>{{ $project->description }}</td>
+                                    <td>{{ $project->initial_date }}</td>
                                     <td>
                                         <a href="#" class="show-modal btn btn-info btn-sm"
-                                            data-id="{{$environment->id}}" data-title="{{$environment->title}}"
-                                            data-description="{{$environment->description}}"
-                                            data-code="{{$environment->code}}"
-                                            data-password="{{$environment->password}}">
+                                            data-id="{{$project->id}}" data-code="{{$project->code}}"
+                                            data-title="{{$environment->title}}"
+                                            data-description="{{$project->description}}"
+                                            data-initialdate="{{$project->initial_date}}">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                         <a href="#" class="edit-modal btn btn-warning btn-sm"
-                                            data-id="{{$environment->id}}" data-title="{{$environment->title}}"
-                                            data-description="{{$environment->description}}"
-                                            data-code="{{$environment->code}}"
-                                            data-password="{{$environment->password}}">
+                                        data-id="{{$project->id}}" data-code="{{$project->code}}"
+                                        data-title="{{$environment->title}}"
+                                        data-description="{{$project->description}}"
+                                        data-initialdate="{{$project->initial_date}}">
                                             <i class="fa fa-pencil-ruler"></i>
                                         </a>
                                         <a href="#" class="delete-modal btn btn-danger btn-sm"
-                                            data-id="{{$environment->id}}" data-title="{{$environment->title}}"
-                                            data-description="{{$environment->description}}">
+                                        data-id="{{$project->id}}" data-code="{{$project->code}}"
+                                        data-title="{{$environment->title}}"
+                                        data-description="{{$project->description}}"
+                                        data-initialdate="{{$project->initial_date}}">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>
@@ -181,14 +183,14 @@
                                 @endforeach
                             </table>
                         </div>
-                        {{$environments->links()}}
+                        {{$projects->links()}}
                     </div>
                 </div>
             </div>
 
 
-            {{-- Modal Form Create Post --}}
-            <div id="create" class="modal fade" role="dialog">
+            {{-- Modal Form Create Project --}}
+            <div id="create-project" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -206,13 +208,28 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                        <label class="control-label col-sm-3" for="code">Código:</label>
+                                        <div class="col-sm-8">
+                                            <input type="text" class="form-control" id="code" name="code"
+                                                placeholder="Nombre" required>
+
+                                        </div>
+                                    </div>
+                                <div class="form-group row">
                                     <label class="control-label col-sm-3" for="description">Descripción:</label>
                                     <div class="col-sm-8">
                                         <textarea class="form-control" id="description" name="description"
                                             placeholder="Descripción" required></textarea>
-
                                     </div>
                                 </div>
+                                    <div class="form-group row">
+                                            <label class="control-label col-sm-3" for="description">Fecha inicial:</label>
+                                            <div class="col-sm-8">
+                                                <input id="initial_date" type="text" class="week-picker" name="initial_date" value="{{ old('initial_date') }}" required autocomplete="initial_date">
+
+
+                                            </div>
+                                        </div>
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -372,15 +389,15 @@
 
 @section('scripts')
 <script type="text/javascript">
-    $(document).on('click', '.create-modal', function () {
-        $('#create').modal('show');
+    $(document).on('click', '.create-modal-project', function () {
+        $('#create-project').modal('show');
         $('.form-horizontal').show();
-        $('.modal-title').text('Crear ambiente');
+        $('.modal-title').text('Crear proyecto');
     });
     $("#add").click(function () {
         $.ajax({
             type: 'POST',
-            url: 'addEnvironment',
+            url: 'addProyect',
             data: {
                 '_token': $('input[name=_token]').val(),
                 'title': $('input[name=title]').val(),

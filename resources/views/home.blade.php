@@ -57,11 +57,10 @@
                         <div class="table table-responsive">
                             <table class="table table-bordered" id="table">
                                 <tr>
-                                    <th>No</th>
                                     <th>Nombre</th>
                                     <th>Descripción</th>
                                     <th>Administrador</th>
-                                    <th class="text-center">
+                                    <th class="text-center" width="130">
                                         <a href="#" class="create-modal btn btn-success btn-sm">
                                             <i class="fas fa-plus"></i>
                                         </a>
@@ -74,7 +73,6 @@
                                 <?php  $no=1; ?>
                                 @foreach ($environments as $environment)
                                 <tr class="environment{{$environment->id}}">
-                                    <td>{{ $no++ }}</td>
                                     <td><a href="{{ $environment->url }}">{{ $environment->title }}</a></td>
                                     <td>{{ $environment->description }}</td>
                                     <td>{{ $environment->user->name }}</td>
@@ -316,7 +314,6 @@
                 } else {
                     $('.error').remove();
                     $('#table').append("<tr class='environment" + data.environment.id + "'>" +
-                        "<td>" + data.environment.id + "</td>" +
                         "<td><a href='" + data.url + "'>" + data.environment.title + "</a></td>" +
                         "<td>" + data.environment.description + "</td>" +
                         "<td>" + data.user.name + "</td>" +
@@ -380,7 +377,6 @@
 
                 $('.environment' + data.environment.id).replaceWith(" " +
                     "<tr class='environment" + data.environment.id + "'>" +
-                    "<td>" + data.environment.id + "</td>" +
                     "<td><a href='" + data.url + "'>" + data.environment.title + "</a></td>" +
                     "<td>" + data.environment.description + "</td>" +
                     "<td>" + data.user + "</td>" +
@@ -429,7 +425,6 @@
             success: function (data) {
 alert(data);
                 $('#table').append("<tr class='environment" + data.environment.id + "'>" +
-                "<td>" + data.environment.id + "</td>" +
                 "<td><a href='" + data.url + "'>" + data.environment.title + "</a></td>" +
                 "<td>" + data.environment.description + "</td>" +
                 "<td>" + data.user.name + "</td>" +
