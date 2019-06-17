@@ -27,6 +27,14 @@ Route::resource('environment.report', 'ReportController');
 
 
 
+Route::POST('environment.report/addDay','DayController@add');
+Route::POST('environment/editDay','DayController@change');
+Route::POST('environment/deleteDay','DayController@delete');
+
+Route::POST('environment.report/addReport','ReportController@add');
+Route::POST('environment/editReport','ReportController@change');
+Route::POST('environment/deleteReport','ReportController@delete');
+
 Route::POST('environment/editJoin','JoinController@change');
 Route::POST('environment/deleteJoin','JoinController@delete');
 
