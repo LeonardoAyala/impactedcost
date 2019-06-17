@@ -2,15 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
+use Faker\Generator as Faker;
+use Yajra\DataTables\DataTables;
+
 use App\Environment;
 use App\Project;
 use App\Report;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Faker\Generator as Faker;
+use App\User;
+use App\Salary;
+
 use Auth;
-use Illuminate\Support\Str;
-use Yajra\DataTables\DataTables;
 
 class EnvironmentController extends Controller
 {
@@ -102,7 +106,11 @@ class EnvironmentController extends Controller
     {
 
         $environment = Environment::find($environment->id);
-        $projects = Project::where('environment_id', $environment->id)->orderBy('initial_date', 'desc')->paginate(5);
+        $projects = Project::where('environment_id', $environment->id)->orderBy('initial_date', 'desc')->latest()->paginate(10);
+
+        $coUsers = User::whereHas('coEnvironments', function ($query) use ($environment) {
+            $query->where('environment_id', '=', $environment->id);
+        })->latest()->paginate(10);
 
         $reports = Report::where('environment_id', $environment->id)->with('days')->orderBy('initial_date', 'desc')->get();
 
@@ -114,6 +122,7 @@ class EnvironmentController extends Controller
 
         return view('environments.show')
         ->with(compact('environment'))
+        ->with(compact('coUsers'))
         ->with(compact('projects'))
         ->with(compact('reports'));
     }
@@ -232,6 +241,11 @@ public function join (Request $request){
         if(isset($environment))
         {
             $user->coEnvironments()->attach($environment);
+
+            $salary = Salary::create([
+                'environment_id' => $environment->id,
+                'user_id' => $user->id
+            ]);
 
             return response()->json([
                 'environment' => $environment,

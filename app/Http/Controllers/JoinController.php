@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Environment;
 use App\Project;
 use App\Report;
+use App\User;
+use App\Salary;
 
 use Auth;
 
@@ -112,4 +114,37 @@ class JoinController extends Controller
     {
         //
     }
+
+    public function change (Request $request){
+        $environment = Environment::find ($request->environment_id);
+        $user = User::find ($request->user_id);
+
+        $salary = Salary::create([
+            'environment_id' => $environment->id,
+            'user_id' => $user->id,
+            'amount' => $request->amount
+        ]);
+
+        return response()->json([
+            'coUser' => $user,
+            'salary' => $salary,
+            'environment' => $environment
+        ]);
+      }
+
+
+
+      public function delete(Request $request){
+
+        $environment = Environment::find ($request->environment_id);
+
+        $environment->coUsers()->where('user_id', $request->user_id)->detach(1);
+
+        //$managementUnit->councils()->where('id', 1)->wherePivot('year', 2011)->detach(1);
+
+        return response()->json();
+      }
+
+
+
 }

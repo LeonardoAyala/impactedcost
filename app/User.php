@@ -41,11 +41,31 @@ class User extends Authenticatable
         return $this->hasMany(Environment::class);
     }
 
+    public function salaries(){
+        return $this->hasMany(Salary::class);
+    }
+
+    public function latestSalary(){
+        return $this->hasMany(Salary::class)->latest();
+    }
+
     public function coEnvironments(){
         return $this->belongsToMany(Environment::class, 'environment_user', 'user_id', 'environment_id')->withTimestamps();
     }
 
     public function getUrlAttribute(){
         return route("user.show", $this->id);
+    }
+
+    public function getSalaryAttribute(){
+        $latest = $this->latestSalary()->first();
+
+        if(!$latest){
+            return null;
+        }
+        else{
+            return $latest->amount;
+        }
+
     }
 }

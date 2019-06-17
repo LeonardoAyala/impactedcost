@@ -21,9 +21,11 @@ class Project extends Model
         return $date;
     }
 
+    public function getUrlAttribute(){
 
-    public function getUrlAttribute(Environment $environment){
-        return url('environment/'.$environment->id.'/report/'.$this->id);
+        $environment = $this->environment;
+
+        return url('environment/'.$environment->id.'/project/'.$this->id);
     }
 
 

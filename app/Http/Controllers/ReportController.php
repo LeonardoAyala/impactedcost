@@ -32,6 +32,8 @@ class ReportController extends Controller
     {
         $projects = Project::where('environment_id', $environment->id)->orderBy('title', 'desc')->get();
 
+
+
         return view('reports.create')
         ->with(compact('environment'))
         ->with(compact('projects'));

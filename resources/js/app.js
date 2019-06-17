@@ -42,3 +42,4 @@ $( ".week-picker" ).datepicker({
     changeMonth: true,
     changeYear: true
 });
+
