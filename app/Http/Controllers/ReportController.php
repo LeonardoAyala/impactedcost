@@ -33,10 +33,24 @@ class ReportController extends Controller
         $projects = Project::where('environment_id', $environment->id)->orderBy('title', 'desc')->get();
 
 
+    if(Auth::check())
+    {
+        $user = Auth::User();
+
+        Report::where('active', false)->where('user_id', $user->id)->delete();
+
+        $report = Report::create([
+            'environment_id' =>  $environment->id,
+            'user_id' => $user->id
+        ]);
 
         return view('reports.create')
         ->with(compact('environment'))
-        ->with(compact('projects'));
+        ->with(compact('projects'))
+        ->with(compact('report'));
+    }
+
+    return redirect('login');
     }
 
     /**

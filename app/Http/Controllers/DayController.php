@@ -3,62 +3,180 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
+use App\Environment;
+use App\Project;
+use App\Report;
+use App\User;
+use App\Salary;
+use App\Day;
+
+use Auth;
 
 class DayController extends Controller
 {
-
-    public function add (Request $request)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
+        //
+    }
 
-        $this->validate($request ,[
-            'title' => ['required', 'max:25'],
-            'description' => ['required', 'max:100'],
-            //'code' => ['required', 'max:10'],
-            //'initial_date' => ['required', 'date', 'date_format:d-m-Y']
-        ]);
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
 
-        $date = strtotime($request->initial_date);
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $initial_date = strtotime($request->initial_date);
+        $index = $request->index;
+
+        $date = Carbon::parse($initial_date)->startOfWeek();
+        $index_date = $date->copy()->add( $index, 'day');
 
         if(Auth::check())
         {
-            $user = Auth::User();
-            $project = Project::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'code' => $request->code,
-                'initial_date' => date('Y/m/d', $date),
-                'environment_id' => $request->environment_id
+            $day = Day::create([
+                'date' => date('Y/m/d', strtotime($index_date)),
+                'hours' => $request->hours,
+                'report_id' => $request->report_id,
+                'project_id' => $request->project_id,
             ]);
+
+            $project = Project::find($day->project_id);
 
             return response()->json([
+                'day' => $day,
+                'index' => $index,
                 'project' => $project,
-                'url' => $project->url,
             ]);
         }
+        else{
+            return redirect('login');
+        }
+
     }
 
-    public function change (Request $request){
-        $project = Project::find ($request->id);
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
 
-        $environment = $project->environment;
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
 
-        $date = strtotime($request->initial_date);
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        $initial_date = strtotime($request->initial_date);
+        $index = $request->index;
 
+        $date = Carbon::parse($initial_date)->startOfWeek();
+        $index_date = $date->copy()->add( $index, 'day');
 
-        $project->title = $request->title;
-        $project->description = $request->description;
-        $project->code = $request->code;
-        $project->initial_date = date('Y/m/d', $date);
-        $project->save();
+        $day = Day::find ($request->id);
+
+        $day->date = date('Y/m/d', strtotime($index_date));
+        $day->project_id = $request->project_id;
+        $day->hours = $request->hours;
+        $day->save();
+
+        $project = $day->project;
+
         return response()->json([
+            'day' => $day,
+            'index' => $index,
             'project' => $project,
-            'url' => $project->url,
         ]);
-      }
 
-      public function delete(Request $request){
-        $project = Project::find ($request->id)->delete();
-        return response()->json();
-      }
+
+
+
+
+
+
+
+
+
+        $initial_date = strtotime($request->initial_date);
+        $index = $request->index;
+
+        $date = Carbon::parse($initial_date)->startOfWeek();
+        $index_date = $date->copy()->add( $index, 'day');
+
+        if(Auth::check())
+        {
+            $day = Day::create([
+                'date' => date('Y/m/d', strtotime($index_date)),
+                'hours' => $request->hours,
+                'report_id' => $request->report_id,
+                'project_id' => $request->project_id,
+            ]);
+
+            $project = Project::find($day->project_id);
+
+            return response()->json([
+                'day' => $day,
+                'index' => $index,
+                'project' => $project,
+            ]);
+        }
+
+
+
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request)
+    {
+        $day = Day::find ($request->id);
+        $dayBuffer = $day;
+        $day->delete();
+        return response()->json([
+            'day' => $dayBuffer,
+        ]);
+    }
 
 }

@@ -7,20 +7,41 @@
             <div class="card">
                 <div class="card-header">Reporte semanal</div>
 
-                <div class="card">
+                <br>
+
+                <input type="hidden" id="reportId" value="{{$report->id}}">
+
+                <div class="form-group row">
+                    <label for="date" class="col-md-2 col-form-label text-md-right">Semana</label>
+
+                    <div class="col-md-6">
+                        <input id="date" type="text" class="week-picker @error('date') is-invalid @enderror" name="date"
+                            value="{{ old('date') }}" required autocomplete="date">
+
+                        @error('date')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+
+
+                <div class="card date_required">
                     <div class="card-header">Lunes</div>
 
                     <div class="card-body">
 
                         <div class="row">
                             <div class="table table-responsive">
-                                <table class="table table-bordered" id="proj_table">
+                                <table class="table table-bordered" id="table_0">
                                     <tr>
                                         <th>Fecha</th>
                                         <th>Proyecto</th>
                                         <th>Horas</th>
-                                        <th class="text-center" width="130">
-                                            <a href="#" class="create-modal-project btn btn-success btn-sm">
+                                        <th class="text-center" width="90">
+                                            <a href="#" class="create-modal btn btn-success btn-sm" data-title="Lunes"
+                                                data-index="0">
                                                 <i class="fas fa-plus"></i>
                                             </a>
                                         </th>
@@ -32,117 +53,356 @@
                     </div>
                 </div>
 
+                <br>
 
+                <div class="card date_required">
+                    <div class="card-header">Martes</div>
 
+                    <div class="card-body">
 
-
-
-
-                {{-- Modal Form Create Project --}}
-                <div id="create-project" class="modal fade" role="dialog">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h4 class="modal-title"></h4>
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <form class="form-horizontal" role="form">
-
-                                    <div class="form-group row">
-                                        <label for="saturday_project"
-                                            class="col-md-3 col-form-label text-md-right">Proyecto</label>
-
-                                        <div class="col-md-7">
-                                            <select id="saturday_project"
-                                                class="form-control @error('saturday_project') is-invalid @enderror"
-                                                name="saturday_project" value="{{ old('saturday_project') }}"
-                                                autocomplete="saturday_project">
-                                                <option value="0">--Elija un proyecto--</option>
-
-                                                @foreach($projects as $project)
-                                                <option value="{{$project->id}}">{{ $project->title }}</option>
-                                                @endforeach
-                                            </select>
-
-                                            @error('saturday_project')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="saturday_project"
-                                            class="col-md-3 col-form-label text-md-right">Horas</label>
-
-                                        <div class="col-md-7">
-                                            <input type="number" max="24" min="0" name="saturday_hours" value="0"
-                                                id="saturday_hours"
-                                                class="form-control @error('saturday_hours') is-invalid @enderror"
-                                                name="saturday_hours" value="{{ old('saturday_hours') }}"
-                                                autocomplete="saturday_hours">
-
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-sm-8">
-                                            <input type="hidden" class="form-control" id="cProj_environmentId"
-                                                value="{{$environment->id}}">
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-primary" type="submit" id="add">
-                                    Crear
-                                </button>
-                                <button class="btn btn-outline-primary" type="button" data-dismiss="modal">
-                                    <span class="fas fa-remove"></span>Cerrar
-                                </button>
+                        <div class="row">
+                            <div class="table table-responsive">
+                                <table class="table table-bordered" id="table_1">
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Proyecto</th>
+                                        <th>Horas</th>
+                                        <th class="text-center" width="90">
+                                            <a href="#" class="create-modal btn btn-success btn-sm" data-title="Martes"
+                                                data-index="1">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                        </th>
+                                    </tr>
+                                    {{ csrf_field() }}
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <br>
 
+                <div class="card date_required">
+                    <div class="card-header">Miércoles</div>
 
+                    <div class="card-body">
 
+                        <div class="row">
+                            <div class="table table-responsive">
+                                <table class="table table-bordered" id="table_2">
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Proyecto</th>
+                                        <th>Horas</th>
+                                        <th class="text-center" width="90">
+                                            <a href="#" class="create-modal btn btn-success btn-sm" data-title="Miércoles"
+                                                data-index="1">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                        </th>
+                                    </tr>
+                                    {{ csrf_field() }}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <br>
 
+                <div class="card date_required">
+                    <div class="card-header">Jueves</div>
 
+                    <div class="card-body">
 
+                        <div class="row">
+                            <div class="table table-responsive">
+                                <table class="table table-bordered" id="table_3">
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Proyecto</th>
+                                        <th>Horas</th>
+                                        <th class="text-center" width="90">
+                                            <a href="#" class="create-modal btn btn-success btn-sm" data-title="Jueves"
+                                                data-index="1">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                        </th>
+                                    </tr>
+                                    {{ csrf_field() }}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <br>
 
+                <div class="card date_required">
+                    <div class="card-header">Viernes</div>
 
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="table table-responsive">
+                                <table class="table table-bordered" id="table_4">
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Proyecto</th>
+                                        <th>Horas</th>
+                                        <th class="text-center" width="90">
+                                            <a href="#" class="create-modal btn btn-success btn-sm" data-title="Viernes"
+                                                data-index="1">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                        </th>
+                                    </tr>
+                                    {{ csrf_field() }}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+
+                <div class="card date_required">
+                    <div class="card-header">Sábado</div>
+
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="table table-responsive">
+                                <table class="table table-bordered" id="table_5">
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Proyecto</th>
+                                        <th>Horas</th>
+                                        <th class="text-center" width="90">
+                                            <a href="#" class="create-modal btn btn-success btn-sm" data-title="Sábado"
+                                                data-index="1">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                        </th>
+                                    </tr>
+                                    {{ csrf_field() }}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+<br>
+
+                <div class="card date_required">
+                    <div class="card-header">Domingo</div>
+
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="table table-responsive">
+                                <table class="table table-bordered" id="table_6">
+                                    <tr>
+                                        <th>Fecha</th>
+                                        <th>Proyecto</th>
+                                        <th>Horas</th>
+                                        <th class="text-center" width="90">
+                                            <a href="#" class="create-modal btn btn-success btn-sm" data-title="Domingo"
+                                                data-index="1">
+                                                <i class="fas fa-plus"></i>
+                                            </a>
+                                        </th>
+                                    </tr>
+                                    {{ csrf_field() }}
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {{-- Modal Form Create Project --}}
+            <div id="create-modal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title"></h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">
+
+                                <input type="hidden" id="dayindex" class="dayindex">
+                                <input type="hidden" id="dayId" class="dayId">
+
+                                <div class="form-group row">
+                                    <label for="saturday_project"
+                                        class="col-md-3 col-form-label text-md-right">Proyecto</label>
+
+                                    <div class="col-md-7">
+                                        <select id="projectId"
+                                            class=" form-control @error('saturday_project') is-invalid @enderror"
+                                            name="saturday_project" value="{{ old('saturday_project') }}"
+                                            autocomplete="saturday_project">
+                                            <option value="0">--Elija un proyecto--</option>
+
+                                            @foreach($projects as $project)
+                                            <option value="{{$project->id}}">{{ $project->title }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('saturday_project')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="saturday_project"
+                                        class="col-md-3 col-form-label text-md-right">Horas</label>
+
+                                    <div class="col-md-7">
+                                        <input type="number" max="24" min="0" name="saturday_hours" value="0" id="hours"
+                                            class=" form-control @error('saturday_hours') is-invalid @enderror"
+                                            name="saturday_hours" value="{{ old('saturday_hours') }}"
+                                            autocomplete="saturday_hours">
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="submit" id="add">
+                                Crear
+                            </button>
+                            <button class="btn btn-outline-primary" type="button" data-dismiss="modal">
+                                <span class="fas fa-remove"></span>Cerrar
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+
+
+
+
+            {{-- Modal Form Edit and Delete Post --}}
+            <div id="edit-modal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title"></h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="modal">
+
+                                <div class="form-group row">
+                                    <label for="saturday_project"
+                                        class="col-md-3 col-form-label text-md-right">Proyecto</label>
+
+                                    <div class="col-md-7">
+                                        <select id="projectId"
+                                            class="projectId form-control @error('saturday_project') is-invalid @enderror"
+                                            name="saturday_project" value="{{ old('saturday_project') }}"
+                                            autocomplete="saturday_project">
+                                            <option value="0">--Elija un proyecto--</option>
+
+                                            @foreach($projects as $project)
+                                            <option value="{{$project->id}}">{{ $project->title }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('saturday_project')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="saturday_project"
+                                        class="col-md-3 col-form-label text-md-right">Horas</label>
+
+                                    <div class="col-md-7">
+                                        <input type="number" max="24" min="0" name="saturday_hours" value="0" id="hours"
+                                            class=" hours form-control @error('saturday_hours') is-invalid @enderror"
+                                            name="saturday_hours" value="{{ old('saturday_hours') }}"
+                                            autocomplete="saturday_hours">
+
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+
+                            </form>
+                            {{-- Form Delete Post --}}
+                            <div class="deleteContent">
+                                ¿Seguro que quiere eliminar a <span class="title"></span> del ambiente?
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn actionBtn" data-dismiss="modal">
+                                <span id="footer_action_button" class="glyphicon"></span>
+                            </button>
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">
+                                <span class="glyphicon glyphicon"></span>Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
         </div>
     </div>
+</div>
 </div>
 </div>
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
-    $(document).on('click', '.create-modal-project', function () {
-        $('#create-project').modal('show');
+    $(document).ready(function () {
+        $('.date_required').hide();
+    });
+
+    $('#date').change(function () {
+        $('.date_required').show();
+    });
+
+    $(document).on('click', '.create-modal', function () {
+        $('#create-modal').modal('show');
         $('.form-horizontal').show();
-        $('.modal-title').text('Crear proyecto');
+        $('.modal-title').text($(this).data('title'));
+        $('#dayindex').val($(this).data('index'));
     });
     $("#add").click(function () {
         $.ajax({
             type: 'POST',
-            url: 'addProject',
+            url: 'addDay',
             data: {
                 '_token': $('input[name=_token]').val(),
-                'environment_id': $('#cProj_environmentId').val(),
-                'title': $('#cProj_title').val(),
-                'description': $('#cProj_description').val(),
-                'code': $('#cProj_code').val(),
-                'initial_date': $('#cProj_initialDate').val()
+                'index': $('#dayindex').val(),
+                'initial_date': $('#date').val(),
+                'project_id': $('#projectId').val(),
+                'hours': $('#hours').val(),
+                'report_id': $('#reportId').val()
             },
             success: function (data) {
                 if ((data.errors)) {
@@ -151,42 +411,37 @@
                     $('.error').text(data.errors.description);
                 } else {
                     $('.error').remove();
-                    $('#proj_table').append("<tr class='project" + data.project.id + "'>" +
-                        "<td>" + data.project.code + "</td>" +
-                        "<td><a href='" + data.url + "'>" + data.project.title +
-                        "</a></td>" +
-                        "<td>" + data.project.description + "</td>" +
-                        "<td>" + data.project.initial_date + "</td>" +
-                        "<td><button class='show-modal-project btn btn-info btn-sm' data-id='" +
-                        data.project.id + "' data-code='" + data.project.code +
-                        "' data-title='" + data.project.title +
-                        "' data-description='" + data.project.description +
-                        "' data-initialdate='" + data.project.initial_date +
-                        "'><span class='fa fa-eye'></span></button> " +
-                        "<button class='edit-modal-project btn btn-warning btn-sm' data-id='" +
-                        data.project.id + "' data-code='" + data.project.code +
-                        "' data-title='" + data.project.title +
-                        "' data-description='" + data.project.description +
-                        "' data-initialdate='" + data.project.initial_date +
+                    var index = '#table_' + data.index.toString();
+                    $(index).append("<tr class='day" + data.day.id + "'>" +
+                        "<td>" + data.day.date + "</td>" +
+                        "<td>" + data.project.title + "</td>" +
+                        "<td>" + data.day.hours + "</td>" +
+                        "<td>" +
+                        "<button class='edit-modal btn btn-warning btn-sm'" +
+                        " data-id='" + data.day.id +
+                        "' data-project='" + data.day.project_id +
+                        "' data-hours='" + data.day.hours +
+                        "' data-date='" + data.day.date +
+                        "' data-index='" + data.index +
                         "'><span class='fa fa-pencil-ruler'></span></button> " +
-                        "<button class='delete-modal-project btn btn-danger btn-sm' data-id='" +
-                        data.project.id + "' data-code='" + data.project.code +
-                        "' data-title='" + data.project.title +
-                        "' data-description='" + data.project.description +
-                        "' data-initialdate='" + data.project.initial_date +
+                        "<button class='delete-modal btn btn-danger btn-sm'" +
+                        " data-id='" + data.day.id +
+                        "' data-project='" + data.day.project_id +
+                        "' data-hours='" + data.day.hours +
+                        "' data-date='" + data.day.date +
+                        "' data-index='" + data.index +
                         "'><span class='fa fa-trash'></span></button></td>" +
                         "</tr>");
                 }
             },
         });
-        $('#cProj_title').val('');
-        $('#cProj_description').val('');
-        $('#cProj_code').val('');
-        $('#cProj_initialDate').val('');
+        $('#projectId').val(0);
+        $('#hours').val('');
+        $('#create-modal').modal('hide');
     });
 
     // function Edit POST
-    $(document).on('click', '.edit-modal-project', function () {
+    $(document).on('click', '.edit-modal', function () {
         $('#footer_action_button').text("Editar");
         $('#footer_action_button').addClass('glyphicon-check');
         $('#footer_action_button').removeClass('glyphicon-trash');
@@ -196,51 +451,48 @@
         $('.modal-title').text('Editar proyecto');
         $('.deleteContent').hide();
         $('.form-horizontal').show();
-        $('#eProj_id').val($(this).data('id'));
-        $('#eProj_title').val($(this).data('title'));
-        $('#eProj_description').val($(this).data('description'));
-        $('#eProj_code').val($(this).data('code'));
-        $('#eProj_initialdate').val($(this).data('initialdate'));
-        $('#editdelete-project').modal('show');
+        $('.projectId').val($(this).data('project'));
+        $('.hours').val($(this).data('hours'));
+        alert($('.hours').val());
+        $('.dayindex').val($(this).data('index'));
+        $('.dayId').val($(this).data('id'));
+        $('#edit-modal').modal('show');
     });
 
     $('.modal-footer').on('click', '.edit', function () {
         $.ajax({
             type: 'POST',
-            url: 'editProject',
+            url: 'editDay',
             data: {
                 '_token': $('input[name=_token]').val(),
-                'id': $("#eProj_id").val(),
-                'title': $('#eProj_title').val(),
-                'description': $('#eProj_description').val(),
-                'code': $('#eProj_code').val(),
-                'initial_date': $('#eProj_initialdate').val()
+                'id': $('.dayId').val(),
+                'project_id': $('.projectId').val(),
+                'index': $('.dayindex').val(),
+                'hours': $('.hours').val(),
+                'initial_date': $('#date').val(),
             },
             success: function (data) {
 
-                $('.project' + data.project.id).replaceWith(" " +
-                    "<tr class='project" + data.project.id + "'>" +
-                    "<td>" + data.project.code + "</td>" +
-                    "<td><a href='" + data.url + "'>" + data.project.title + "</a></td>" +
-                    "<td>" + data.project.description + "</td>" +
-                    "<td>" + data.project.initial_date + "</td>" +
-                    "<td><button class='show-modal-project btn btn-info btn-sm' data-id='" +
-                    data.project.id + "' data-code='" + data.project.code +
-                    "' data-title='" + data.project.title +
-                    "' data-description='" + data.project.description +
-                    "' data-initialdate='" + data.project.initial_date +
-                    "'><span class='fa fa-eye'></span></button> " +
-                    "<button class='edit-modal-project btn btn-warning btn-sm' data-id='" +
-                    data.project.id + "' data-code='" + data.project.code +
-                    "' data-title='" + data.project.title +
-                    "' data-description='" + data.project.description +
-                    "' data-initialdate='" + data.project.initial_date +
+                alert(data.day.hours);
+                $('.day' + data.day.id).replaceWith(
+                    "<tr class='day" + data.day.id + "'>" +
+                    "<td>" + data.day.date + "</td>" +
+                    "<td>" + data.project.title + "</td>" +
+                    "<td>" + data.day.hours + "</td>" +
+                    "<td>" +
+                    "<button class='edit-modal btn btn-warning btn-sm'" +
+                    " data-id='" + data.day.id +
+                    "' data-project='" + data.day.project_id +
+                    "' data-hours='" + data.day.hours +
+                    "' data-date='" + data.day.date +
+                    "' data-index='" + data.index +
                     "'><span class='fa fa-pencil-ruler'></span></button> " +
-                    "<button class='delete-modal-project btn btn-danger btn-sm' data-id='" +
-                    data.project.id + "' data-code='" + data.project.code +
-                    "' data-title='" + data.project.title +
-                    "' data-description='" + data.project.description +
-                    "' data-initialdate='" + data.project.initial_date +
+                    "<button class='delete-modal btn btn-danger btn-sm'" +
+                    " data-id='" + data.day.id +
+                    "' data-project='" + data.day.project_id +
+                    "' data-hours='" + data.day.hours +
+                    "' data-date='" + data.day.date +
+                    "' data-index='" + data.index +
                     "'><span class='fa fa-trash'></span></button></td>" +
                     "</tr>");
             }
@@ -248,45 +500,20 @@
     });
 
     // form Delete function
-    $(document).on('click', '.delete-modal-project', function () {
-        $('#footer_action_button').text("Eliminar");
-        $('#footer_action_button').removeClass('glyphicon-check');
-        $('#footer_action_button').addClass('glyphicon-trash');
-        $('.actionBtn').removeClass('btn-success');
-        $('.actionBtn').addClass('btn-danger');
-        $('.actionBtn').addClass('delete');
-        $('.modal-title').text('Eliminar proyecto');
-        $('#eProj_id').val($(this).data('id'));
-        $('.deleteContent').show();
-        $('.form-horizontal').hide();
-        $('.title').html($(this).data('title'));
-        $('#editdelete-project').modal('show');
-    });
-
-    $('.modal-footer').on('click', '.delete', function () {
+    $(document).on('click', '.delete-modal', function () {
         $.ajax({
             type: 'POST',
-            url: 'deleteProject',
+            url: 'deleteDay',
             data: {
                 '_token': $('input[name=_token]').val(),
-                'id': $("#eProj_id").val(),
+                'id': $(this).data('id'),
             },
             success: function (data) {
-                $('.project' + $('#eProj_id').val()).remove();
+                $('.day' + data.day.id).remove();
             }
         });
-    });
 
-    // Show function
-    $(document).on('click', '.show-modal', function () {
-        $('#show').modal('show');
-        $('#s_id').text($(this).data('id'));
-        $('#s_project').text($(this).data('project'));
-        $('#s_hours').text($(this).data('hours'));
-        $('#s_initialdate').text($(this).data('initialdate'));
-        $('.modal-title').text('Información');
     });
-
 
 </script>
 @endsection
