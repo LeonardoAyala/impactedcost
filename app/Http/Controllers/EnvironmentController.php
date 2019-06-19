@@ -118,7 +118,7 @@ class EnvironmentController extends Controller
             $reports = Report::where('environment_id', $environment->id)->with('days')->orderBy('initial_date', 'desc')->get();
         }else{
             $reports = Report::where('environment_id', $environment->id)->
-            where()->with('user_id', $user->id)->orderBy('initial_date', 'desc')->get();
+            where('user_id', $user->id)->with('days')->orderBy('initial_date', 'desc')->get();
         }
 
         /*
