@@ -19,4 +19,26 @@ class Report extends Model
     public function days() {
         return $this->hasMany(Day::class);
     }
+
+    public function getTotalhoursAttribute(){
+
+        $amount = $this->days->sum('hours');
+
+        return $amount;
+    }
+
+    public function getProductivityAttribute(){
+
+        $amount = (($this->totalhours)/48)*100;
+
+
+        return number_format((float)$amount, 2, '.', '');
+    }
+
+    public function getImpactedcostAttribute(){
+
+        $amount = ($this->totalhours)*($this->user->latestSalary->first()->amount);
+
+        return number_format((float)$amount, 2, '.', '');
+    }
 }

@@ -112,7 +112,14 @@ class EnvironmentController extends Controller
             $query->where('environment_id', '=', $environment->id);
         })->latest()->paginate(10);
 
-        $reports = Report::where('environment_id', $environment->id)->with('days')->orderBy('initial_date', 'desc')->get();
+        $user = Auth::User();
+
+        if( $environment->user->id === $user->id){
+            $reports = Report::where('environment_id', $environment->id)->with('days')->orderBy('initial_date', 'desc')->get();
+        }else{
+            $reports = Report::where('environment_id', $environment->id)->
+            where()->with('user_id', $user->id)->orderBy('initial_date', 'desc')->get();
+        }
 
         /*
         $reports = Report::whereHas('project', function ($query) use ($environment) {

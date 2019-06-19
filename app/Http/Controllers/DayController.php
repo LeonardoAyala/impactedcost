@@ -52,14 +52,20 @@ class DayController extends Controller
 
         if(Auth::check())
         {
-            $day = Day::create([
-                'date' => date('Y/m/d', strtotime($index_date)),
-                'hours' => $request->hours,
-                'report_id' => $request->report_id,
-                'project_id' => $request->project_id,
-            ]);
+            if (($request->hours > 0) && ($request->project_id > 0))
+            {
 
-            $project = Project::find($day->project_id);
+                $day = Day::create([
+                    'date' => date('Y/m/d', strtotime($index_date)),
+                    'hours' => $request->hours,
+                    'report_id' => $request->report_id,
+                    'project_id' => $request->project_id,
+                ]);
+
+                $project = Project::find($day->project_id);
+
+            }
+
 
             return response()->json([
                 'day' => $day,
@@ -124,43 +130,6 @@ class DayController extends Controller
             'index' => $index,
             'project' => $project,
         ]);
-
-
-
-
-
-
-
-
-
-
-        $initial_date = strtotime($request->initial_date);
-        $index = $request->index;
-
-        $date = Carbon::parse($initial_date)->startOfWeek();
-        $index_date = $date->copy()->add( $index, 'day');
-
-        if(Auth::check())
-        {
-            $day = Day::create([
-                'date' => date('Y/m/d', strtotime($index_date)),
-                'hours' => $request->hours,
-                'report_id' => $request->report_id,
-                'project_id' => $request->project_id,
-            ]);
-
-            $project = Project::find($day->project_id);
-
-            return response()->json([
-                'day' => $day,
-                'index' => $index,
-                'project' => $project,
-            ]);
-        }
-
-
-
-
     }
 
     /**

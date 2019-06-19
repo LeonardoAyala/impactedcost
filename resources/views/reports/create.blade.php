@@ -4,28 +4,34 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+
+
             <div class="card">
                 <div class="card-header">Reporte semanal</div>
 
                 <br>
 
-                <input type="hidden" id="reportId" value="{{$report->id}}">
+                <form method="POST" action="{{ url('environment/'.$environment->id.'/report') }}" id="report_form">
+                    {{csrf_field()}}
 
-                <div class="form-group row">
-                    <label for="date" class="col-md-2 col-form-label text-md-right">Semana</label>
+                    <input type="hidden" id="reportId" name="report_id" value="{{$report->id}}">
 
-                    <div class="col-md-6">
-                        <input id="date" type="text" class="week-picker @error('date') is-invalid @enderror" name="date"
-                            value="{{ old('date') }}" required autocomplete="date">
+                    <div class="form-group row">
+                        <label for="date" class="col-md-2 col-form-label text-md-right">Semana</label>
 
-                        @error('date')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
+                        <div class="col-md-6">
+                            <input id="date" type="text" class="week-picker @error('date') is-invalid @enderror" name="date"
+                                value="{{ old('date') }}" required autocomplete="off">
+
+                            @error('date')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
                     </div>
-                </div>
 
+                </form>
 
                 <div class="card date_required">
                     <div class="card-header">Lunes</div>
@@ -96,8 +102,8 @@
                                         <th>Proyecto</th>
                                         <th>Horas</th>
                                         <th class="text-center" width="90">
-                                            <a href="#" class="create-modal btn btn-success btn-sm" data-title="Miércoles"
-                                                data-index="1">
+                                            <a href="#" class="create-modal btn btn-success btn-sm"
+                                                data-title="Miércoles" data-index="2">
                                                 <i class="fas fa-plus"></i>
                                             </a>
                                         </th>
@@ -125,7 +131,7 @@
                                         <th>Horas</th>
                                         <th class="text-center" width="90">
                                             <a href="#" class="create-modal btn btn-success btn-sm" data-title="Jueves"
-                                                data-index="1">
+                                                data-index="3">
                                                 <i class="fas fa-plus"></i>
                                             </a>
                                         </th>
@@ -153,7 +159,7 @@
                                         <th>Horas</th>
                                         <th class="text-center" width="90">
                                             <a href="#" class="create-modal btn btn-success btn-sm" data-title="Viernes"
-                                                data-index="1">
+                                                data-index="4">
                                                 <i class="fas fa-plus"></i>
                                             </a>
                                         </th>
@@ -181,7 +187,7 @@
                                         <th>Horas</th>
                                         <th class="text-center" width="90">
                                             <a href="#" class="create-modal btn btn-success btn-sm" data-title="Sábado"
-                                                data-index="1">
+                                                data-index="5">
                                                 <i class="fas fa-plus"></i>
                                             </a>
                                         </th>
@@ -193,7 +199,7 @@
                     </div>
                 </div>
 
-<br>
+                <br>
 
                 <div class="card date_required">
                     <div class="card-header">Domingo</div>
@@ -209,7 +215,7 @@
                                         <th>Horas</th>
                                         <th class="text-center" width="90">
                                             <a href="#" class="create-modal btn btn-success btn-sm" data-title="Domingo"
-                                                data-index="1">
+                                                data-index="6">
                                                 <i class="fas fa-plus"></i>
                                             </a>
                                         </th>
@@ -221,163 +227,179 @@
                     </div>
                 </div>
 
-            {{-- Modal Form Create Project --}}
-            <div id="create-modal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title"></h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" role="form">
+                <br>
 
-                                <input type="hidden" id="dayindex" class="dayindex">
-                                <input type="hidden" id="dayId" class="dayId">
+                <button type="submit" class="btn btn-primary date_required" id="submit_report">
+                        Subir reporte
+                </button>
 
-                                <div class="form-group row">
-                                    <label for="saturday_project"
-                                        class="col-md-3 col-form-label text-md-right">Proyecto</label>
+                <br>
 
-                                    <div class="col-md-7">
-                                        <select id="projectId"
-                                            class=" form-control @error('saturday_project') is-invalid @enderror"
-                                            name="saturday_project" value="{{ old('saturday_project') }}"
-                                            autocomplete="saturday_project">
-                                            <option value="0">--Elija un proyecto--</option>
+                {{-- Modal Form Create Project --}}
+                <div id="create-modal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title"></h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" role="form">
 
-                                            @foreach($projects as $project)
-                                            <option value="{{$project->id}}">{{ $project->title }}</option>
-                                            @endforeach
-                                        </select>
+                                    <input type="hidden" id="dayindex" class="dayindex">
+                                    <input type="hidden" id="dayId" class="dayId">
 
-                                        @error('saturday_project')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
+                                    <div class="form-group row">
+                                        <label for="saturday_project"
+                                            class="col-md-3 col-form-label text-md-right">Proyecto</label>
+
+                                        <div class="col-md-7">
+                                            <select id="projectId"
+                                                class=" form-control @error('saturday_project') is-invalid @enderror"
+                                                name="saturday_project" value="{{ old('saturday_project') }}">
+                                                <option value="0">--Elija un proyecto--</option>
+
+                                                @foreach($projects as $project)
+                                                <option value="{{$project->id}}">{{ $project->title }}</option>
+                                                @endforeach
+                                            </select>
+
+                                            @error('saturday_project')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="saturday_project"
-                                        class="col-md-3 col-form-label text-md-right">Horas</label>
+                                    <div class="form-group row">
+                                        <label for="saturday_project"
+                                            class="col-md-3 col-form-label text-md-right">Horas</label>
 
-                                    <div class="col-md-7">
-                                        <input type="number" max="24" min="0" name="saturday_hours" value="0" id="hours"
-                                            class=" form-control @error('saturday_hours') is-invalid @enderror"
-                                            name="saturday_hours" value="{{ old('saturday_hours') }}"
-                                            autocomplete="saturday_hours">
+                                        <div class="col-md-7">
+                                            <input type="number" max="24" min="0" name="saturday_hours" value="0"
+                                                id="hours"
+                                                class=" form-control @error('saturday_hours') is-invalid @enderror"
+                                                name="saturday_hours" value="{{ old('saturday_hours') }}"
+                                                autocomplete="saturday_hours">
 
-                                        </select>
+                                            </select>
+                                        </div>
                                     </div>
-                                </div>
-
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" type="submit" id="add">
-                                Crear
-                            </button>
-                            <button class="btn btn-outline-primary" type="button" data-dismiss="modal">
-                                <span class="fas fa-remove"></span>Cerrar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
-
-
-
-            {{-- Modal Form Edit and Delete Post --}}
-            <div id="edit-modal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title"></h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" role="modal">
-
-                                <div class="form-group row">
-                                    <label for="saturday_project"
-                                        class="col-md-3 col-form-label text-md-right">Proyecto</label>
-
-                                    <div class="col-md-7">
-                                        <select id="projectId"
-                                            class="projectId form-control @error('saturday_project') is-invalid @enderror"
-                                            name="saturday_project" value="{{ old('saturday_project') }}"
-                                            autocomplete="saturday_project">
-                                            <option value="0">--Elija un proyecto--</option>
-
-                                            @foreach($projects as $project)
-                                            <option value="{{$project->id}}">{{ $project->title }}</option>
-                                            @endforeach
-                                        </select>
-
-                                        @error('saturday_project')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="saturday_project"
-                                        class="col-md-3 col-form-label text-md-right">Horas</label>
-
-                                    <div class="col-md-7">
-                                        <input type="number" max="24" min="0" name="saturday_hours" value="0" id="hours"
-                                            class=" hours form-control @error('saturday_hours') is-invalid @enderror"
-                                            name="saturday_hours" value="{{ old('saturday_hours') }}"
-                                            autocomplete="saturday_hours">
-
-                                        </select>
-                                    </div>
-                                </div>
-
-
-
-
-                            </form>
-                            {{-- Form Delete Post --}}
-                            <div class="deleteContent">
-                                ¿Seguro que quiere eliminar a <span class="title"></span> del ambiente?
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" type="submit" id="add">
+                                    Crear
+                                </button>
+                                <button class="btn btn-outline-primary" type="button" data-dismiss="modal">
+                                    <span class="fas fa-remove"></span>Cerrar
+                                </button>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn actionBtn" data-dismiss="modal">
-                                <span id="footer_action_button" class="glyphicon"></span>
-                            </button>
-                            <button type="button" class="btn btn-warning" data-dismiss="modal">
-                                <span class="glyphicon glyphicon"></span>Cancelar
-                            </button>
+                    </div>
+                </div>
+
+
+
+
+
+                {{-- Modal Form Edit and Delete Post --}}
+                <div id="edit-modal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title"></h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" role="modal">
+
+                                    <div class="form-group row">
+                                        <label for="saturday_project"
+                                            class="col-md-3 col-form-label text-md-right">Proyecto</label>
+
+                                        <div class="col-md-7">
+                                            <select id="projectId"
+                                                class="projectId form-control @error('saturday_project') is-invalid @enderror"
+                                                name="saturday_project" value="{{ old('saturday_project') }}"
+                                                autocomplete="saturday_project">
+                                                <option value="0">--Elija un proyecto--</option>
+
+                                                @foreach($projects as $project)
+                                                <option value="{{$project->id}}">{{ $project->title }}</option>
+                                                @endforeach
+                                            </select>
+
+                                            @error('saturday_project')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="saturday_project"
+                                            class="col-md-3 col-form-label text-md-right">Horas</label>
+
+                                        <div class="col-md-7">
+                                            <input type="number" max="24" min="0" name="saturday_hours" value="0"
+                                                id="hours"
+                                                class=" hours form-control @error('saturday_hours') is-invalid @enderror"
+                                                name="saturday_hours" value="{{ old('saturday_hours') }}"
+                                                autocomplete="saturday_hours">
+
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </form>
+                                {{-- Form Delete Post --}}
+                                <div class="deleteContent">
+                                    ¿Seguro que quiere eliminar a <span class="title"></span> del ambiente?
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn actionBtn" data-dismiss="modal">
+                                    <span id="footer_action_button" class="glyphicon"></span>
+                                </button>
+                                <button type="button" class="btn btn-warning" data-dismiss="modal">
+                                    <span class="glyphicon glyphicon"></span>Cancelar
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
+
+
+
+
+
+
+
+
+
             </div>
-
-
-
-
-
-
-
-
-
-
+            <form>
 
         </div>
     </div>
-</div>
 </div>
 </div>
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
+
+$(document).on('click', '#submit_report', function () {
+    $("#report_form").submit();
+    });
+
     $(document).ready(function () {
         $('.date_required').hide();
     });
@@ -453,7 +475,6 @@
         $('.form-horizontal').show();
         $('.projectId').val($(this).data('project'));
         $('.hours').val($(this).data('hours'));
-        alert($('.hours').val());
         $('.dayindex').val($(this).data('index'));
         $('.dayId').val($(this).data('id'));
         $('#edit-modal').modal('show');
@@ -472,8 +493,6 @@
                 'initial_date': $('#date').val(),
             },
             success: function (data) {
-
-                alert(data.day.hours);
                 $('.day' + data.day.id).replaceWith(
                     "<tr class='day" + data.day.id + "'>" +
                     "<td>" + data.day.date + "</td>" +

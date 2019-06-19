@@ -7,12 +7,12 @@
             <h2>{{$environment->title}}</h2>
             <p>{{ str_limit($environment->description, 100) }}</p>
 
-            <diV class="align-right">
+            <!--diV class="align-right">
                 @if( Auth::User()->id === $environment->user_id)
                 <a class="btn btn-primary" href="{{url('environment/create')}}" role="button">Manejar empleados</a>
                 <a class="btn btn-outline-primary" href="#" role="button">Ver acividad</a>
                 @endif
-            </div>
+            </div-->
 
             <br>
 
@@ -45,41 +45,44 @@
 
                 <div class="card-body">
 
-                    @if(!$reports->isEmpty())
-                    @foreach ($reports as $report)
-                    <div class="media">
-                        <div class="d-flex flex-column counters">
-                        </div>
-                        <div>
-                            <h3 class="mt-0"><a href="">{{ $report->user->name}}</a></h3>
-                            <p class="lead">
-                                Reportado el {{ $report->created_at }}
-                            </p>
 
-                            @foreach ($report->days as $day)
-                            <p>
-                                Día: {{$day->dayweek}} {{$day->date}}
-                            </p>
-                            <p>
-                                Horas: {{$day->hours}}
-                            </p>
 
-                            @if(isset($day->project_id))
-                            <p>Proyecto: {{$day->project->title}}</p>
-                            @else
-                            <p>Proyecto: Sin actividad</p>
-                            @endif
-                            <hr>
-                            @endforeach
-                        </div>
-                    </div>
-                    <hr>
-                    @endforeach
 
-                    @else
-                    No hay reportes disponibles.
-                    <hr>
-                    @endif
+                        <div class="row">
+                                <div class="table table-responsive">
+                                    <table class="table table-bordered" id="rep_table">
+                                        <tr>
+                                            <th>Autor</th>
+                                            <th>Reportado el</th>
+                                            <th>Horas totales</th>
+                                            <th>% de Productividad</th>
+                                            <th>Costo impactado</th>
+                                            <th>Ver</th>
+                                        </tr>
+                                        {{ csrf_field() }}
+                                        <?php  $no=1; ?>
+                                        @foreach ($reports as $report)
+                                        <tr class="report{{$report->id}}">
+                                            <td>{{ $report->user->name}}</td>
+                                            <td>{{ $report->created_at }}</td>
+                                            <td>{{ $report->totalhours }}</td>
+                                            <td>{{ $report->productivity }}%</td>
+                                            <td>${{ $report->impactedcost }}</td>
+                                            <td>
+                                                <a href="#" class="show-modal-report btn btn-info btn-sm" data-id="{{$report->id}}"
+                                                        data-name="{{$report->user->name}}" data-email="{{$report->totalhours}}">
+                                                        <i class="fa fa-eye"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </table>
+                                </div>
+
+                            </div>
+
+
+
                     <diV class="align-right">
                         <a class="btn btn-primary" href="{{url('environment/'.$environment->id.'/report/create')}}"
                             role="button">Crear reporte</a>
@@ -456,7 +459,65 @@
             </div>
 
 
+   {{-- Modal Form Show POST --}}
+   <div id="show-report" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
 
+                    <h4 class="modal-title"></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="hidden" id="sUsers_id" name="sUsers_id">
+                    </div>
+
+                    @if(!$reports->isEmpty())
+                    @foreach ($reports as $report)
+                    <div class="media">
+                        <div class="d-flex flex-column counters">
+                        </div>
+                        <div>
+                            <h3 class="mt-0"><a href="">{{ $report->user->name}}</a></h3>
+                            <p class="lead">
+                                Reportado el {{ $report->created_at }}
+                            </p>
+
+                            @foreach ($report->days as $day)
+                            <p>
+                                Día: {{$day->dayweek}} {{$day->readdate}}
+                            </p>
+                            <p>
+                                Horas: {{$day->hours}}
+                            </p>
+
+                            @if(isset($day->project_id))
+                            <p>Proyecto: {{$day->project->title}}</p>
+                            @else
+                            <p>Proyecto: Sin actividad</p>
+                            @endif
+                            <hr>
+                            @endforeach
+                        </div>
+                    </div>
+                    <hr>
+                    @endforeach
+
+                    @else
+                    No hay reportes disponibles.
+                    <hr>
+                    @endif
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -737,6 +798,18 @@
         });
     });
 
+
+
+    // Show function
+    $(document).on('click', '.show-modal-report', function () {
+        $('#show-report').modal('show');
+        $('#sUsers_id').text($(this).data('id'));
+        $('#sUsers_name').text($(this).data('name'));
+        $('#sUsers_email').text($(this).data('email'));
+        $('#sUsers_salary').text($(this).data('salary'));
+        $('#sUsers_productivity').text($(this).data('productivity'));
+        $('.modal-title').text('Información');
+    });
 
 
 

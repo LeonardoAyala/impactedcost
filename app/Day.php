@@ -17,12 +17,12 @@ class Day extends Model
     }
 
     public function getDayweekAttribute(){
-        $date = \Carbon\Carbon::parse($this->initial_date)->format('l');
+        $date = \Carbon\Carbon::parse(strtotime($this->date))->format('l');
         return $date;
     }
 
-    public function getDateAttribute(){
-        $date = \Carbon\Carbon::parse($this->initial_date)->format('d/m/Y');
+    public function getReaddateAttribute(){
+        $date = \Carbon\Carbon::parse(strtotime($this->date))->format('d/m/Y');
         return $date;
     }
 }
