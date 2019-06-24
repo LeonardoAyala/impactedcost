@@ -18,58 +18,22 @@ use Auth;
 
 class EnvironmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        /*
-        $environments = Environment::with('user')->latest()->paginate(5);
 
-
-        return view('environments.index', compact('environments'));
-        */
-
-        $environments = Environment::with('user')->latest()->get();
-
-/*
-        echo "<pre>";
-
-        print_r($environments);
-        exit();
-        */
-
-        return Datatables::of($environments)
-        ->addColumn('action', function($environments){
-
-            '<a onclick="showData('.$environments->id.')" class="btn btn-sm
-            btn-success">Show</a>'.' '.
-            '<a onclick="editForm('.$environments->id.')" class="btn btn-sm
-            btn-success">Edit</a>'.' '.
-            '<a onclick="deleteData('.$environments->id.')" class="btn btn-sm
-            btn-success">Delete</a>';
-
-        })->make(true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('environments.create');
+        //return view('environments.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $this->validate($request ,[
@@ -77,34 +41,22 @@ class EnvironmentController extends Controller
             'description' => ['required', 'max:100']
         ]);
 
-        if(Auth::check())
-        {
-            $user = Auth::User();
-            $environment = Environment::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'code' => Str::random(6),
-                'password' => Str::random(6),
-                'user_id' => $user->id
-            ]);
+        $user = Auth::User();
+        $environment = Environment::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'code' => Str::random(6),
+            'password' => Str::random(6),
+            'user_id' => $user->id
+        ]);
 
-            $user->coEnvironments()->attach($environment);
+        $user->coEnvironments()->attach($environment);
 
-            return redirect('environment/'.$environment->id);
-        }
-
-        return redirect('register');
+        return redirect('environment/'.$environment->id);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Environment  $environment
-     * @return \Illuminate\Http\Response
-     */
     public function show(Environment $environment)
     {
-
         $environment = Environment::find($environment->id);
         $projects = Project::where('environment_id', $environment->id)->orderBy('initial_date', 'desc')->latest()->paginate(10);
 
@@ -133,44 +85,17 @@ class EnvironmentController extends Controller
         ->with(compact('projects'))
         ->with(compact('reports'));
     }
-/*
-    public function show(Environment $environment)
-    {
 
-        $projects = Project::where('environment_id', $environment->id)->with('reports')->orderBy('initial_date', 'desc')->paginate(5);
-
-        return view('environments.show', compact('projects'), compact('environment'));
-    }
-*/
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Environment  $environment
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Environment $environment)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Environment  $environment
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Environment $environment)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Environment  $environment
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Environment $environment)
     {
 
@@ -185,26 +110,23 @@ class EnvironmentController extends Controller
         'description' => ['required', 'max:100']
     ]);
 
+    $user = Auth::User();
+    $environment = Environment::create([
+        'title' => $request->title,
+        'description' => $request->description,
+        'code' => Str::random(6),
+        'password' => Str::random(6),
+        'user_id' => $user->id
+    ]);
 
-    if(Auth::check())
-    {
-        $user = Auth::User();
-        $environment = Environment::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'code' => Str::random(6),
-            'password' => Str::random(6),
-            'user_id' => $user->id
-        ]);
+    $user->coEnvironments()->attach($environment);
 
-        $user->coEnvironments()->attach($environment);
+    return response()->json([
+        'environment' => $environment,
+        'url' => $environment->url,
+        'user' => $user
+    ]);
 
-        return response()->json([
-            'environment' => $environment,
-            'url' => $environment->url,
-            'user' => $user
-        ]);
-    }
 
     return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
 
@@ -238,33 +160,27 @@ public function join (Request $request){
         'password' => 'required'
     ]);
 
+    $user = Auth::User();
+    $environment = Environment::where('code', '=', $request->code)->where('password', '=', $request->password)->first();
 
-    if(Auth::check())
+    if(isset($environment))
     {
+        $user->coEnvironments()->attach($environment);
 
-        $user = Auth::User();
-        $environment = Environment::where('code', '=', $request->code)->where('password', '=', $request->password)->first();
+        $salary = Salary::create([
+            'environment_id' => $environment->id,
+            'user_id' => $user->id
+        ]);
 
-        if(isset($environment))
-        {
-            $user->coEnvironments()->attach($environment);
-
-            $salary = Salary::create([
-                'environment_id' => $environment->id,
-                'user_id' => $user->id
-            ]);
-
-            return response()->json([
-                'environment' => $environment,
-                'url' => $environment->url,
-                'user' => $environment->user
-            ]);
-        }
+        return response()->json([
+            'environment' => $environment,
+            'url' => $environment->url,
+            'user' => $environment->user
+        ]);
 
         return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
     }
 
-    return redirect('register');
 }
 
 }

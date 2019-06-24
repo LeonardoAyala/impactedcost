@@ -13,27 +13,20 @@ use Auth;
 
 class ReportController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Environment $environment)
     {
         $projects = Project::where('environment_id', $environment->id)->orderBy('title', 'desc')->get();
 
-    if(Auth::check())
-    {
         $user = Auth::User();
 
         Report::where('active', false)->where('user_id', $user->id)->delete();
@@ -49,15 +42,6 @@ class ReportController extends Controller
         ->with(compact('report'));
     }
 
-    return redirect('login');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Environment $environment, Request $request)
     {
         $report = Report::find ($request->report_id);
@@ -77,46 +61,21 @@ class ReportController extends Controller
         return redirect('home');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
     public function show(Report $report)
     {
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Report $report)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Report $report)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Report  $report
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Report $report)
     {
         //
@@ -136,22 +95,19 @@ class ReportController extends Controller
 
         $date = strtotime($request->initial_date);
 
-        if(Auth::check())
-        {
-            $user = Auth::User();
-            $project = Project::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'code' => $request->code,
-                'initial_date' => date('Y/m/d', $date),
-                'environment_id' => $request->environment_id
-            ]);
+        $user = Auth::User();
+        $project = Project::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'code' => $request->code,
+            'initial_date' => date('Y/m/d', $date),
+            'environment_id' => $request->environment_id
+        ]);
 
-            return response()->json([
-                'project' => $project,
-                'url' => $project->url,
-            ]);
-        }
+        return response()->json([
+            'project' => $project,
+            'url' => $project->url,
+        ]);
     }
 
     public function change (Request $request){
@@ -160,7 +116,6 @@ class ReportController extends Controller
         $environment = $project->environment;
 
         $date = strtotime($request->initial_date);
-
 
         $project->title = $request->title;
         $project->description = $request->description;

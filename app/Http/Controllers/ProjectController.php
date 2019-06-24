@@ -9,32 +9,21 @@ use Auth;
 
 class ProjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Environment $environment)
     {
         return view('projects.create', compact('environment'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Environment $environment ,Request $request)
     {
         $this->validate($request ,[
@@ -54,27 +43,22 @@ class ProjectController extends Controller
         $date = strtotime($request->initial_date);
 
 
-        if(Auth::check())
-        {
-            $user = Auth::User();
-            $project = Project::create([
-                'code' => $request->code,
-                'title' => $request->title,
-                'description' => $request->description,
-                'initial_date' => date('Y/m/d', $date),
-                'environment_id' => $environment->id
-            ]);
+        $user = Auth::User();
+        $project = Project::create([
+            'code' => $request->code,
+            'title' => $request->title,
+            'description' => $request->description,
+            'initial_date' => date('Y/m/d', $date),
+            'environment_id' => $environment->id
+        ]);
 /*
-            $table->string('code')->unique();
-            $table->string('title');
-            $table->mediumText('description');
-            $table->date('initial_date');
-            $table->bigInteger('environment_id')->unsigned();
+        $table->string('code')->unique();
+        $table->string('title');
+        $table->mediumText('description');
+        $table->date('initial_date');
+        $table->bigInteger('environment_id')->unsigned();
 */
-            return redirect('environment/'.$environment->id);
-        }
-
-        return redirect('register');
+        return redirect('environment/'.$environment->id);
     }
 
     /**
@@ -88,35 +72,16 @@ class ProjectController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Project  $project
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Project $project)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Project  $project
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Project $project)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Project  $project
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Project $project)
     {
         //
@@ -134,22 +99,19 @@ class ProjectController extends Controller
 
         $date = strtotime($request->initial_date);
 
-        if(Auth::check())
-        {
-            $user = Auth::User();
-            $project = Project::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'code' => $request->code,
-                'initial_date' => date('Y/m/d', $date),
-                'environment_id' => $request->environment_id
-            ]);
+        $user = Auth::User();
+        $project = Project::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'code' => $request->code,
+            'initial_date' => date('Y/m/d', $date),
+            'environment_id' => $request->environment_id
+        ]);
 
-            return response()->json([
-                'project' => $project,
-                'url' => $project->url,
-            ]);
-        }
+        return response()->json([
+            'project' => $project,
+            'url' => $project->url,
+        ]);
     }
 
     public function change (Request $request){
@@ -158,7 +120,6 @@ class ProjectController extends Controller
         $environment = $project->environment;
 
         $date = strtotime($request->initial_date);
-
 
         $project->title = $request->title;
         $project->description = $request->description;
