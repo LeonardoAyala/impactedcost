@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
 
             <!--br>
 
@@ -122,7 +122,7 @@
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" id="title" name="title"
                                             placeholder="Nombre" required>
-
+                                        <p class="error error_title  alert-danger hidden">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -130,7 +130,7 @@
                                     <div class="col-sm-8">
                                         <textarea class="form-control" id="description" name="description"
                                             placeholder="Descripción" required></textarea>
-
+                                        <p class="error error_description alert-danger hidden">
                                     </div>
                                 </div>
                             </form>
@@ -309,8 +309,8 @@
             success: function (data) {
                 if ((data.errors)) {
                     $('.error').removeClass('hidden');
-                    $('.error').text(data.errors.title);
-                    $('.error').text(data.errors.description);
+                    $('.error_title').text(data.errors.title);
+                    $('.error_description').text(data.errors.description);
                 } else {
                     $('.error').remove();
                     $('#table').append("<tr class='environment" + data.environment.id + "'>" +
@@ -423,7 +423,6 @@
                 'password': $('#j_password').val()
             },
             success: function (data) {
-alert(data);
                 $('#table').append("<tr class='environment" + data.environment.id + "'>" +
                 "<td><a href='" + data.url + "'>" + data.environment.title + "</a></td>" +
                 "<td>" + data.environment.description + "</td>" +

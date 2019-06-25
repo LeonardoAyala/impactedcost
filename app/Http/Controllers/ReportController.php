@@ -25,6 +25,8 @@ class ReportController extends Controller
 
     public function create(Environment $environment)
     {
+        $this->authorize('view', $environment);
+
         $projects = Project::where('environment_id', $environment->id)->orderBy('title', 'desc')->get();
 
         $user = Auth::User();
@@ -128,7 +130,7 @@ class ReportController extends Controller
         ]);
       }
 
-      public function delete(Request $request){
+      public function select (Request $request){
         $project = Project::find ($request->id)->delete();
         return response()->json();
       }

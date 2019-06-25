@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
+
 
 class Report extends Model
 {
@@ -33,6 +35,15 @@ class Report extends Model
 
 
         return number_format((float)$amount, 2, '.', '');
+    }
+
+    public function getCreatedReadAttribute(){
+
+        $now = new Carbon();
+        $date = new Carbon($this->created_at);
+        $date->setLocale('es');
+        return $date->diffForHumans($now);
+
     }
 
     public function getImpactedcostAttribute(){

@@ -8,6 +8,11 @@ use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use Yajra\DataTables\DataTables;
 
+use Validator;
+use Response;
+use Illuminate\Support\Facades\Input;
+use App\http\Requests;
+
 use App\Environment;
 use App\Project;
 use App\Report;
@@ -36,27 +41,35 @@ class EnvironmentController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request ,[
+        $rules = array(
             'title' => ['required', 'max:25'],
             'description' => ['required', 'max:100']
-        ]);
+          );
+        $validator = Validator::make ( Input::all(), $rules);
+        if ($validator->fails()){
+            return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
+        }
+        else {
+            $user = Auth::User();
+            $environment = Environment::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'code' => Str::random(6),
+                'password' => Str::random(6),
+                'user_id' => $user->id
+            ]);
 
-        $user = Auth::User();
-        $environment = Environment::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'code' => Str::random(6),
-            'password' => Str::random(6),
-            'user_id' => $user->id
-        ]);
+            $user->coEnvironments()->attach($environment);
 
-        $user->coEnvironments()->attach($environment);
-
-        return redirect('environment/'.$environment->id);
+            return redirect('environment/'.$environment->id);
+        }
     }
 
     public function show(Environment $environment)
     {
+
+        $this->authorize('view', $environment);
+
         $environment = Environment::find($environment->id);
         $projects = Project::where('environment_id', $environment->id)->orderBy('initial_date', 'desc')->latest()->paginate(10);
 
@@ -67,10 +80,11 @@ class EnvironmentController extends Controller
         $user = Auth::User();
 
         if( $environment->user->id === $user->id){
-            $reports = Report::where('environment_id', $environment->id)->with('days')->orderBy('initial_date', 'desc')->get();
+            $reports = Report::where('environment_id', $environment->id)->with('days')
+            ->orderBy('created_at', 'desc')->get();
         }else{
             $reports = Report::where('environment_id', $environment->id)->
-            where('user_id', $user->id)->with('days')->orderBy('initial_date', 'desc')->get();
+            where('user_id', $user->id)->with('days')->orderBy('created_at', 'desc')->get();
         }
 
         /*
@@ -104,32 +118,34 @@ class EnvironmentController extends Controller
 
     public function add(Request $request)
     {
+        $rules = array(
+            'title' => ['required', 'max:25'],
+            'description' => ['required', 'max:100']
+          );
+        $validator = Validator::make ( Input::all(), $rules);
+        if ($validator->fails()){
+            return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
+        }
+        else {
 
-    $this->validate($request ,[
-        'title' => ['required', 'max:25'],
-        'description' => ['required', 'max:100']
-    ]);
+            $user = Auth::User();
+            $environment = Environment::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'code' => Str::random(6),
+                'password' => Str::random(6),
+                'user_id' => $user->id
+            ]);
 
-    $user = Auth::User();
-    $environment = Environment::create([
-        'title' => $request->title,
-        'description' => $request->description,
-        'code' => Str::random(6),
-        'password' => Str::random(6),
-        'user_id' => $user->id
-    ]);
+            $user->coEnvironments()->attach($environment);
 
-    $user->coEnvironments()->attach($environment);
+            return response()->json([
+                'environment' => $environment,
+                'url' => $environment->url,
+                'user' => $user
+            ]);
 
-    return response()->json([
-        'environment' => $environment,
-        'url' => $environment->url,
-        'user' => $user
-    ]);
-
-
-    return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
-
+        }
   }
 
   public function change (Request $request){

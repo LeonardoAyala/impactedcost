@@ -41,6 +41,11 @@ class User extends Authenticatable
         return $this->hasMany(Environment::class);
     }
 
+    public function reports(){
+        return $this->hasMany(Report::class);
+    }
+
+
     public function salaries(){
         return $this->hasMany(Salary::class);
     }
@@ -67,5 +72,31 @@ class User extends Authenticatable
             return $latest->amount;
         }
 
+    }
+
+    public function getProductivityAttribute(){
+
+        $weeks = $this->reports->count();
+
+        $total_hours = $this->total_hours;
+
+        if($total_hours <= 0){
+            $amount = 0;
+        } else{
+            $amount = (($total_hours)/(48 * $weeks))*100;
+        }
+
+        return number_format((float)$amount, 2, '.', '');
+    }
+
+    public function getTotalHoursAttribute(){
+
+        $hours = 0;
+
+        foreach($this->reports as $report){
+            $hours += $report->totalhours;
+        }
+
+        return $hours;
     }
 }

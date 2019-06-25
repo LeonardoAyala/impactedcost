@@ -33,7 +33,7 @@
 
                 </form>
 
-                <div class="card date_required">
+                <div class="card date_required card_day0">
                     <div class="card-header">Lunes</div>
 
                     <div class="card-body">
@@ -61,7 +61,7 @@
 
                 <br>
 
-                <div class="card date_required">
+                <div class="card date_required card_day1">
                     <div class="card-header">Martes</div>
 
                     <div class="card-body">
@@ -89,7 +89,7 @@
 
                 <br>
 
-                <div class="card date_required">
+                <div class="card date_required card_day2">
                     <div class="card-header">Miércoles</div>
 
                     <div class="card-body">
@@ -117,7 +117,7 @@
 
                 <br>
 
-                <div class="card date_required">
+                <div class="card date_required card_day3">
                     <div class="card-header">Jueves</div>
 
                     <div class="card-body">
@@ -145,7 +145,7 @@
 
                 <br>
 
-                <div class="card date_required">
+                <div class="card date_required card_day4">
                     <div class="card-header">Viernes</div>
 
                     <div class="card-body">
@@ -173,7 +173,7 @@
 
                 <br>
 
-                <div class="card date_required">
+                <div class="card date_required card_day5">
                     <div class="card-header">Sábado</div>
 
                     <div class="card-body">
@@ -201,7 +201,7 @@
 
                 <br>
 
-                <div class="card date_required">
+                <div class="card date_required card_day6">
                     <div class="card-header">Domingo</div>
 
                     <div class="card-body">
@@ -229,7 +229,7 @@
 
                 <br>
 
-                <button type="submit" class="btn btn-primary date_required" id="submit_report">
+                <button type="submit" class="btn btn-primary date_required card_day7" id="submit_report">
                         Subir reporte
                 </button>
 
@@ -405,7 +405,34 @@ $(document).on('click', '#submit_report', function () {
     });
 
     $('#date').change(function () {
-        $('.date_required').show();
+
+        $('.date_required').hide();
+
+        $.ajax({
+            type: 'POST',
+            url: 'selectDay',
+            data: {
+                '_token': $('input[name=_token]').val(),
+                'id': $('.dayId').val(),
+                'project_id': $('.projectId').val(),
+                'initial_date': $('#date').val(),
+            },
+            success: function (data) {
+                if ((data.errors))
+                {
+                    $('.error').removeClass('hidden');
+                    $('.error').text(data.errors.title);
+                    $('.error').text(data.errors.body);
+                }
+                else
+                {
+                    $('.date_required').show();
+                }
+
+            }
+        });
+
+
     });
 
     $(document).on('click', '.create-modal', function () {

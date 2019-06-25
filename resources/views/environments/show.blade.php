@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <h2>{{$environment->title}}</h2>
             <p>{{ str_limit($environment->description, 100) }}</p>
 
@@ -53,7 +53,7 @@
                                     <table class="table table-bordered" id="rep_table">
                                         <tr>
                                             <th>Autor</th>
-                                            <th>Reportado el</th>
+                                            <th>Reportado</th>
                                             <th>Horas totales</th>
                                             <th>% de Productividad</th>
                                             <th>Costo impactado</th>
@@ -64,7 +64,7 @@
                                         @foreach ($reports as $report)
                                         <tr class="report{{$report->id}}">
                                             <td>{{ $report->user->name}}</td>
-                                            <td>{{ $report->created_at }}</td>
+                                            <td>{{ $report->created_read }}</td>
                                             <td>{{ $report->totalhours }}</td>
                                             <td>{{ $report->productivity }}%</td>
                                             <td>${{ $report->impactedcost }}</td>
@@ -120,9 +120,9 @@
                                     <tr class="coUser{{$coUser->id}}">
                                         <td>{{ $coUser->name}}</td>
                                         <td>{{ $coUser->email}}</td>
-
                                         <td>{{ $coUser->salary }}</td>
-                                        <td></td>
+                                        <td>{{ $coUser->productivity }}</td>
+
                                         <td>
                                             <a href="#" class="show-modal-users btn btn-info btn-sm" data-id="{{$coUser->id}}"
                                                 data-name="{{$coUser->name}}" data-email="{{$coUser->email}}">

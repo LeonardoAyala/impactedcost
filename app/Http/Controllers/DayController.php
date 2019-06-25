@@ -112,4 +112,11 @@ class DayController extends Controller
         ]);
     }
 
+    public function select(Request $request)
+    {
+        return response()->json([
+            'day' => '1',
+        ]);
+    }
+
 }
