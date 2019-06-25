@@ -459,6 +459,7 @@
         $('.actionBtn').addClass('delete');
         $('.modal-title').text('Eliminar ambiente');
         $('.id').text($(this).data('id'));
+        $('#e_id').val($(this).data('id'));
         $('.deleteContent').show();
         $('.form-horizontal').hide();
         $('.title').html($(this).data('title'));
@@ -471,10 +472,10 @@
             url: 'deleteEnvironment',
             data: {
                 '_token': $('input[name=_token]').val(),
-                'id': $('.id').text()
+                'id': $('#e_id').val()
             },
             success: function (data) {
-                $('.environment' + $('.id').text()).remove();
+                $('.environment' + $('#e_id').val()).remove();
             }
         });
     });
