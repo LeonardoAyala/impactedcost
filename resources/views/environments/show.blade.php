@@ -110,9 +110,13 @@
                                         <th>Email</th>
                                         <th>Salario</th>
                                         <th>% de productividad</th>
+
+                                        @if( Auth::User()->id === $environment->user_id)
                                         <th class="text-center" width="130">
                                             Opciones
                                         </th>
+                                        @endif
+
                                     </tr>
                                     {{ csrf_field() }}
                                     <?php  $no=1; ?>
@@ -121,8 +125,9 @@
                                         <td>{{ $coUser->name}}</td>
                                         <td>{{ $coUser->email}}</td>
                                         <td>{{ $coUser->salary }}</td>
-                                        <td>{{ $coUser->productivity }}</td>
+                                        <td>{{ $coUser->productivity }}%</td>
 
+                                        @if( Auth::User()->id === $environment->user_id)
                                         <td>
                                             <a href="#" class="show-modal-users btn btn-info btn-sm" data-id="{{$coUser->id}}"
                                                 data-name="{{$coUser->name}}" data-email="{{$coUser->email}}">
@@ -139,6 +144,7 @@
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </td>
+                                        @endif
                                     </tr>
                                     @endforeach
                                 </table>
@@ -163,11 +169,13 @@
                                     <th>Nombre</th>
                                     <th>Descripción</th>
                                     <th>Fecha de inicio</th>
+                                    @if( Auth::User()->id === $environment->user_id)
                                     <th class="text-center" width="130">
                                         <a href="#" class="create-modal-project btn btn-success btn-sm">
                                             <i class="fas fa-plus"></i>
                                         </a>
                                     </th>
+                                    @endif
                                 </tr>
                                 {{ csrf_field() }}
                                 <?php  $no=1; ?>
@@ -177,6 +185,7 @@
                                     <td><a href="{{ $project->url }}">{{ $project->title }}</a></td>
                                     <td>{{ $project->description }}</td>
                                     <td>{{ $project->initial_date }}</td>
+                                    @if( Auth::User()->id === $environment->user_id)
                                     <td>
                                         <a href="#" class="show-modal-project btn btn-info btn-sm" data-id="{{$project->id}}"
                                             data-code="{{$project->code}}" data-title="{{$project->title}}"
@@ -198,6 +207,7 @@
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </table>

@@ -94,7 +94,8 @@ class User extends Authenticatable
         $hours = 0;
 
         foreach($this->reports as $report){
-            $hours += $report->totalhours;
+
+                $hours += $report->totalhours;
         }
 
         return $hours;
