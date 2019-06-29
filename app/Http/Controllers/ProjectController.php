@@ -105,12 +105,15 @@ class ProjectController extends Controller
             'description' => $request->description,
             'code' => $request->code,
             'initial_date' => date('Y/m/d', $date),
-            'environment_id' => $request->environment_id
+            'environment_id' => $request->environment_id,
+            'project_category_id' => $request->project_category_id,
+            'expected_budget' => $request->expected_budget,
         ]);
 
         return response()->json([
             'project' => $project,
             'url' => $project->url,
+            'project_category' => $project->category,
         ]);
     }
 
@@ -122,18 +125,23 @@ class ProjectController extends Controller
         $date = strtotime($request->initial_date);
 
         $project->title = $request->title;
+        $project->project_category_id = $request->project_category_id;
         $project->description = $request->description;
         $project->code = $request->code;
         $project->initial_date = date('Y/m/d', $date);
         $project->save();
+
         return response()->json([
             'project' => $project,
             'url' => $project->url,
+            'project_category' => $project->category,
         ]);
       }
 
       public function delete(Request $request){
-        $project = Project::find ($request->id)->delete();
+        $project = Project::find ($request->id);
+        $project->archived = true;
+        $project->save();
         return response()->json();
       }
 

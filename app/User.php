@@ -55,7 +55,9 @@ class User extends Authenticatable
     }
 
     public function coEnvironments(){
-        return $this->belongsToMany(Environment::class, 'environment_user', 'user_id', 'environment_id')->withTimestamps();
+        return $this->belongsToMany(Environment::class, 'environment_user', 'user_id', 'environment_id')
+        ->withPivot('administrator')
+        ->withTimestamps();
     }
 
     public function getUrlAttribute(){

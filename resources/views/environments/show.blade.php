@@ -9,7 +9,7 @@
 
             <!--diV class="align-right">
                 @if( Auth::User()->id === $environment->user_id)
-                <a class="btn btn-primary" href="{{url('environment/create')}}" role="button">Manejar empleados</a>
+                <a class="btn btn-primary" href="{{url('environment/create')}}" role="button">Manejar colaboradors</a>
                 <a class="btn btn-outline-primary" href="#" role="button">Ver acividad</a>
                 @endif
             </div-->
@@ -48,38 +48,39 @@
 
 
 
-                        <div class="row">
-                                <div class="table table-responsive">
-                                    <table class="table table-bordered" id="rep_table">
-                                        <tr>
-                                            <th>Autor</th>
-                                            <th>Reportado</th>
-                                            <th>Horas totales</th>
-                                            <th>% de Productividad</th>
-                                            <th>Costo impactado</th>
-                                            <th>Ver</th>
-                                        </tr>
-                                        {{ csrf_field() }}
-                                        <?php  $no=1; ?>
-                                        @foreach ($reports as $report)
-                                        <tr class="report{{$report->id}}">
-                                            <td>{{ $report->user->name}}</td>
-                                            <td>{{ $report->created_read }}</td>
-                                            <td>{{ $report->totalhours }}</td>
-                                            <td>{{ $report->productivity }}%</td>
-                                            <td>${{ $report->impactedcost }}</td>
-                                            <td>
-                                                <a href="#" class="show-modal-report btn btn-info btn-sm" data-id="{{$report->id}}"
-                                                        data-name="{{$report->user->name}}" data-email="{{$report->totalhours}}">
-                                                        <i class="fa fa-eye"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </table>
-                                </div>
+                    <div class="row">
+                        <div class="table table-responsive">
+                            <table class="table table-bordered" id="rep_table">
+                                <tr>
+                                    <th>Autor</th>
+                                    <th>Reportado</th>
+                                    <th>Horas totales</th>
+                                    <th>% de Productividad</th>
+                                    <th>Costo impactado</th>
+                                    <th>Ver</th>
+                                </tr>
+                                {{ csrf_field() }}
+                                <?php  $no=1; ?>
+                                @foreach ($reports as $report)
+                                <tr class="report{{$report->id}}">
+                                    <td>{{ $report->user->name}}</td>
+                                    <td>{{ $report->created_read }}</td>
+                                    <td>{{ $report->totalhours }}</td>
+                                    <td>{{ $report->productivity }}%</td>
+                                    <td>${{ $report->impactedcost }}</td>
+                                    <td>
+                                        <a href="#" class="show-modal-report btn btn-info btn-sm"
+                                            data-id="{{$report->id}}" data-name="{{$report->user->name}}"
+                                            data-email="{{$report->totalhours}}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </table>
+                        </div>
 
-                            </div>
+                    </div>
 
 
 
@@ -97,67 +98,72 @@
 
             <br>
 
+            @if( Auth::User()->id === $environment->user_id)
+
             <div class="card">
-                    <div class="card-header">Empleados</div>
+                <div class="card-header">Colaboradores</div>
 
-                    <div class="card-body">
+                <div class="card-body">
 
-                        <div class="row">
-                            <div class="table table-responsive">
-                                <table class="table table-bordered" id="user_table">
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Email</th>
-                                        <th>Salario</th>
-                                        <th>% de productividad</th>
+                    <div class="row">
+                        <div class="table table-responsive">
+                            <table class="table table-bordered" id="user_table">
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Costo horario</th>
+                                    <th>% de productividad</th>
 
-                                        @if( Auth::User()->id === $environment->user_id)
-                                        <th class="text-center" width="130">
-                                            Opciones
-                                        </th>
-                                        @endif
 
-                                    </tr>
-                                    {{ csrf_field() }}
-                                    <?php  $no=1; ?>
-                                    @foreach ($coUsers as $coUser)
-                                    <tr class="coUser{{$coUser->id}}">
-                                        <td>{{ $coUser->name}}</td>
-                                        <td>{{ $coUser->email}}</td>
-                                        <td>{{ $coUser->salary }}</td>
-                                        <td>{{ $coUser->productivity }}%</td>
+                                    <th class="text-center" width="130">
+                                        Opciones
+                                    </th>
 
-                                        @if( Auth::User()->id === $environment->user_id)
-                                        <td>
-                                            <a href="#" class="show-modal-users btn btn-info btn-sm" data-id="{{$coUser->id}}"
-                                                data-name="{{$coUser->name}}" data-email="{{$coUser->email}}">
-                                                <i class="fa fa-eye"></i>
-                                            </a>
-                                            <a href="#" class="edit-modal-users btn btn-warning btn-sm" data-id="{{$coUser->id}}"
-                                                    data-environmentid="{{$environment->id}}" data-name="{{$coUser->name}}"
-                                                    data-email="{{$coUser->email}}" >
-                                                <i class="fa fa-pencil-ruler"></i>
-                                            </a>
-                                            <a href="#" class="delete-modal-users btn btn-danger btn-sm"
+
+                                </tr>
+                                {{ csrf_field() }}
+                                <?php  $no=1; ?>
+                                @foreach ($coUsers as $coUser)
+                                <tr class="coUser{{$coUser->id}}">
+                                    <td>{{ $coUser->name}}</td>
+                                    <td>{{ $coUser->email}}</td>
+                                    <td>{{ $coUser->salary }}</td>
+                                    <td>{{ $coUser->productivity }}%</td>
+
+                                    @if( Auth::User()->id === $environment->user_id)
+                                    <td>
+                                        <a href="#" class="show-modal-users btn btn-info btn-sm"
+                                            data-id="{{$coUser->id}}" data-name="{{$coUser->name}}"
+                                            data-email="{{$coUser->email}}">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+                                        <a href="#" class="edit-modal-users btn btn-warning btn-sm"
                                             data-id="{{$coUser->id}}" data-environmentid="{{$environment->id}}"
                                             data-name="{{$coUser->name}}" data-email="{{$coUser->email}}">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </td>
-                                        @endif
-                                    </tr>
-                                    @endforeach
-                                </table>
-                            </div>
-                            {{$coUsers->links()}}
+                                            <i class="fa fa-pencil-ruler"></i>
+                                        </a>
+                                        <a href="#" class="delete-modal-users btn btn-danger btn-sm"
+                                            data-id="{{$coUser->id}}" data-environmentid="{{$environment->id}}"
+                                            data-name="{{$coUser->name}}" data-email="{{$coUser->email}}">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                    @endif
+                                </tr>
+                                @endforeach
+                            </table>
                         </div>
+                        {{$coUsers->links()}}
                     </div>
                 </div>
+            </div>
 
-<br>
+            @endif
+
+            <br>
 
             <div class="card">
-                <div class="card-header">Proyectos</div>
+                <div class="card-header">Procesos</div>
 
                 <div class="card-body">
 
@@ -167,7 +173,7 @@
                                 <tr>
                                     <th>Código</th>
                                     <th>Nombre</th>
-                                    <th>Descripción</th>
+                                    <th>Categoría</th>
                                     <th>Fecha de inicio</th>
                                     @if( Auth::User()->id === $environment->user_id)
                                     <th class="text-center" width="130">
@@ -183,18 +189,23 @@
                                 <tr class="project{{$project->id}}">
                                     <td>{{ $project->code}}</td>
                                     <td><a href="{{ $project->url }}">{{ $project->title }}</a></td>
-                                    <td>{{ $project->description }}</td>
+                                    <td>{{ $project->category->name }}</td>
                                     <td>{{ $project->initial_date }}</td>
                                     @if( Auth::User()->id === $environment->user_id)
                                     <td>
-                                        <a href="#" class="show-modal-project btn btn-info btn-sm" data-id="{{$project->id}}"
-                                            data-code="{{$project->code}}" data-title="{{$project->title}}"
+                                        <a href="#" class="show-modal-project btn btn-info btn-sm"
+                                            data-id="{{$project->id}}" data-code="{{$project->code}}"
+                                            data-title="{{$project->title}}"
                                             data-description="{{$project->description}}"
+                                            data-projectcategoryid="{{ $project->project_category_id}}"
+                                            data-projectcategory="{{$project->category->name}}"
                                             data-initialdate="{{$project->initial_date}}">
                                             <i class="fa fa-eye"></i>
                                         </a>
-                                        <a href="#" class="edit-modal-project btn btn-warning btn-sm" data-id="{{$project->id}}"
-                                            data-code="{{$project->code}}" data-title="{{$project->title}}"
+                                        <a href="#" class="edit-modal-project btn btn-warning btn-sm"
+                                            data-id="{{$project->id}}" data-code="{{$project->code}}"
+                                            data-title="{{$project->title}}"
+                                            data-projectcategoryid="{{ $project->project_category_id}}"
                                             data-description="{{$project->description}}"
                                             data-initialdate="{{$project->initial_date}}">
                                             <i class="fa fa-pencil-ruler"></i>
@@ -244,6 +255,24 @@
 
                                     </div>
                                 </div>
+
+
+                                <div class="form-group row">
+
+                                    <label for="saturday_project" class="col-md-3 col-form-label">Categoría</label>
+
+                                    <div class="col-md-7">
+                                        <select id="project_category_id" class=" form-control" name="project_category">
+                                            <option value="0">--Elija una categoria--</option>
+
+                                            @foreach($project_categories as $project_category)
+                                            <option value="{{$project_category->id}}">{{ $project_category->name }}
+                                            </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="form-group row">
                                     <label class="control-label col-sm-3" for="description">Descripción:</label>
                                     <div class="col-sm-8">
@@ -252,6 +281,15 @@
 
                                     </div>
                                 </div>
+
+                                <div class="form-group row">
+                                        <label class="control-label col-sm-3" for="body">Presupuesto</label>
+                                        <div class="col-sm-9">
+                                            <input type="number" min="0.00" step="1000.00" max="50000" value="00.00"
+                                                id="cProy_budget" />
+                                        </div>
+                                    </div>
+
                                 <div class="form-group row">
                                     <label class="control-label col-sm-3" for="description">Fecha inicial:</label>
                                     <div class="col-sm-8">
@@ -302,6 +340,10 @@
                             <label for="">Nombre :</label>
                             <label id="sProj_title" />
                         </div>
+                        <div class="form-group">
+                            <label for="">Categoría :</label>
+                            <label id="sProj_category" />
+                        </div>
 
                         <div class="form-group">
                             <label for="">Descripción :</label>
@@ -334,11 +376,11 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                    <label class="control-label col-sm-3" for="title">Código</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="eProj_code">
-                                    </div>
+                                <label class="control-label col-sm-3" for="title">Código</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="eProj_code">
                                 </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="control-label col-sm-3" for="title">Nombre</label>
                                 <div class="col-sm-9">
@@ -351,17 +393,34 @@
                                     <textarea type="name" class="form-control" id="eProj_description"></textarea>
                                 </div>
                             </div>
+
+
+                            <div class="form-group row">
+
+                                <label for="saturday_project" class="col-md-3 col-form-label">Categoría</label>
+
+                                <div class="col-md-7">
+                                    <select id="project_category_id_ed" class=" form-control" name="project_category">
+                                        <option value="0">--Elija una categoria--</option>
+
+                                        @foreach($project_categories as $project_category)
+                                        <option value="{{$project_category->id}}">{{ $project_category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label class="control-label col-sm-3" for="body">Fecha inicial</label>
                                 <div class="col-sm-9">
-                                    <input id="eProj_initialdate" type="text" class="week-picker"
-                                    name="initial_date" required>
+                                    <input id="eProj_initialdate" type="text" class="week-picker" name="initial_date"
+                                        required>
                                 </div>
                             </div>
                         </form>
                         {{-- Form Delete Post --}}
                         <div class="deleteContent">
-                            ¿Seguro que quiere borrar al proyecto: <span class="title"></span>?
+                            ¿Seguro que quiere borrar al proceso: <span class="title"></span>?
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -385,149 +444,150 @@
 
         {{-- Modal Form Show POST --}}
         <div id="show-users" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
 
-                            <h4 class="modal-title"></h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <input type="hidden" id="sUsers_id" name="sUsers_id">
-                            </div>
-                            <div class="form-group">
-                                <label for="">Nombre :</label>
-                                <label id="sUsers_name" />
-                            </div>
-                            <div class="form-group">
-                                <label for="">Email :</label>
-                                <label id="sUsers_email" />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">Salario :</label>
-                                <label id="sUsers_salary" />
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">% de productividad :</label>
-                                <label id="sUsers_productivity" />
-                            </div>
-
-                        </div>
+                        <h4 class="modal-title"></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                </div>
-            </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="hidden" id="sUsers_id" name="sUsers_id">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Nombre :</label>
+                            <label id="sUsers_name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="">Email :</label>
+                            <label id="sUsers_email" />
+                        </div>
 
-                  {{-- Modal Form Edit and Delete Post --}}
-        <div id="editdelete-users" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title"></h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <div class="form-group">
+                            <label for="">Costo horario :</label>
+                            <label id="sUsers_salary" />
                         </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" role="modal">
-                                <div class="form-group row">
-                                    <div class="col-sm-10">
-                                        <input type="hidden" id="eUsers_userId">
-                                        <input type="hidden" id="eUsers_environmentId">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                        <label for="">Nombre :</label>
-                                        <label id="eUsers_name" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="">Email :</label>
-                                        <label id="eUsers_email" />
-                                    </div>
-                                <div class="form-group row">
-                                    <label class="control-label col-sm-3" for="body">Salario</label>
-                                    <div class="col-sm-9">
-                                        <input type="number" min="0.00" step="100.00" max="50000" value="00.00" id="eUsers_salary"/>
-                                    </div>
-                                </div>
-                            </form>
-                            {{-- Form Delete Post --}}
-                            <div class="deleteContent">
-                                ¿Seguro que quiere eliminar a <span class="title"></span> del ambiente?
-                            </div>
+
+                        <div class="form-group">
+                            <label for="">% de productividad :</label>
+                            <label id="sUsers_productivity" />
                         </div>
-                        <div class="modal-footer">
-                                <button type="button" class="btn actionBtn" data-dismiss="modal">
-                                        <span id="footer_action_button" class="glyphicon"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-warning" data-dismiss="modal">
-                                        <span class="glyphicon glyphicon"></span>Cancelar
-                                    </button>
-                        </div>
+
                     </div>
-                </div>
-            </div>
-
-
-   {{-- Modal Form Show POST --}}
-   <div id="show-report" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-
-                    <h4 class="modal-title"></h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <input type="hidden" id="sUsers_id" name="sUsers_id">
-                    </div>
-
-                    @if(!$reports->isEmpty())
-                    @foreach ($reports as $report)
-                    <div class="media">
-                        <div class="d-flex flex-column counters">
-                        </div>
-                        <div>
-                            <h3 class="mt-0"><a href="">{{ $report->user->name}}</a></h3>
-                            <p class="lead">
-                                Reportado el {{ $report->created_at }}
-                            </p>
-
-                            @foreach ($report->days as $day)
-                            <p>
-                                Día: {{$day->dayweek}} {{$day->readdate}}
-                            </p>
-                            <p>
-                                Horas: {{$day->hours}}
-                            </p>
-
-                            @if(isset($day->project_id))
-                            <p>Proyecto: {{$day->project->title}}</p>
-                            @else
-                            <p>Proyecto: Sin actividad</p>
-                            @endif
-                            <hr>
-                            @endforeach
-                        </div>
-                    </div>
-                    <hr>
-                    @endforeach
-
-                    @else
-                    No hay reportes disponibles.
-                    <hr>
-                    @endif
-
-
-
-
-
-
                 </div>
             </div>
         </div>
-    </div>
+
+        {{-- Modal Form Edit and Delete Post --}}
+        <div id="editdelete-users" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="modal">
+                            <div class="form-group row">
+                                <div class="col-sm-10">
+                                    <input type="hidden" id="eUsers_userId">
+                                    <input type="hidden" id="eUsers_environmentId">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Nombre :</label>
+                                <label id="eUsers_name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="">Email :</label>
+                                <label id="eUsers_email" />
+                            </div>
+                            <div class="form-group row">
+                                <label class="control-label col-sm-3" for="body">Costo horario</label>
+                                <div class="col-sm-9">
+                                    <input type="number" min="0.00" step="10.00" max="50000" value="00.00"
+                                        id="eUsers_salary" />
+                                </div>
+                            </div>
+                        </form>
+                        {{-- Form Delete Post --}}
+                        <div class="deleteContent">
+                            ¿Seguro que quiere eliminar a <span class="title"></span> del ambiente?
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn actionBtn" data-dismiss="modal">
+                            <span id="footer_action_button" class="glyphicon"></span>
+                        </button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">
+                            <span class="glyphicon glyphicon"></span>Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {{-- Modal Form Show POST --}}
+        <div id="show-report" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <h4 class="modal-title"></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="hidden" id="sUsers_id" name="sUsers_id">
+                        </div>
+
+                        @if(!$reports->isEmpty())
+                        @foreach ($reports as $report)
+                        <div class="media">
+                            <div class="d-flex flex-column counters">
+                            </div>
+                            <div>
+                                <h3 class="mt-0"><a href="">{{ $report->user->name}}</a></h3>
+                                <p class="lead">
+                                    Reportado el {{ $report->created_at }}
+                                </p>
+
+                                @foreach ($report->days as $day)
+                                <p>
+                                    Día: {{$day->dayweek}} {{$day->readdate}}
+                                </p>
+                                <p>
+                                    Horas: {{$day->hours}}
+                                </p>
+
+                                @if(isset($day->project_id))
+                                <p>Proceso: {{$day->project->title}}</p>
+                                @else
+                                <p>Proceso: Sin actividad</p>
+                                @endif
+                                <hr>
+                                @endforeach
+                            </div>
+                        </div>
+                        <hr>
+                        @endforeach
+
+                        @else
+                        No hay reportes disponibles.
+                        <hr>
+                        @endif
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
@@ -541,7 +601,7 @@
     $(document).on('click', '.create-modal-project', function () {
         $('#create-project').modal('show');
         $('.form-horizontal').show();
-        $('.modal-title').text('Crear proyecto');
+        $('.modal-title').text('Crear proceso');
     });
     $("#add").click(function () {
         $.ajax({
@@ -553,7 +613,9 @@
                 'title': $('#cProj_title').val(),
                 'description': $('#cProj_description').val(),
                 'code': $('#cProj_code').val(),
-                'initial_date': $('#cProj_initialDate').val()
+                'initial_date': $('#cProj_initialDate').val(),
+                'project_category_id': $('#project_category_id').val(),
+                'expected_budget': $('#cProy_budget').val(),
             },
             success: function (data) {
                 if ((data.errors)) {
@@ -566,25 +628,29 @@
                         "<td>" + data.project.code + "</td>" +
                         "<td><a href='" + data.url + "'>" + data.project.title +
                         "</a></td>" +
-                        "<td>" + data.project.description + "</td>" +
+                        "<td>" + data.project_category.name + "</td>" +
                         "<td>" + data.project.initial_date + "</td>" +
                         "<td><button class='show-modal-project btn btn-info btn-sm' data-id='" +
                         data.project.id + "' data-code='" + data.project.code +
                         "' data-title='" + data.project.title +
                         "' data-description='" + data.project.description +
+                        "' data-projectcategoryid='" + data.project_category.id +
+                        "' data-projectcategory='" + data.project_category.name +
+                        "' data-budget='" + data.project.expected_budget +
                         "' data-initialdate='" + data.project.initial_date +
                         "'><span class='fa fa-eye'></span></button> " +
                         "<button class='edit-modal-project btn btn-warning btn-sm' data-id='" +
                         data.project.id + "' data-code='" + data.project.code +
                         "' data-title='" + data.project.title +
                         "' data-description='" + data.project.description +
+                        "' data-projectcategoryid='" + data.project_category.id +
+                        "' data-projectcategory='" + data.project_category.name +
+                        "' data-budget='" + data.project.expected_budget +
                         "' data-initialdate='" + data.project.initial_date +
                         "'><span class='fa fa-pencil-ruler'></span></button> " +
                         "<button class='delete-modal-project btn btn-danger btn-sm' data-id='" +
                         data.project.id + "' data-code='" + data.project.code +
                         "' data-title='" + data.project.title +
-                        "' data-description='" + data.project.description +
-                        "' data-initialdate='" + data.project.initial_date +
                         "'><span class='fa fa-trash'></span></button></td>" +
                         "</tr>");
                 }
@@ -594,6 +660,8 @@
         $('#cProj_description').val('');
         $('#cProj_code').val('');
         $('#cProj_initialDate').val('');
+        $('#project_category_id').val(0);
+        $('#cProy_budget').val(0);
     });
 
     // function Edit POST
@@ -604,7 +672,7 @@
         $('.actionBtn').addClass('btn-primary');
         $('.actionBtn').removeClass('btn-outline-primary');
         $('.actionBtn').addClass('edit');
-        $('.modal-title').text('Editar proyecto');
+        $('.modal-title').text('Editar proceso');
         $('.deleteContent').hide();
         $('.form-horizontal').show();
         $('#eProj_id').val($(this).data('id'));
@@ -612,6 +680,7 @@
         $('#eProj_description').val($(this).data('description'));
         $('#eProj_code').val($(this).data('code'));
         $('#eProj_initialdate').val($(this).data('initialdate'));
+        $('#project_category_id_ed').val($(this).data('projectcategoryid'));
         $('#editdelete-project').modal('show');
     });
 
@@ -636,24 +705,24 @@
                     "<td>" + data.project.description + "</td>" +
                     "<td>" + data.project.initial_date + "</td>" +
                     "<td><button class='show-modal-project btn btn-info btn-sm' data-id='" +
-                        data.project.id + "' data-code='" + data.project.code +
-                        "' data-title='" + data.project.title +
-                        "' data-description='" + data.project.description +
-                        "' data-initialdate='" + data.project.initial_date +
-                        "'><span class='fa fa-eye'></span></button> " +
-                        "<button class='edit-modal-project btn btn-warning btn-sm' data-id='" +
-                        data.project.id + "' data-code='" + data.project.code +
-                        "' data-title='" + data.project.title +
-                        "' data-description='" + data.project.description +
-                        "' data-initialdate='" + data.project.initial_date +
-                        "'><span class='fa fa-pencil-ruler'></span></button> " +
-                        "<button class='delete-modal-project btn btn-danger btn-sm' data-id='" +
-                        data.project.id + "' data-code='" + data.project.code +
-                        "' data-title='" + data.project.title +
-                        "' data-description='" + data.project.description +
-                        "' data-initialdate='" + data.project.initial_date +
-                        "'><span class='fa fa-trash'></span></button></td>" +
-                        "</tr>");
+                    data.project.id + "' data-code='" + data.project.code +
+                    "' data-title='" + data.project.title +
+                    "' data-description='" + data.project.description +
+                    "' data-initialdate='" + data.project.initial_date +
+                    "'><span class='fa fa-eye'></span></button> " +
+                    "<button class='edit-modal-project btn btn-warning btn-sm' data-id='" +
+                    data.project.id + "' data-code='" + data.project.code +
+                    "' data-title='" + data.project.title +
+                    "' data-description='" + data.project.description +
+                    "' data-initialdate='" + data.project.initial_date +
+                    "'><span class='fa fa-pencil-ruler'></span></button> " +
+                    "<button class='delete-modal-project btn btn-danger btn-sm' data-id='" +
+                    data.project.id + "' data-code='" + data.project.code +
+                    "' data-title='" + data.project.title +
+                    "' data-description='" + data.project.description +
+                    "' data-initialdate='" + data.project.initial_date +
+                    "'><span class='fa fa-trash'></span></button></td>" +
+                    "</tr>");
             }
         });
     });
@@ -666,7 +735,7 @@
         $('.actionBtn').removeClass('btn-success');
         $('.actionBtn').addClass('btn-danger');
         $('.actionBtn').addClass('delete');
-        $('.modal-title').text('Eliminar proyecto');
+        $('.modal-title').text('Eliminar proceso');
         $('#eProj_id').val($(this).data('id'));
         $('.deleteContent').show();
         $('.form-horizontal').hide();
@@ -693,6 +762,7 @@
         $('#show-project').modal('show');
         $('#sProj_id').text($(this).data('id'));
         $('#sProj_title').text($(this).data('title'));
+        $('#sProj_category').text($(this).data('projectcategory'));
         $('#sProj_description').text($(this).data('description'));
         $('#sProj_code').text($(this).data('code'));
         $('#sProj_initialdate').text($(this).data('initialdate'));
@@ -751,40 +821,40 @@
                     "<td>" + data.salary.amount + "</td>" +
                     "<td>" + "</td>" +
                     "<td><button class='show-modal-users btn btn-info btn-sm' data-id='" +
-                        data.coUser.id +
-                        "' data-name='" + data.coUser.name +
-                        "' data-email='" + data.coUser.email +
-                        "' data-salary='" + data.salary.amount +
-                        "' data-environmentid='" + data.environment.id +
-                        "'><span class='fa fa-eye'></span></button> " +
-                        "<button class='edit-modal-users btn btn-warning btn-sm' data-id='" +
-                        data.coUser.id +
-                        "' data-name='" + data.coUser.name +
-                        "' data-email='" + data.coUser.email +
-                        "' data-salary='" + data.salary.amount +
-                        "' data-environmentid='" + data.environment.id +
-                        "'><span class='fa fa-pencil-ruler'></span></button> " +
-                        "<button class='delete-modal-users btn btn-danger btn-sm' data-id='" +
-                        data.coUser.id +
-                        "' data-name='" + data.coUser.name +
-                        "' data-email='" + data.coUser.email +
-                        "' data-salary='" + data.salary.amount +
-                        "' data-environmentid='" + data.environment.id +
-                        "'><span class='fa fa-trash'></span></button></td>" +
-                        "</tr>");
+                    data.coUser.id +
+                    "' data-name='" + data.coUser.name +
+                    "' data-email='" + data.coUser.email +
+                    "' data-salary='" + data.salary.amount +
+                    "' data-environmentid='" + data.environment.id +
+                    "'><span class='fa fa-eye'></span></button> " +
+                    "<button class='edit-modal-users btn btn-warning btn-sm' data-id='" +
+                    data.coUser.id +
+                    "' data-name='" + data.coUser.name +
+                    "' data-email='" + data.coUser.email +
+                    "' data-salary='" + data.salary.amount +
+                    "' data-environmentid='" + data.environment.id +
+                    "'><span class='fa fa-pencil-ruler'></span></button> " +
+                    "<button class='delete-modal-users btn btn-danger btn-sm' data-id='" +
+                    data.coUser.id +
+                    "' data-name='" + data.coUser.name +
+                    "' data-email='" + data.coUser.email +
+                    "' data-salary='" + data.salary.amount +
+                    "' data-environmentid='" + data.environment.id +
+                    "'><span class='fa fa-trash'></span></button></td>" +
+                    "</tr>");
             }
         });
     });
 
-        // form Delete function
-        $(document).on('click', '.delete-modal-users', function () {
+    // form Delete function
+    $(document).on('click', '.delete-modal-users', function () {
         $('#footer_action_button').text("Eliminar");
         $('#footer_action_button').removeClass('glyphicon-check');
         $('#footer_action_button').addClass('glyphicon-trash');
         $('.actionBtn').removeClass('btn-success');
         $('.actionBtn').addClass('btn-danger');
         $('.actionBtn').addClass('delete');
-        $('.modal-title').text('Eliminar empleado');
+        $('.modal-title').text('Eliminar colaborador');
         $('#eUsers_userId').val($(this).data('id'));
         $('#eUsers_environmentId').val($(this).data('environmentid'));
         $('.deleteContent').show();
@@ -820,8 +890,6 @@
         $('#sUsers_productivity').text($(this).data('productivity'));
         $('.modal-title').text('Información');
     });
-
-
 
 </script>
 @endsection

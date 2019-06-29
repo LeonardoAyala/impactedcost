@@ -13,8 +13,6 @@ class CreateDaysTable extends Migration
      */
     public function up()
     {
-        Schema::dropIfExists('days');
-
         Schema::create('days', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('date');
@@ -25,7 +23,6 @@ class CreateDaysTable extends Migration
             $table->timestamps();
 
             $table->foreign('report_id')->references('id')->on('reports')->onDelete('cascade');
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
     }
 

@@ -16,6 +16,10 @@ class Project extends Model
         return $this->hasMany(Report::class);
     }
 
+    public function category(){
+        return $this->hasOne(ProjectCategory::class, 'id', 'project_category_id');
+    }
+
     public function getDateAttribute(){
         $date = \Carbon\Carbon::parse($this->initial_date)->format('d/m/Y');
         return $date;

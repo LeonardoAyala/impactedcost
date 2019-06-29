@@ -18,6 +18,7 @@ use App\Project;
 use App\Report;
 use App\User;
 use App\Salary;
+use App\ProjectCategory;
 
 use Auth;
 
@@ -41,28 +42,7 @@ class EnvironmentController extends Controller
 
     public function store(Request $request)
     {
-        $rules = array(
-            'title' => ['required', 'max:25'],
-            'description' => ['required', 'max:100']
-          );
-        $validator = Validator::make ( Input::all(), $rules);
-        if ($validator->fails()){
-            return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
-        }
-        else {
-            $user = Auth::User();
-            $environment = Environment::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'code' => Str::random(6),
-                'password' => Str::random(6),
-                'user_id' => $user->id
-            ]);
 
-            $user->coEnvironments()->attach($environment);
-
-            return redirect('environment/'.$environment->id);
-        }
     }
 
     public function show(Environment $environment)
@@ -71,7 +51,10 @@ class EnvironmentController extends Controller
         $this->authorize('view', $environment);
 
         $environment = Environment::find($environment->id);
-        $projects = Project::where('environment_id', $environment->id)->orderBy('initial_date', 'desc')->latest()->paginate(10);
+        $projects = Project::where('environment_id', $environment->id)
+        ->where('archived', false)
+        ->with('category')
+        ->orderBy('initial_date', 'desc')->latest()->paginate(10);
 
         $coUsers = User::whereHas('coEnvironments', function ($query) use ($environment) {
             $query->where('environment_id', '=', $environment->id);
@@ -82,6 +65,9 @@ class EnvironmentController extends Controller
         if( $environment->user->id === $user->id){
             $reports = Report::where('environment_id', $environment->id)->with('days')
             ->orderBy('created_at', 'desc')->get();
+
+            $project_categories = ProjectCategory::all();
+
         }else{
             $reports = Report::where('environment_id', $environment->id)->
             where('user_id', $user->id)->with('days')->orderBy('created_at', 'desc')->get();
@@ -97,7 +83,8 @@ class EnvironmentController extends Controller
         ->with(compact('environment'))
         ->with(compact('coUsers'))
         ->with(compact('projects'))
-        ->with(compact('reports'));
+        ->with(compact('reports'))
+        ->with(compact('project_categories'));
     }
 
     public function edit(Environment $environment)
@@ -137,7 +124,15 @@ class EnvironmentController extends Controller
                 'user_id' => $user->id
             ]);
 
-            $user->coEnvironments()->attach($environment);
+            /*
+            $join = $user->coEnvironments()->find($environment->id);
+            $join->pivot->administrator = true;
+            $join->pivot->save();
+            */
+            // or
+            //$user->coEnvironments()->updateExistingPivot($environment->id, ['administrator'=> true]);
+
+            $user->coEnvironments()->attach($environment, ['administrator' => 1]);
 
             return response()->json([
                 'environment' => $environment,
@@ -170,33 +165,32 @@ class EnvironmentController extends Controller
     return response()->json();
   }
 
-public function join (Request $request){
-    $this->validate($request ,[
-        'code' => 'required',
-        'password' => 'required'
-    ]);
-
-    $user = Auth::User();
-    $environment = Environment::where('code', '=', $request->code)->where('password', '=', $request->password)->first();
-
-    if(isset($environment))
-    {
-        $user->coEnvironments()->attach($environment);
-
-        $salary = Salary::create([
-            'environment_id' => $environment->id,
-            'user_id' => $user->id
+    public function join (Request $request){
+        $this->validate($request ,[
+            'code' => 'required',
+            'password' => 'required'
         ]);
 
-        return response()->json([
-            'environment' => $environment,
-            'url' => $environment->url,
-            'user' => $environment->user
-        ]);
+        $user = Auth::User();
+        $environment = Environment::where('code', '=', $request->code)->where('password', '=', $request->password)->first();
 
-        return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
+        if(isset($environment))
+        {
+            $user->coEnvironments()->attach($environment);
+
+            $salary = Salary::create([
+                'environment_id' => $environment->id,
+                'user_id' => $user->id
+            ]);
+
+            return response()->json([
+                'environment' => $environment,
+                'url' => $environment->url,
+                'user' => $environment->user
+            ]);
+
+            return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
+        }
     }
-
-}
 
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEnvironmentsTable extends Migration
+class CreateProductivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateEnvironmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('environments', function (Blueprint $table) {
+        Schema::create('productivities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->mediumText('description');
-            $table->string('code');
-            $table->string('password');
+            $table->bigInteger('environment_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
-            $table->timestamps();
+            $table->float('productivity', 2, 2)->default(0);
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('environment_id')->references('id')->on('environments')->onDelete('cascade');
+
+            $table->timestamps();
         });
     }
 
@@ -33,10 +33,6 @@ class CreateEnvironmentsTable extends Migration
      */
     public function down()
     {
-        Schema::disableForeignKeyConstraints();
-
-        Schema::dropIfExists('environments');
-
-        Schema::enableForeignKeyConstraints();
+        Schema::dropIfExists('productivities');
     }
 }

@@ -6,7 +6,6 @@ use Auth;
 use App\Environment;
 use App\Project;
 use App\Report;
-use App\Post;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -26,10 +25,7 @@ class HomeController extends Controller
             $query->where('user_id', '=', $user->id);
         })->latest()->paginate(10);
 
-        $post = Post::paginate(20);
-
         return view('home')
-        ->with(compact('environments'))
-        ->with(compact('post'));
+        ->with(compact('environments'));
     }
 }

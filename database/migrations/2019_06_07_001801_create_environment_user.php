@@ -17,6 +17,7 @@ class CreateEnvironmentUser extends Migration
             //$table->bigIncrements('id');
             $table->bigInteger('environment_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
+            $table->boolean('administrator')->default(false);
             $table->timestamps();
 
             $table->primary(['environment_id', 'user_id']);

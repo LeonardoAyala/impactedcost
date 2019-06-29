@@ -14,7 +14,9 @@ class Environment extends Model
 
     public function coUsers()
     {
-        return $this->belongsToMany(User::class, 'environment_user', 'environment_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'environment_user', 'environment_id', 'user_id')
+        ->withPivot('administrator')
+        ->withTimestamps();
     }
 
     public function projects(){

@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        /*
         factory(App\User::class, 3)->create()->each(function($user){
             $user->environments()
             ->saveMany(
@@ -31,7 +32,7 @@ class DatabaseSeeder extends Seeder
 
             );
         });
-
-        // $this->call(UsersTableSeeder::class);
+*/
+        $this->call(ProjectCategorySeeder::class);
     }
 }
