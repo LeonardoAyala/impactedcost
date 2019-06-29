@@ -12,8 +12,8 @@ class Project extends Model
         return $this->belongsTo(Environment::class);
     }
 
-    public function reports(){
-        return $this->hasMany(Report::class);
+    public function days(){
+        return $this->hasMany(Day::class);
     }
 
     public function category(){
@@ -32,5 +32,23 @@ class Project extends Model
         return url('environment/'.$environment->id.'/project/'.$this->id);
     }
 
+
+    public function getImpactedcostAttribute(){
+
+        $days = $this->days;
+        $amount = 0.00;
+        foreach($days as $day){
+            $amount += ($day->hours)*($day->report->user->latestSalary->first()->amount);
+        }
+
+        return number_format((float)$amount, 2, '.', '');
+    }
+
+    public function getTotalhoursAttribute(){
+
+        $amount = $this->days->sum('hours');
+
+        return $amount;
+    }
 
 }

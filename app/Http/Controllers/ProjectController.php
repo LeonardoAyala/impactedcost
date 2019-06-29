@@ -128,6 +128,7 @@ class ProjectController extends Controller
         $project->project_category_id = $request->project_category_id;
         $project->description = $request->description;
         $project->code = $request->code;
+        $project->expected_budget = $request->expected_budget;
         $project->initial_date = date('Y/m/d', $date);
         $project->save();
 
@@ -144,5 +145,4 @@ class ProjectController extends Controller
         $project->save();
         return response()->json();
       }
-
 }

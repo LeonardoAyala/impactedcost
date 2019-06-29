@@ -19,6 +19,7 @@ use App\Report;
 use App\User;
 use App\Salary;
 use App\ProjectCategory;
+use App\Productivity;
 
 use Auth;
 
@@ -52,7 +53,7 @@ class EnvironmentController extends Controller
 
         $environment = Environment::find($environment->id);
         $projects = Project::where('environment_id', $environment->id)
-        ->where('archived', false)
+        ->where('archived', 0)
         ->with('category')
         ->orderBy('initial_date', 'desc')->latest()->paginate(10);
 
@@ -124,6 +125,15 @@ class EnvironmentController extends Controller
                 'user_id' => $user->id
             ]);
 
+            $salary = Salary::create([
+                'environment_id' => $environment->id,
+                'user_id' => $user->id
+            ]);
+
+            $productivity = Productivity::create([
+                'environment_id' => $environment->id,
+                'user_id' => $user->id
+            ]);
             /*
             $join = $user->coEnvironments()->find($environment->id);
             $join->pivot->administrator = true;
@@ -179,6 +189,11 @@ class EnvironmentController extends Controller
             $user->coEnvironments()->attach($environment);
 
             $salary = Salary::create([
+                'environment_id' => $environment->id,
+                'user_id' => $user->id
+            ]);
+
+            $productivity = Productivity::create([
                 'environment_id' => $environment->id,
                 'user_id' => $user->id
             ]);

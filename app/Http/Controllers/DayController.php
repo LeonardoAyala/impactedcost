@@ -114,8 +114,19 @@ class DayController extends Controller
 
     public function select(Request $request)
     {
+        $initial_date = Carbon::parse($request->initial_date);
+
+        $length = -1;
+        if($initial_date->isPast()){
+            $start_week = $initial_date->startOfWeek();
+
+            $now = Carbon::now();
+
+            $length = $start_week->diffInDays($now);
+        }
+
         return response()->json([
-            'day' => '1',
+            'day_index' => $length,
         ]);
     }
 

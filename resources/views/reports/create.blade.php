@@ -59,7 +59,7 @@
                     </div>
                 </div>
 
-                <br>
+                <br class="date_required card_day0">
 
                 <div class="card date_required card_day1">
                     <div class="card-header">Martes</div>
@@ -87,7 +87,7 @@
                     </div>
                 </div>
 
-                <br>
+                <br class="date_required card_day1">
 
                 <div class="card date_required card_day2">
                     <div class="card-header">Miércoles</div>
@@ -115,7 +115,7 @@
                     </div>
                 </div>
 
-                <br>
+                <br class="date_required card_day2">
 
                 <div class="card date_required card_day3">
                     <div class="card-header">Jueves</div>
@@ -143,7 +143,7 @@
                     </div>
                 </div>
 
-                <br>
+                <br class="date_required card_day3">
 
                 <div class="card date_required card_day4">
                     <div class="card-header">Viernes</div>
@@ -171,7 +171,7 @@
                     </div>
                 </div>
 
-                <br>
+                <br class="date_required card_day4">
 
                 <div class="card date_required card_day5">
                     <div class="card-header">Sábado</div>
@@ -199,7 +199,7 @@
                     </div>
                 </div>
 
-                <br>
+                <br class="date_required card_day5">
 
                 <div class="card date_required card_day6">
                     <div class="card-header">Domingo</div>
@@ -227,9 +227,9 @@
                     </div>
                 </div>
 
-                <br>
+                <br class="date_required card_day6">
 
-                <button type="submit" class="btn btn-primary date_required card_day7" id="submit_report">
+                <button type="submit" class="btn btn-primary date_required submit_day" id="submit_report">
                         Subir reporte
                 </button>
 
@@ -426,7 +426,40 @@ $(document).on('click', '#submit_report', function () {
                 }
                 else
                 {
-                    $('.date_required').show();
+                    if(data.day_index == -1){
+                        alert('Por favor, inserte una fecha que ya haya llegado.');
+                    }else{
+                        $('.submit_day').show();
+
+                        if(data.day_index > -1){
+                            $('.card_day0').show();
+                        }
+
+                        if(data.day_index > 0){
+                            $('.card_day1').show();
+                        }
+
+                        if(data.day_index > 1){
+                            $('.card_day2').show();
+                        }
+
+                        if(data.day_index > 2){
+                            $('.card_day3').show();
+                        }
+
+                        if(data.day_index > 3){
+                            $('.card_day4').show();
+                        }
+
+                        if(data.day_index > 4){
+                            $('.card_day5').show();
+                        }
+
+                        if(data.day_index > 5){
+                            $('.card_day6').show();
+                        }
+
+                    }
                 }
 
             }
@@ -497,7 +530,7 @@ $(document).on('click', '#submit_report', function () {
         $('.actionBtn').addClass('btn-primary');
         $('.actionBtn').removeClass('btn-outline-primary');
         $('.actionBtn').addClass('edit');
-        $('.modal-title').text('Editar proyecto');
+        $('.modal-title').text('Editar día');
         $('.deleteContent').hide();
         $('.form-horizontal').show();
         $('.projectId').val($(this).data('project'));

@@ -174,7 +174,7 @@
                                     <th>Código</th>
                                     <th>Nombre</th>
                                     <th>Categoría</th>
-                                    <th>Fecha de inicio</th>
+                                    <th>Costo impactado</th>
                                     @if( Auth::User()->id === $environment->user_id)
                                     <th class="text-center" width="130">
                                         <a href="#" class="create-modal-project btn btn-success btn-sm">
@@ -190,7 +190,7 @@
                                     <td>{{ $project->code}}</td>
                                     <td><a href="{{ $project->url }}">{{ $project->title }}</a></td>
                                     <td>{{ $project->category->name }}</td>
-                                    <td>{{ $project->initial_date }}</td>
+                                    <td>{{ $project->impactedcost }}</td>
                                     @if( Auth::User()->id === $environment->user_id)
                                     <td>
                                         <a href="#" class="show-modal-project btn btn-info btn-sm"
@@ -199,6 +199,7 @@
                                             data-description="{{$project->description}}"
                                             data-projectcategoryid="{{ $project->project_category_id}}"
                                             data-projectcategory="{{$project->category->name}}"
+                                            data-budget="{{$project->expected_budget}}"
                                             data-initialdate="{{$project->initial_date}}">
                                             <i class="fa fa-eye"></i>
                                         </a>
@@ -206,15 +207,14 @@
                                             data-id="{{$project->id}}" data-code="{{$project->code}}"
                                             data-title="{{$project->title}}"
                                             data-projectcategoryid="{{ $project->project_category_id}}"
+                                            data-budget="{{$project->expected_budget}}"
                                             data-description="{{$project->description}}"
                                             data-initialdate="{{$project->initial_date}}">
                                             <i class="fa fa-pencil-ruler"></i>
                                         </a>
                                         <a href="#" class="delete-modal-project btn btn-danger btn-sm"
                                             data-id="{{$project->id}}" data-code="{{$project->code}}"
-                                            data-title="{{$project->title}}"
-                                            data-description="{{$project->description}}"
-                                            data-initialdate="{{$project->initial_date}}">
+                                            data-title="{{$project->title}}">
                                             <i class="fa fa-trash"></i>
                                         </a>
                                     </td>
@@ -285,7 +285,7 @@
                                 <div class="form-group row">
                                         <label class="control-label col-sm-3" for="body">Presupuesto</label>
                                         <div class="col-sm-9">
-                                            <input type="number" min="0.00" step="1000.00" max="50000" value="00.00"
+                                            <input type="number" min="0.00" step="1000.00" max="50000000" value="00.00"
                                                 id="cProy_budget" />
                                         </div>
                                     </div>
@@ -351,6 +351,11 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="">Presupuesto estimado :</label>
+                            <label id="sProj_budget" />
+                        </div>
+
+                        <div class="form-group">
                             <label for="">Fecha inicial :</label>
                             <label id="sProj_initialdate" />
                         </div>
@@ -387,6 +392,22 @@
                                     <input type="name" class="form-control" id="eProj_title">
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+
+                                <label for="saturday_project" class="col-md-3 col-form-label">Categoría</label>
+
+                                <div class="col-md-7">
+                                    <select id="eProj_category_id" class=" form-control" name="project_category">
+                                        <option value="0">--Elija una categoria--</option>
+
+                                        @foreach($project_categories as $project_category)
+                                        <option value="{{$project_category->id}}">{{ $project_category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <label class="control-label col-sm-3" for="body">Descripción</label>
                                 <div class="col-sm-9">
@@ -394,19 +415,11 @@
                                 </div>
                             </div>
 
-
                             <div class="form-group row">
-
-                                <label for="saturday_project" class="col-md-3 col-form-label">Categoría</label>
-
-                                <div class="col-md-7">
-                                    <select id="project_category_id_ed" class=" form-control" name="project_category">
-                                        <option value="0">--Elija una categoria--</option>
-
-                                        @foreach($project_categories as $project_category)
-                                        <option value="{{$project_category->id}}">{{ $project_category->name }}</option>
-                                        @endforeach
-                                    </select>
+                                <label class="control-label col-sm-3" for="body">Presupuesto</label>
+                                <div class="col-sm-9">
+                                    <input type="number" min="0.00" step="1000.00" max="50000000" value="00.00"
+                                        id="eProj_budget" />
                                 </div>
                             </div>
 
@@ -598,11 +611,15 @@
 
 @section('scripts')
 <script type="text/javascript">
+
+    //Create project modal.
     $(document).on('click', '.create-modal-project', function () {
         $('#create-project').modal('show');
         $('.form-horizontal').show();
         $('.modal-title').text('Crear proceso');
     });
+
+    //Create project POST request.
     $("#add").click(function () {
         $.ajax({
             type: 'POST',
@@ -629,7 +646,7 @@
                         "<td><a href='" + data.url + "'>" + data.project.title +
                         "</a></td>" +
                         "<td>" + data.project_category.name + "</td>" +
-                        "<td>" + data.project.initial_date + "</td>" +
+                        "<td>" + "0.00" + "</td>" +
                         "<td><button class='show-modal-project btn btn-info btn-sm' data-id='" +
                         data.project.id + "' data-code='" + data.project.code +
                         "' data-title='" + data.project.title +
@@ -644,7 +661,6 @@
                         "' data-title='" + data.project.title +
                         "' data-description='" + data.project.description +
                         "' data-projectcategoryid='" + data.project_category.id +
-                        "' data-projectcategory='" + data.project_category.name +
                         "' data-budget='" + data.project.expected_budget +
                         "' data-initialdate='" + data.project.initial_date +
                         "'><span class='fa fa-pencil-ruler'></span></button> " +
@@ -664,7 +680,7 @@
         $('#cProy_budget').val(0);
     });
 
-    // function Edit POST
+    // Edit Project modal.
     $(document).on('click', '.edit-modal-project', function () {
         $('#footer_action_button').text("Editar");
         $('#footer_action_button').addClass('glyphicon-check');
@@ -680,7 +696,8 @@
         $('#eProj_description').val($(this).data('description'));
         $('#eProj_code').val($(this).data('code'));
         $('#eProj_initialdate').val($(this).data('initialdate'));
-        $('#project_category_id_ed').val($(this).data('projectcategoryid'));
+        $('#eProj_category_id').val($(this).data('projectcategoryid'));
+        $('#eProj_budget').val($(this).data('budget'));
         $('#editdelete-project').modal('show');
     });
 
@@ -694,7 +711,9 @@
                 'title': $('#eProj_title').val(),
                 'description': $('#eProj_description').val(),
                 'code': $('#eProj_code').val(),
-                'initial_date': $('#eProj_initialdate').val()
+                'initial_date': $('#eProj_initialdate').val(),
+                'project_category_id': $('#eProj_category_id').val(),
+                'expected_budget': $('#eProj_budget').val(),
             },
             success: function (data) {
 
@@ -702,25 +721,28 @@
                     "<tr class='project" + data.project.id + "'>" +
                     "<td>" + data.project.code + "</td>" +
                     "<td><a href='" + data.url + "'>" + data.project.title + "</a></td>" +
-                    "<td>" + data.project.description + "</td>" +
-                    "<td>" + data.project.initial_date + "</td>" +
+                    "<td>" + data.project_category.name + "</td>" +
+                    "<td>" + "0.00" + "</td>" +
                     "<td><button class='show-modal-project btn btn-info btn-sm' data-id='" +
                     data.project.id + "' data-code='" + data.project.code +
                     "' data-title='" + data.project.title +
                     "' data-description='" + data.project.description +
+                    "' data-projectcategoryid='" + data.project_category.id +
+                    "' data-projectcategory='" + data.project_category.name +
+                    "' data-budget='" + data.project.expected_budget +
                     "' data-initialdate='" + data.project.initial_date +
                     "'><span class='fa fa-eye'></span></button> " +
                     "<button class='edit-modal-project btn btn-warning btn-sm' data-id='" +
                     data.project.id + "' data-code='" + data.project.code +
                     "' data-title='" + data.project.title +
                     "' data-description='" + data.project.description +
+                    "' data-projectcategoryid='" + data.project_category.id +
+                    "' data-budget='" + data.project.expected_budget +
                     "' data-initialdate='" + data.project.initial_date +
                     "'><span class='fa fa-pencil-ruler'></span></button> " +
                     "<button class='delete-modal-project btn btn-danger btn-sm' data-id='" +
                     data.project.id + "' data-code='" + data.project.code +
                     "' data-title='" + data.project.title +
-                    "' data-description='" + data.project.description +
-                    "' data-initialdate='" + data.project.initial_date +
                     "'><span class='fa fa-trash'></span></button></td>" +
                     "</tr>");
             }
@@ -743,6 +765,7 @@
         $('#editdelete-project').modal('show');
     });
 
+    //Delete project modal POST request.
     $('.modal-footer').on('click', '.delete', function () {
         $.ajax({
             type: 'POST',
@@ -757,13 +780,14 @@
         });
     });
 
-    // Show function
+    //Show project modal.
     $(document).on('click', '.show-modal-project', function () {
         $('#show-project').modal('show');
         $('#sProj_id').text($(this).data('id'));
         $('#sProj_title').text($(this).data('title'));
         $('#sProj_category').text($(this).data('projectcategory'));
         $('#sProj_description').text($(this).data('description'));
+        $('#sProj_budget').text("$" + $(this).data('budget'));
         $('#sProj_code').text($(this).data('code'));
         $('#sProj_initialdate').text($(this).data('initialdate'));
         $('.modal-title').text('Información');
