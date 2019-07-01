@@ -63,11 +63,11 @@ class EnvironmentController extends Controller
 
         $user = Auth::User();
 
+        $project_categories = ProjectCategory::all();
+
         if( $environment->user->id === $user->id){
             $reports = Report::where('environment_id', $environment->id)->with('days')
             ->orderBy('created_at', 'desc')->get();
-
-            $project_categories = ProjectCategory::all();
 
         }else{
             $reports = Report::where('environment_id', $environment->id)->

@@ -32,7 +32,6 @@ class Project extends Model
         return url('environment/'.$environment->id.'/project/'.$this->id);
     }
 
-
     public function getImpactedcostAttribute(){
 
         $days = $this->days;
