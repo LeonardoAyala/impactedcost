@@ -31,5 +31,9 @@ class ProjectCategorySeeder extends Seeder
         $project_category = new ProjectCategory();
         $project_category->name = 'Estándares';
         $project_category->save();
+
+        $project_category = new ProjectCategory();
+        $project_category->name = 'Servicios';
+        $project_category->save();
     }
 }

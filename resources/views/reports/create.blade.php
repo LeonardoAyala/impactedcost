@@ -16,8 +16,14 @@
 
                     <input type="hidden" id="reportId" name="report_id" value="{{$report->id}}">
 
+                    <p class="col-form-label">Elija cualquier día que pertenezca a la semana a reportar.</p>
+
+
+
                     <div class="form-group row">
                         <label for="date" class="col-md-2 col-form-label text-md-right">Semana</label>
+
+
 
                         <div class="col-md-6">
                             <input id="date" type="text" class="week-picker @error('date') is-invalid @enderror" name="date"
@@ -260,7 +266,7 @@
                                                 <option value="0">--Elija un proyecto--</option>
 
                                                 @foreach($projects as $project)
-                                                <option value="{{$project->id}}">{{ $project->title }}</option>
+                                                <option value="{{$project->id}}">{{ $project->title }} ({{$project->category->name}})</option>
                                                 @endforeach
                                             </select>
 
@@ -327,7 +333,7 @@
                                                 <option value="0">--Elija un proyecto--</option>
 
                                                 @foreach($projects as $project)
-                                                <option value="{{$project->id}}">{{ $project->title }}</option>
+                                                <option value="{{$project->id}}">{{ $project->title }} ({{$project->category->name}})</option>
                                                 @endforeach
                                             </select>
 
