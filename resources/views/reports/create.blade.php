@@ -16,7 +16,7 @@
 
                     <input type="hidden" id="reportId" name="report_id" value="{{$report->id}}">
 
-                    <p class="col-form-label">Elija cualquier día que pertenezca a la semana a reportar.</p>
+                    <p class="col-form-label" style="padding-left: 40px; padding-bottom: 20px;">Elija cualquier día que pertenezca a la semana a reportar.</p>
 
 
 

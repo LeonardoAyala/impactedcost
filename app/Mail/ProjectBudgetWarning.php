@@ -28,6 +28,6 @@ class ProjectBudgetWarning extends Mailable
      */
     public function build()
     {
-        return $this->markdown(''mail.project-budget-warning'');
+        return $this->markdown('mail.project-budget-warning');
     }
 }

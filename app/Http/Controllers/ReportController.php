@@ -55,7 +55,11 @@ class ReportController extends Controller
                 $report->active = true;
                 $report->save();
             }
-
+/*
+            /Mail::to()->send{
+                new ProjectCreated();
+            }
+*/
             return redirect('environment/'.$report->environment->id);
 
         }
