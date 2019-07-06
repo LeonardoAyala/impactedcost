@@ -20,6 +20,13 @@ class Project extends Model
         return $this->hasOne(ProjectCategory::class, 'id', 'project_category_id');
     }
 
+    /*
+    public function days(){
+
+    }
+
+*/
+
     public function getDateAttribute(){
         $date = \Carbon\Carbon::parse($this->initial_date)->format('d/m/Y');
         return $date;

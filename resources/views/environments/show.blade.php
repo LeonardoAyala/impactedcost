@@ -127,13 +127,14 @@
                                 <tr class="coUser{{$coUser->id}}">
                                     <td>{{ $coUser->name}}</td>
                                     <td>{{ $coUser->email}}</td>
-                                    <td>{{ $coUser->salary }}</td>
+                                    <td>{{ $coUser->getEnvironmentSalary($environment->id) }}</td>
                                     <td>{{ $coUser->productivity }}%</td>
 
                                     @if( Auth::User()->id === $environment->user_id)
                                     <td>
                                         <a href="#" class="show-modal-users btn btn-info btn-sm"
                                             data-id="{{$coUser->id}}" data-name="{{$coUser->name}}"
+                                            data-salary="{{ $coUser->getEnvironmentSalary($environment->id)}}"
                                             data-email="{{$coUser->email}}">
                                             <i class="fa fa-eye"></i>
                                         </a>
@@ -531,7 +532,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn actionBtn" data-dismiss="modal">
-                            <span id="footer_action_button" class="glyphicon"></span>
+                            <span id="footer_action_button_users" class="glyphicon"></span>
                         </button>
                         <button type="button" class="btn btn-warning" data-dismiss="modal">
                             <span class="glyphicon glyphicon"></span>Cancelar
@@ -683,8 +684,6 @@
     // Edit Project modal.
     $(document).on('click', '.edit-modal-project', function () {
         $('#footer_action_button').text("Editar");
-        $('#footer_action_button').addClass('glyphicon-check');
-        $('#footer_action_button').removeClass('glyphicon-trash');
         $('.actionBtn').addClass('btn-primary');
         $('.actionBtn').removeClass('btn-outline-primary');
         $('.actionBtn').addClass('edit');
@@ -808,9 +807,7 @@
 
     // function Edit POST
     $(document).on('click', '.edit-modal-users', function () {
-        $('#footer_action_button').text("Editar");
-        $('#footer_action_button').addClass('glyphicon-check');
-        $('#footer_action_button').removeClass('glyphicon-trash');
+        $('#footer_action_button_users').text("Editar");
         $('.actionBtn').addClass('btn-primary');
         $('.actionBtn').removeClass('btn-outline-primary');
         $('.actionBtn').addClass('edit');
@@ -872,9 +869,7 @@
 
     // form Delete function
     $(document).on('click', '.delete-modal-users', function () {
-        $('#footer_action_button').text("Eliminar");
-        $('#footer_action_button').removeClass('glyphicon-check');
-        $('#footer_action_button').addClass('glyphicon-trash');
+        $('#footer_action_button_users').text("Eliminar");
         $('.actionBtn').removeClass('btn-success');
         $('.actionBtn').addClass('btn-danger');
         $('.actionBtn').addClass('delete');
