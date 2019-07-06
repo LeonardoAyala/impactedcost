@@ -23,8 +23,6 @@
                     <div class="form-group row">
                         <label for="date" class="col-md-2 col-form-label text-md-right">Semana</label>
 
-
-
                         <div class="col-md-6">
                             <input id="date" type="text" class="week-picker @error('date') is-invalid @enderror" name="date"
                                 value="{{ old('date') }}" required autocomplete="off">

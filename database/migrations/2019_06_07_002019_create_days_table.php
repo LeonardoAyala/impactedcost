@@ -15,11 +15,17 @@ class CreateDaysTable extends Migration
     {
         Schema::create('days', function (Blueprint $table) {
             $table->bigIncrements('id');
+
             $table->date('date');
-            $table->bigInteger('project_id')->unsigned()->nullable();
+
             $table->integer('hours')->unsigned();
             $table->text('description')->nullable();
+
+            $table->bigInteger('project_id')->unsigned()->nullable();
             $table->bigInteger('report_id')->unsigned();
+
+            $table->boolean('active')->default(true);
+
             $table->timestamps();
 
             $table->foreign('report_id')->references('id')->on('reports')->onDelete('cascade');

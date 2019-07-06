@@ -9,6 +9,8 @@ use App\Project;
 use App\Report;
 use App\Day;
 
+use App\Mail\ProjectBudgetWarning;
+
 use Auth;
 
 class ReportController extends Controller
@@ -55,11 +57,14 @@ class ReportController extends Controller
                 $report->active = true;
                 $report->save();
             }
-/*
-            /Mail::to()->send{
-                new ProjectCreated();
+
+
+            /*
+            Mail::to($environment->user->email)->send{
+                new ProjectBudgetWarning($);
             }
-*/
+            */
+
             return redirect('environment/'.$report->environment->id);
 
         }
