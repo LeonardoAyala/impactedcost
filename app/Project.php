@@ -44,7 +44,7 @@ class Project extends Model
         $days = $this->days;
         $amount = 0.00;
         foreach($days as $day){
-            $amount += ($day->hours)*($day->report->user->latestSalary->first()->amount);
+            $amount += ($day->hours)*($day->report->user->salaries()->latest()->first()->amount);
         }
 
         return number_format((float)$amount, 2, '.', '');

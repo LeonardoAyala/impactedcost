@@ -38,20 +38,8 @@ class User extends Authenticatable
         return $this->hasMany(Salary::class);
     }
 
-    //Magic attributes
-
-    public function latestSalary(){
-        return $this->salaries()->latest();
-    }
-
-    //Integrated gets
-
-
-    public function getEnvironmentSalary($environment_id){
-
-        $salary = $this->salaries()->where('environment_id', $environment_id)->latest()->first();
-
-        return $salary->amount;
+    public function days($environment_id){
+        return $this->hasManyThrough(Day::class, Report::class)->where('environment_id', $environment_id);
     }
 
     public function coEnvironments(){
@@ -60,35 +48,10 @@ class User extends Authenticatable
         ->withTimestamps();
     }
 
+    //Magic attributes
+
     public function getUrlAttribute(){
         return route("user.show", $this->id);
-    }
-
-    public function getSalaryAttribute(){
-        $latest = $this->latestSalary()->first();
-
-        if(!$latest){
-            return null;
-        }
-        else{
-            return $latest->amount;
-        }
-
-    }
-
-    public function getProductivityAttribute(){
-
-        $weeks = $this->reports->count();
-
-        $total_hours = $this->total_hours;
-
-        if($total_hours <= 0){
-            $amount = 0;
-        } else{
-            $amount = (($total_hours)/(48 * $weeks))*100;
-        }
-
-        return number_format((float)$amount, 2, '.', '');
     }
 
     public function getTotalHoursAttribute(){
@@ -96,10 +59,60 @@ class User extends Authenticatable
         $hours = 0;
 
         foreach($this->reports as $report){
-
-                $hours += $report->totalhours;
+                $hours += $report->total_hours;
         }
 
         return $hours;
     }
+
+    //Integrated gets
+
+    public function getEnvironmentSalary($environment_id){
+
+        $salary = $this->salaries()->where('environment_id', $environment_id)->latest()->first();
+
+        return $salary->amount;
+    }
+
+    public function getEnvironmentHours($environment_id){
+
+        $hours = $this->days($environment_id)->sum('hours');
+
+        $users = User::select('name')->distinct()->get();
+
+        return $hours;
+    }
+
+    public function getEnvironmentRealProductivity($environment_id){
+
+        $days = $this->days($environment_id);
+
+        $hours = $days->sum('hours');
+
+        $distinct_days = $days->select('date')->distinct()->count();
+
+        if($hours <= 0){
+            $amount = 0;
+        } else{
+            $amount = (($hours)/(8 * $distinct_days))*100;
+        }
+
+        return number_format((float)$amount, 2, '.', '');
+    }
+
+    public function getEnvironmentPartialProductivity($environment_id){
+
+        $hours = $this->days($environment_id)->sum('hours');
+
+        $weeks = $this->reports->count();
+
+        if($hours <= 0){
+            $amount = 0;
+        } else{
+            $amount = (($hours)/(48 * $weeks))*100;
+        }
+
+        return number_format((float)$amount, 2, '.', '');
+    }
+
 }

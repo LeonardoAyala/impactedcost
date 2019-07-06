@@ -8,7 +8,11 @@ use Carbon\Carbon;
 
 class Report extends Model
 {
+    //Formalities
+
     protected $guarded = [];
+
+    //Relationships
 
     public function user() {
         return $this->belongsTo(User::class);
@@ -22,7 +26,9 @@ class Report extends Model
         return $this->hasMany(Day::class);
     }
 
-    public function getTotalhoursAttribute(){
+    //Magic Attributes
+
+    public function getTotalHoursAttribute(){
 
         $amount = $this->days->sum('hours');
 
@@ -31,7 +37,7 @@ class Report extends Model
 
     public function getProductivityAttribute(){
 
-        $amount = (($this->totalhours)/48)*100;
+        $amount = (($this->total_hours)/48)*100;
 
 
         return number_format((float)$amount, 2, '.', '');
@@ -48,7 +54,19 @@ class Report extends Model
 
     public function getImpactedcostAttribute(){
 
-        $amount = ($this->totalhours)*($this->user->latestSalary->first()->amount);
+        $end_date = Carbon::parse($this->initial_date);
+        $end_date = $end_date->copy()->add( 6, 'day');
+
+        $end_date = strtotime($end_date);
+
+        $amount = $this->user->salaries()->whereDate('created_at', '<=', date('Y/m/d', $end_date))
+        ->latest()->first()->amount;
+
+        if(empty($amount)){
+            $amount = 0;
+        }
+
+        $amount = ($this->total_hours)*($this->user->salaries()->latest()->first()->amount);
 
         return number_format((float)$amount, 2, '.', '');
     }

@@ -65,13 +65,13 @@
                                 <tr class="report{{$report->id}}">
                                     <td>{{ $report->user->name}}</td>
                                     <td>{{ $report->created_read }}</td>
-                                    <td>{{ $report->totalhours }}</td>
+                                    <td>{{ $report->total_hours }}</td>
                                     <td>{{ $report->productivity }}%</td>
                                     <td>${{ $report->impactedcost }}</td>
                                     <td>
                                         <a href="#" class="show-modal-report btn btn-info btn-sm"
                                             data-id="{{$report->id}}" data-name="{{$report->user->name}}"
-                                            data-email="{{$report->totalhours}}">
+                                            data-email="{{$report->total_hours}}">
                                             <i class="fa fa-eye"></i>
                                         </a>
                                     </td>
@@ -128,7 +128,7 @@
                                     <td>{{ $coUser->name}}</td>
                                     <td>{{ $coUser->email}}</td>
                                     <td>{{ $coUser->getEnvironmentSalary($environment->id) }}</td>
-                                    <td>{{ $coUser->productivity }}%</td>
+                                    <td>{{ $coUser->getEnvironmentPartialProductivity($environment->id) }}%</td>
 
                                     @if( Auth::User()->id === $environment->user_id)
                                     <td>

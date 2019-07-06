@@ -106,14 +106,22 @@ class ReportController extends Controller
 
         $date = strtotime($request->initial_date);
 
+        $end_date = Carbon::parse($request->initial_date)->startOfWeek();
+        $end_date = $end_date->copy()->add( 6, 'day');
+
+        $end_date = strtotime($end_date);
+
         $user = Auth::User();
         $project = Project::create([
             'title' => $request->title,
             'description' => $request->description,
             'code' => $request->code,
             'initial_date' => date('Y/m/d', $date),
+            'final_date' => date('Y/m/d', $end_date),
             'environment_id' => $request->environment_id
         ]);
+
+
 
         return response()->json([
             'project' => $project,
