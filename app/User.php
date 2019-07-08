@@ -71,7 +71,13 @@ class User extends Authenticatable
 
         $salary = $this->salaries()->where('environment_id', $environment_id)->latest()->first();
 
-        return $salary->amount;
+        if(isset($salary)){
+            $amount = $salary->amount;
+        } else{
+            $amount = 0;
+        }
+
+        return $amount;
     }
 
     public function getEnvironmentHours($environment_id){
