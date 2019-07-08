@@ -16,7 +16,7 @@
 
             <br>
 
-            @if( Auth::User()->id === $environment->user_id)
+            @if( $admin === true)
             <div class="card">
                 <div class="card-header">Credenciales</div>
 
@@ -98,7 +98,7 @@
 
             <br>
 
-            @if( Auth::User()->id === $environment->user_id)
+            @if( $admin === true)
 
             <div class="card">
                 <div class="card-header">Colaboradores</div>
@@ -130,7 +130,7 @@
                                     <td>{{ $coUser->getEnvironmentSalary($environment->id) }}</td>
                                     <td>{{ $coUser->getEnvironmentPartialProductivity($environment->id) }}%</td>
 
-                                    @if( Auth::User()->id === $environment->user_id)
+                                    @if( $admin === true)
                                     <td>
                                         <a href="#" class="show-modal-users btn btn-info btn-sm"
                                             data-id="{{$coUser->id}}" data-name="{{$coUser->name}}"
@@ -176,7 +176,7 @@
                                     <th>Nombre</th>
                                     <th>Categoría</th>
                                     <th>Costo impactado</th>
-                                    @if( Auth::User()->id === $environment->user_id)
+                                    @if( $admin === true)
                                     <th class="text-center" width="130">
                                         <a href="#" class="create-modal-project btn btn-success btn-sm">
                                             <i class="fas fa-plus"></i>
@@ -192,7 +192,7 @@
                                     <td><a href="{{ $project->url }}">{{ $project->title }}</a></td>
                                     <td>{{ $project->category->name }}</td>
                                     <td>{{ $project->impactedcost }}</td>
-                                    @if( Auth::User()->id === $environment->user_id)
+                                    @if( $admin === true)
                                     <td>
                                         <a href="#" class="show-modal-project btn btn-info btn-sm"
                                             data-id="{{$project->id}}" data-code="{{$project->code}}"

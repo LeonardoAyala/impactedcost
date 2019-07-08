@@ -51,6 +51,8 @@ class EnvironmentController extends Controller
 
         $this->authorize('view', $environment);
 
+        $user = Auth::User();
+
         $environment = Environment::find($environment->id);
         $projects = Project::where('environment_id', $environment->id)
         ->where('archived', 0)
@@ -61,11 +63,19 @@ class EnvironmentController extends Controller
             $query->where('environment_id', '=', $environment->id);
         })->latest()->paginate(10);
 
-        $user = Auth::User();
+        $relationship = $environment->coUsers()->wherePivot('administrator', 1)
+        ->where('user_id', '=', $user->id)->get();
+
+        if(isset($relationship)){
+            $admin = true;
+        }
+        else{
+            $admin = false;
+        }
 
         $project_categories = ProjectCategory::all();
 
-        if( $environment->user->id === $user->id){
+        if( $admin === true){
             $reports = Report::where('environment_id', $environment->id)->with('days')
             ->orderBy('created_at', 'desc')->get();
 
@@ -85,7 +95,8 @@ class EnvironmentController extends Controller
         ->with(compact('coUsers'))
         ->with(compact('projects'))
         ->with(compact('reports'))
-        ->with(compact('project_categories'));
+        ->with(compact('project_categories'))
+        ->with(compact('admin'));
     }
 
     public function edit(Environment $environment)
