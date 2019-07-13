@@ -59,7 +59,7 @@ class Report extends Model
 
         $end_date = strtotime($end_date);
 
-        */
+        /*
         $amount = $this->user->salaries()->whereDate('created_at', '<=', date('Y/m/d', $end_date))
         ->latest()->first()->amount;
 */
