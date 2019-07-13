@@ -59,14 +59,17 @@ class Report extends Model
 
         $end_date = strtotime($end_date);
 
+        */
         $amount = $this->user->salaries()->whereDate('created_at', '<=', date('Y/m/d', $end_date))
         ->latest()->first()->amount;
-
+*/
         if(empty($amount)){
             $amount = 0;
         }
+        else{
+            $amount = ($this->total_hours)*($this->user->salaries()->latest()->first()->amount);
+        }
 
-        $amount = ($this->total_hours)*($this->user->salaries()->latest()->first()->amount);
 
         return number_format((float)$amount, 2, '.', '');
     }
