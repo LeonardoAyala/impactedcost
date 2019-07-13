@@ -76,7 +76,7 @@ class EnvironmentController extends Controller
         $project_categories = ProjectCategory::all();
 
         if( $admin === true){
-            $reports = Report::where('environment_id', $environment->id)->with('days')
+            $reports = Report::where('environment_id', $environment->id)->where('active', 1)->with('days')
             ->orderBy('created_at', 'desc')->get();
 
         }else{
