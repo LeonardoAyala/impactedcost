@@ -63,6 +63,8 @@ class Report extends Model
         $amount = $this->user->salaries()->whereDate('created_at', '<=', date('Y/m/d', $end_date))
         ->latest()->first()->amount;
 */
+        $amount = null;
+
         if(empty($amount)){
             $amount = 0;
         }
