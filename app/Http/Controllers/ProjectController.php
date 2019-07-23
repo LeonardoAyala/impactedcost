@@ -11,7 +11,7 @@ class ProjectController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     public function index()
@@ -99,7 +99,6 @@ class ProjectController extends Controller
 
         $date = strtotime($request->initial_date);
 
-        $user = Auth::User();
         $project = Project::create([
             'title' => $request->title,
             'description' => $request->description,
@@ -109,6 +108,7 @@ class ProjectController extends Controller
             'project_category_id' => $request->project_category_id,
             'expected_budget' => $request->expected_budget,
         ]);
+
 
         return response()->json([
             'project' => $project,

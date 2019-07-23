@@ -23,7 +23,18 @@ import 'jquery-ui/ui/widgets/datepicker.js';
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('navbar-dropdown', require('./components/navbar/NavbarDropdownItem.vue').default);
+
+Vue.component('navigation-menu', require('./components/sidebar/NavigationMenu.vue').default);
+Vue.component('navigation-item', require('./components/sidebar/NavigationItem.vue').default);
+Vue.component('navigation-dropdown', require('./components/sidebar/NavigationDropdownItem.vue').default);
+
+Vue.component('section-component', require('./components/SectionComponent.vue').default);
+
+Vue.component('environment-lister', require('./components/EnvironmentLister.vue').default);
+Vue.component('environment-item', require('./components/EnvironmentItem.vue').default);
+
+Vue.component('widget-count', require('./components/CountWidget.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
