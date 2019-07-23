@@ -1,35 +1,40 @@
 <template>
-    <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-            class="nav-link"><i class="fa fa-bell"></i><span
-                class="badge badge-warning">12</span></a>
-        <ul aria-labelledby="notifications" class="dropdown-menu">
+    <li :class="[{'show': !isShowed}, 'nav-item dropdown']"> <a href="#" @click="toggleClick" v-on-clickaway="away" class="nav-link"><i
+                :class="icon"></i><span :class="'badge badge-' + notification_color">{{ notification }}</span></a>
+        <ul :class="[{'dropdown show': !isShowed} , 'dropdown-menu']">
             <slot></slot>
         </ul>
     </li>
 </template>
 
 <script>
-    export default {
-        mounted() {
-        },
+    import { mixin as clickaway } from 'vue-clickaway';
 
+    export default {
+        mounted() {},
+        mixins: [ clickaway ],
         props: [
-            'object_id',
-            'header',
             'icon',
+            'notification',
+            'notification_color'
         ],
 
         data: function () {
             return {
+                isShowed: true,
             }
         },
         methods: {
-
+            toggleClick() {
+                this.isShowed = !this.isShowed;
+            },
+              away() {
+                this.isShowed = true;
+                }
         },
         computed: {
 
-        },
+        }
     }
 
 </script>

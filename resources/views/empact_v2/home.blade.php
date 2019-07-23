@@ -1,6 +1,8 @@
 @extends('layouts.v2')
 
 @section('content')
+
+
 <!-- Counts Section -->
 <section-component classes="dashboard-counts section-padding">
     <!-- Count item widget-->
@@ -27,6 +29,8 @@
             notification="10 reportes nuevos"></environment-item>
     </environment-lister>
 </section-component>
+
+
 
 <!--Node Section-->
 <section-component classes="mb-30px mb-30px">

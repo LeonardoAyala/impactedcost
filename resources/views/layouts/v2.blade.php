@@ -38,164 +38,112 @@
 
 <body>
     <div id="app">
-    <!-- Side Navbar -->
-    <nav class="side-navbar">
-        <div class="side-navbar-wrapper">
-            <!-- Sidebar Header    -->
-            <div class="sidenav-header d-flex align-items-center justify-content-center">
-                <!-- User Info-->
-                <div class="sidenav-header-inner text-center"><img src="{{ asset('img/placeholder.png') }}"
-                        class="img-fluid rounded-circle">
-                    <h2 class="h5">
-                        @if(Auth::user()) {{ Auth::user()->name }}
-                        @else Usuario
-                        @endif
-                    </h2><span>
-                        @if(Auth::user()) Colaborador
-                        @else Puesto
-                        @endif
-                    </span>
+        <!-- Side Navbar -->
+        <nav class="side-navbar">
+            <div class="side-navbar-wrapper">
+                <!-- Sidebar Header    -->
+                <div class="sidenav-header d-flex align-items-center justify-content-center">
+                    <!-- User Info-->
+                    <div class="sidenav-header-inner text-center"><img src="{{ asset('img/placeholder.png') }}"
+                            class="img-fluid rounded-circle">
+                        <h2 class="h5">
+                            @if(Auth::user()) {{ Auth::user()->name }}
+                            @else Usuario
+                            @endif
+                        </h2><span>
+                            @if(Auth::user()) Colaborador
+                            @else Puesto
+                            @endif
+                        </span>
+                    </div>
+                    <!-- Small Brand information, appears on minimized sidebar-->
+                    <div class="sidenav-header-logo"><a href="{{ url('index_v2') }} "
+                            class="brand-small text-center"><strong class="text-primary">Emp</strong></a></div>
                 </div>
-                <!-- Small Brand information, appears on minimized sidebar-->
-                <div class="sidenav-header-logo"><a href="{{ url('index_v2') }} "
-                        class="brand-small text-center"><strong class="text-primary">Emp</strong></a></div>
-            </div>
-            <!-- Sidebar Navigation Menus-->
-            <navigation-menu header="Panel de control">
+                <!-- Sidebar Navigation Menus-->
+                <navigation-menu header="Panel de control">
                     <navigation-item url="{{ url('home_v2') }}" icon="fa fa-home" header="Home"></navigation-item>
                     <navigation-dropdown object_id="test" icon="fa fa-layer-group" header="Ambientes">
-                            <navigation-item url="{{ url('index_v2') }}" header="Ver todas las opciones."></navigation-item>
+                        <navigation-item url="{{ url('forms_v2') }}" header="Ver todas las opciones."></navigation-item>
                     </navigation-dropdown>
                     <navigation-item url="" icon="fa fa-project-diagram" header="Procesos"></navigation-item>
-                    <navigation-item url="" icon="fa fa-hourglass-end" header="Reportes" notification="" notification_color="info"></navigation-item>
-            </navigation-menu>
-            <navigation-menu header="Usuario">
+                    <navigation-item url="" icon="fa fa-hourglass-end" header="Reportes" notification=""
+                        notification_color="info"></navigation-item>
+                </navigation-menu>
+                <navigation-menu header="Usuario">
                     <navigation-item url="" icon="fa fa-user" header="Perfil"></navigation-item>
                     <navigation-item url="" icon="fa fa-sign-out-alt" header="Cerrar sesión"></navigation-item>
-            </navigation-menu>
+                </navigation-menu>
 
-        </div>
-    </nav>
-    <div class="page">
-        <!-- navbar-->
-        <header class="header">
-            <nav class="navbar">
-                <div class="container-fluid">
-                    <div class="navbar-holder d-flex align-items-center justify-content-between">
-                        <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i class="icon-bars">
-                                </i></a><a href="{{ url('home_v2') }}" class="navbar-brand">
-                                <div class="brand-text d-none d-md-inline-block"><strong
-                                        class="text-primary">Empact</strong></div>
-                            </a></div>
-                        <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
-                            <!-- Notifications dropdown-->
-                            <navbar-dropdown>
-                                            <li><a rel="nofollow" href="#" class="dropdown-item">
-                                                    <div class="notification d-flex justify-content-between">
-                                                        <div class="notification-content"><i class="fa fa-envelope"></i>You have
-                                                            6 new messages </div>
-                                                        <div class="notification-time"><small>4 minutes ago</small></div>
-                                                    </div>
-                                                </a></li>
-                                            <li><a rel="nofollow" href="#" class="dropdown-item">
-                                                    <div class="notification d-flex justify-content-between">
-                                                        <div class="notification-content"><i class="fa fa-twitter"></i>You have
-                                                            2 followers</div>
-                                                        <div class="notification-time"><small>4 minutes ago</small></div>
-                                                    </div>
-                                                </a></li>
-                                            <li><a rel="nofollow" href="#" class="dropdown-item">
-                                                    <div class="notification d-flex justify-content-between">
-                                                        <div class="notification-content"><i class="fa fa-upload"></i>Server
-                                                            Rebooted</div>
-                                                        <div class="notification-time"><small>4 minutes ago</small></div>
-                                                    </div>
-                                                </a></li>
-                                            <li><a rel="nofollow" href="#" class="dropdown-item">
-                                                    <div class="notification d-flex justify-content-between">
-                                                        <div class="notification-content"><i class="fa fa-twitter"></i>You have
-                                                            2 followers</div>
-                                                        <div class="notification-time"><small>10 minutes ago</small></div>
-                                                    </div>
-                                                </a></li>
-                                            <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center">
-                                                    <strong> <i class="fa fa-bell"></i>view all notifications </strong></a></li>
-                            </navbar-dropdown>
-                            <!-- Messages dropdown-->
-                            <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                    class="nav-link"><i class="fa fa-envelope"></i><span
-                                        class="badge badge-info">10</span></a>
-                                <ul aria-labelledby="notifications" class="dropdown-menu">
-                                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
-                                            <div class="msg-profile"> <img src="{{ asset('img/avatar-1.jpg') }}" alt="..."
-                                                    class="img-fluid rounded-circle"></div>
-                                            <div class="msg-body">
-                                                <h3 class="h5">Jason Doe</h3><span>sent you a direct
-                                                    message</span><small>3 days ago at 7:58 pm - 10.06.2014</small>
-                                            </div>
-                                        </a></li>
-                                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
-                                            <div class="msg-profile"> <img src="{{ asset('img/avatar-2.jpg') }}" alt="..."
-                                                    class="img-fluid rounded-circle"></div>
-                                            <div class="msg-body">
-                                                <h3 class="h5">Frank Williams</h3><span>sent you a direct
-                                                    message</span><small>3 days ago at 7:58 pm - 10.06.2014</small>
-                                            </div>
-                                        </a></li>
-                                    <li><a rel="nofollow" href="#" class="dropdown-item d-flex">
-                                            <div class="msg-profile"> <img src="{{ asset('img/avatar-3.jpg') }}" alt="..."
-                                                    class="img-fluid rounded-circle"></div>
-                                            <div class="msg-body">
-                                                <h3 class="h5">Ashley Wood</h3><span>sent you a direct
-                                                    message</span><small>3 days ago at 7:58 pm - 10.06.2014</small>
-                                            </div>
-                                        </a></li>
-                                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center">
-                                            <strong> <i class="fa fa-envelope"></i>Read all messages </strong></a></li>
-                                </ul>
-                            </li>
-                            <!-- Languages dropdown    -->
-                            <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                    class="nav-link language dropdown-toggle"><i class="fas fa-layer-group"></i><span
-                                        class="d-none d-sm-inline-block">Ambientes</span></a>
-                                <ul aria-labelledby="languages" class="dropdown-menu">
-                                    @if(!empty($environments))
-                                    @foreach($environments as $environment)
-                                    <li><a rel="nofollow" href="{{url('entironment_v2/'.$environment->id)}}"
-                                            class="dropdown-item"><span>{{$environment->title}}</span></a></li>
-                                    @endforeach
-                                    @endif
-                                </ul>
-                            </li>
-                            <!-- Log out-->
-                            <li class="nav-item"><a href="login.html" class="nav-link logout"> <span
-                                        class="d-none d-sm-inline-block">Cerrar sesión</span><i class="fa fa-sign-out-alt"></i></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-        @yield('content');
-
-        <footer class="main-footer">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <p>Empact &copy; 2019</p>
-                    </div>
-                    <div class="col-sm-6 text-right">
-                        <p>Design by <a href="https://bootstrapious.com/p/bootstrap-4-dashboard"
-                                class="external">Bootstrapious</a></p>
-                        <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions and it helps me to run Bootstrapious. Thank you for understanding :)-->
-                    </div>
-                </div>
             </div>
-        </footer>
-    </div>
+        </nav>
+        <div class="page">
+            <!-- navbar-->
+            <header class="header">
+                <nav class="navbar">
+                    <div class="container-fluid">
+                        <div class="navbar-holder d-flex align-items-center justify-content-between">
+                            <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i
+                                        class="icon-bars">
+                                    </i></a><a href="{{ url('home_v2') }}" class="navbar-brand">
+                                    <div class="brand-text d-none d-md-inline-block"><strong
+                                            class="text-primary">Empact</strong></div>
+                                </a></div>
+                            <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                                <!-- Notifications dropdown-->
+                                <navbar-dropdown icon="fa fa-bell" notification="10" notification_color="success">
+                                    <navbar-item icon="fa fa-layer-group" notification="Hello" time="Hace 6 minutos"></navbar-item>
+                                    <navbar-action-item icon="fa fa-envelope" header="Ver todos las notificaciones"></navbar-action-item>
+                                </navbar-dropdown>
+
+                                <navbar-dropdown icon="fa fa-envelope" notification="4" notification_color="warning">
+                                    <navbar-layered-item image="{{ asset('img/avatar-1.jpg') }}" header="Jason Doe" notification="Reportó horas" details="Hace 3 días a las 7:58 pm - 10.06.2019"></navbar-layered-item>
+                                    <navbar-action-item icon="fa fa-envelope" header="Ver todos las notificaciones"></navbar-action-item>
+                                </navbar-dropdown>
+
+                                <!-- Languages dropdown    -->
+                                <li class="nav-item dropdown"><a id="languages" rel="nofollow" data-target="#" href="#"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                                        class="nav-link language dropdown-toggle"><i
+                                            class="fas fa-layer-group"></i><span
+                                            class="d-none d-sm-inline-block">Ambientes</span></a>
+                                    <ul aria-labelledby="languages" class="dropdown-menu">
+                                        @if(!empty($environments))
+                                        @foreach($environments as $environment)
+                                        <li><a rel="nofollow" href="{{url('entironment_v2/'.$environment->id)}}"
+                                                class="dropdown-item"><span>{{$environment->title}}</span></a></li>
+                                        @endforeach
+                                        @endif
+                                    </ul>
+                                </li>
+                                <!-- Log out-->
+                                <li class="nav-item"><a href="login.html" class="nav-link logout"> <span
+                                            class="d-none d-sm-inline-block">Cerrar sesión</span><i
+                                            class="fa fa-sign-out-alt"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+
+            @yield('content');
+
+            <footer class="main-footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <p>Empact &copy; 2019</p>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <p>Design by <a href="https://bootstrapious.com/p/bootstrap-4-dashboard"
+                                    class="external">Bootstrapious</a></p>
+                            <!-- Please do not remove the backlink to us unless you support further theme's development at https://bootstrapious.com/donate. It is part of the license conditions and it helps me to run Bootstrapious. Thank you for understanding :)-->
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
 
     </div>
     <!-- JavaScript files-->

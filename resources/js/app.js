@@ -23,6 +23,11 @@ import 'jquery-ui/ui/widgets/datepicker.js';
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
+
+
+Vue.component('navbar-action-item', require('./components/navbar/NavbarActionItem.vue').default);
+Vue.component('navbar-layered-item', require('./components/navbar/NavbarLayeredItem.vue').default);
+Vue.component('navbar-item', require('./components/navbar/NavbarItem.vue').default);
 Vue.component('navbar-dropdown', require('./components/navbar/NavbarDropdownItem.vue').default);
 
 Vue.component('navigation-menu', require('./components/sidebar/NavigationMenu.vue').default);
@@ -36,14 +41,18 @@ Vue.component('environment-item', require('./components/EnvironmentItem.vue').de
 
 Vue.component('widget-count', require('./components/CountWidget.vue').default);
 
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
 const app = new Vue({
+
     el: '#app',
+
 });
 
 $( ".week-picker" ).datepicker({

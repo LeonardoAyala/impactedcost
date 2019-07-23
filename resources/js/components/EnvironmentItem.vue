@@ -14,6 +14,7 @@
                     </div>
                 </div>
                 <p v-text="paragraph"></p>
+
             </div>
             <div>
             </div>

@@ -27,7 +27,7 @@ Route::get('/login_v2', function () {
     return view('empact_v2.login');
 });
 
-Route::get('/forms_v2', function () {
+Route::get('/register_v2', function () {
     return view('empact_v2.register');
 });
 
