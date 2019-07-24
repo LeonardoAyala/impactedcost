@@ -15,27 +15,30 @@
                 </div>
                 <p v-text="paragraph"></p>
 
+                <div class="CTAs">
+                    <a href="#" class="btn btn-xs btn-dark"><i class="fa fa-glasses"> </i> Visitar</a>
+                    <a href="#" class="btn btn-xs btn-dark"><i class="fa fa-cog"> </i> Opciones</a>
+                </div>
+
             </div>
-            <div>
-            </div>
+
         </div>
     </li>
 </template>
 
 <script>
-
     export default {
         mounted() {
             console.log('Component mounted.')
         },
 
-        props:[
-            'criteria',
-            'measure',
-            'header',
-            'notification',
-            'paragraph',
-        ],
+        props: {
+            criteria: { default: 'crit'},
+            measure: String,
+            header: { type: String, required: true},
+            notification: String,
+            paragraph: String,
+    },
         data: {
 
         },
@@ -46,4 +49,5 @@
 
         },
     }
+
 </script>

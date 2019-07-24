@@ -5,75 +5,44 @@
 <section-component classes="dashboard-counts section-padding">
     <!-- Count item widget-->
     <widget-count header="New Clients" time="Last 7 days" number="25" icon="far fa-user"></widget-count>
-    <!-- Count item widget-->
     <widget-count header="work Orders" time="Last 5 days" number="400" icon="icon-padnote"></widget-count>
-    <!-- Count item widget-->
     <widget-count header="New Quotes" time="Last 2 months" number="324" icon="icon-check"></widget-count>
-    <!-- Count item widget-->
     <widget-count header="New Invoices" time="Last 2 days" number="123" icon="icon-bill"></widget-count>
-    <!-- Count item widget-->
     <widget-count header="Open Cases" time="Last 3 months" number="92" icon="icon-list"></widget-count>
-    <!-- Count item widget-->
     <widget-count header="New Cases" time="Last 7 days" number="70" icon="icon-list-1"></widget-count>
 </section-component>
 
-<section-component classes="mb-30px mb-30px">
-    <environment-lister centered="true" header="Ambientes disponibles" col_size="col-lg-10">
+<section-component classes="">
+    <environment-lister centered="true" header="Ambientes disponibles" col_size="col-lg-11">
         <!-- Item-->
         <environment-item criteria="Activo hace" measure="6 horas" header="Ambiente" paragraph="Lorem ipsum"
             notification="10 reportes nuevos"></environment-item>
-        <!-- Item-->
-        <environment-item criteria="Activo hace" measure="6 horas" header="Ambiente" paragraph="Lorem ipsum"
-            notification="10 reportes nuevos"></environment-item>
+        <navbar-action-item url="#" data-toggle="modal" data-target="#addEnv" icon_r="fa fa-plus"
+            header="Crear nuevo ambiente"></navbar-action-item>
     </environment-lister>
 </section-component>
 
 <section-component classes="forms">
-        <div class="col-lg-4">
-                <div class="card">
-                  <div class="card-header d-flex align-items-center">
-                    <h4>Modal Form</h4>
-                  </div>
-                  <div class="card-body text-center">
-                    <button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-primary">Form in simple modal </button>
-                    <!-- Modal-->
-                    <div id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" class="modal fade text-left">
-                      <div role="document" class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 id="exampleModalLabel" class="modal-title">Signin Modal</h5>
-                            <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">×</span></button>
-                          </div>
-                          <div class="modal-body">
-                            <p>Lorem ipsum dolor sit amet consectetur.</p>
-                            <form>
-                              <div class="form-group">
-                                <label>Email</label>
-                                <input type="email" placeholder="Email Address" class="form-control">
-                              </div>
-                              <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" placeholder="Password" class="form-control">
-                              </div>
-                              <div class="form-group">
-                                <input type="submit" value="Signin" class="btn btn-primary">
-                              </div>
-                            </form>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" data-dismiss="modal" class="btn btn-secondary">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <!-- Modal-->
+        <modal-component header="Modal" description="Lorem ipsum." object_id="addEnv">
+            <modal-body description="Lorem ipsum">
+                <form>
+                    <input-item header="Input" type="email" placeholder="Email Address" classes="form-control"></input-item>
+                    <input-item header="Input" type="password" placeholder="Password" classes="form-control"></input-item>
+                    <input-item type="submit" btn_header="Enviar" placeholder="Email Address" classes="btn btn-primary">
+                    </input-item>
+                </form>
+            </modal-body>
+            <modal-footer>
+                <button-item header="Cerrar" dismiss="modal" btn_color="secondary"></button-item>
+                <button-item header="Guardar cambios" dismiss="modal" btn_color="primary"></button-item>
+            </modal-footer>
+        </modal-component>
+
 </section-component>
 
 <!--Node Section-->
-<section-component classes="mb-30px mb-30px">
+<section-component classes="">
     <div class="col-lg-6 col-md-12">
         <!-- Recent Updates Widget          -->
         <div id="new-updates" class="card updates recent-updated">

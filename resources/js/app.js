@@ -24,6 +24,12 @@ import 'jquery-ui/ui/widgets/datepicker.js';
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 
+Vue.component('button-item', require('./components/form/ButtonItem.vue').default);
+Vue.component('input-item', require('./components/form/InputItem.vue').default);
+
+Vue.component('modal-footer', require('./components/form/ModalFooter.vue').default);
+Vue.component('modal-body', require('./components/form/ModalBody.vue').default);
+Vue.component('modal-component', require('./components/form/ModalComponent.vue').default);
 
 Vue.component('navbar-action-item', require('./components/navbar/NavbarActionItem.vue').default);
 Vue.component('navbar-layered-item', require('./components/navbar/NavbarLayeredItem.vue').default);

@@ -1001,10 +1001,20 @@ nav.navbar a.menu-btn:hover {
   color: #555;
 }
 
+.updates .CTAs a {
+    color: rgb(255, 255, 255);
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+
 .updates a:hover, .updates a:focus {
   color: #555;
   text-decoration: none;
 }
+
+.updates .CTAs a:hover, .updates .CTAs a:focus {
+    color: #33b35a;
+  }
 
 .updates h2 {
   margin-bottom: 0;
