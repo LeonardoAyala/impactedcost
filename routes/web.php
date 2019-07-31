@@ -19,21 +19,8 @@ Route::get('/index_v2', function () {
     return view('empact_v2.index');
 });
 
-Route::get('/forms_v2', function () {
-    return view('empact_v2.forms');
-});
-
-Route::get('/login_v2', function () {
-    return view('empact_v2.login');
-});
-
-Route::get('/register_v2', function () {
-    return view('empact_v2.register');
-});
-
 Route::resource('environment_v2', 'EnvironmentControllerV2');
 Route::get('/home_v2', 'HomeController@index_v2');
-
 
 Auth::routes();
 

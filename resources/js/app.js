@@ -23,7 +23,11 @@ import 'jquery-ui/ui/widgets/datepicker.js';
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
+Vue.component('tab-item', require('./components/tabs/TabItem.vue').default);
 
+Vue.component('breadcrumb-item', require('./components/breadcrumb/BreadcrumbItem.vue').default);
+
+Vue.component('button-complement', require('./components/form/ButtonComplement.vue').default);
 Vue.component('button-item', require('./components/form/ButtonItem.vue').default);
 Vue.component('input-item', require('./components/form/InputItem.vue').default);
 
@@ -40,10 +44,10 @@ Vue.component('navigation-menu', require('./components/sidebar/NavigationMenu.vu
 Vue.component('navigation-item', require('./components/sidebar/NavigationItem.vue').default);
 Vue.component('navigation-dropdown', require('./components/sidebar/NavigationDropdownItem.vue').default);
 
-Vue.component('section-component', require('./components/SectionComponent.vue').default);
+Vue.component('section-component', require('./components/section/SectionComponent.vue').default);
 
-Vue.component('environment-lister', require('./components/EnvironmentLister.vue').default);
-Vue.component('environment-item', require('./components/EnvironmentItem.vue').default);
+Vue.component('environment-lister', require('./components/environment/EnvironmentLister.vue').default);
+Vue.component('environment-item', require('./components/environment/EnvironmentItem.vue').default);
 
 Vue.component('widget-count', require('./components/CountWidget.vue').default);
 
@@ -58,7 +62,21 @@ Vue.component('widget-count', require('./components/CountWidget.vue').default);
 const app = new Vue({
 
     el: '#app',
+    data: function () {
+        return {
+            environments: [],
+        }
+    },
+});
 
+const other = new Vue({
+
+    el: '#div',
+    data: function () {
+        return {
+            environments: [],
+        }
+    },
 });
 
 $( ".week-picker" ).datepicker({

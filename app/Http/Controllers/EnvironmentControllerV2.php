@@ -24,12 +24,7 @@ class EnvironmentControllerV2 extends Controller
     {
         $user = Auth::User();
 
-        $environments = Environment::whereHas('coUsers', function ($query) use ($user) {
-            $query->where('user_id', '=', $user->id);
-        })->latest()->paginate(10);
-
-        return view('empact_v2.index')
-        ->with(compact('environments'));
+        return view('empact_v2.environment');
     }
 
     /**

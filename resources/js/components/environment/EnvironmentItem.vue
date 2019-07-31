@@ -1,6 +1,7 @@
 <template>
     <li>
         <div class="row">
+            <slot>
             <div class="col-2 date-holder text-right">
                 <div class="icon"><i class="fas fa-layer-group"></i></div>
                 <div class="date" v-text="criteria"></div>
@@ -13,15 +14,16 @@
                         <div class="badge badge-primary right" v-text="notification"></div>
                     </div>
                 </div>
+
                 <p v-text="paragraph"></p>
 
                 <div class="CTAs">
-                    <a href="#" class="btn btn-xs btn-dark"><i class="fa fa-glasses"> </i> Visitar</a>
-                    <a href="#" class="btn btn-xs btn-dark"><i class="fa fa-cog"> </i> Opciones</a>
+                    <button-complement icon="fa fa-glasses" header=" Visitar"></button-complement>
+                    <button-complement icon="fa fa-cog" header=" Opciones"></button-complement>
                 </div>
 
             </div>
-
+        </slot>
         </div>
     </li>
 </template>
