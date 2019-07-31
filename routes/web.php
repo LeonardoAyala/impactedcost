@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('empact_v2.welcome');
 });
 
 Route::get('/index_v2', function () {

@@ -37,7 +37,7 @@ class HomeController extends Controller
             $query->where('user_id', '=', $user->id);
         })->latest()->paginate(10);
 
-        return view('empact_v2.home')
+        return view('empact_v2.welcome')
         ->with(compact('environments'));
     }
 }
