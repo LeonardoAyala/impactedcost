@@ -43,10 +43,10 @@
                 <a class="js-scroll-trigger" href="#page-top">Ayuda</a>
             </li>
             <li class="sidebar-nav-item">
-                <a class="js-scroll-trigger" href="#page-top">Guía de administrador</a>
+                <a class="js-scroll-trigger" href="https://docs.google.com/document/d/1_WJ0LPetPtfcq8TiddedTGLrk3EDuY6Ra9FcmCCrtlo/edit?usp=sharing" target="_blank">Guía de administrador</a>
             </li>
             <li class="sidebar-nav-item">
-                <a class="js-scroll-trigger" href="#page-top">Guía de usuario</a>
+                <a class="js-scroll-trigger" href="https://docs.google.com/document/d/1b6PK9Xsh_XGuTnZ7WdOPZktT-qa3RJK_i5wMaNH2WqA/edit?usp=sharing" target="_blank">Guía de usuario</a>
             </li>
         </ul>
     </nav>
