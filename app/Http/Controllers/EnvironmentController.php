@@ -3,15 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use Faker\Generator as Faker;
-use Yajra\DataTables\DataTables;
 
 use Validator;
 use Response;
 use Illuminate\Support\Facades\Input;
-use App\http\Requests;
 
 use App\Environment;
 use App\Project;
@@ -29,21 +25,6 @@ class EnvironmentController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-    }
-
-    public function index()
-    {
-
-    }
-
-    public function create()
-    {
-        //return view('environments.create');
-    }
-
-    public function store(Request $request)
-    {
-
     }
 
     public function show(Environment $environment)
@@ -181,11 +162,6 @@ class EnvironmentController extends Controller
     ]);
   }
 
-  public function delete(Request $request){
-    $environment = Environment::find ($request->id)->delete();
-    return response()->json();
-  }
-
     public function join (Request $request){
         $this->validate($request ,[
             'code' => 'required',
@@ -217,6 +193,26 @@ class EnvironmentController extends Controller
 
             return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
         }
+    }
+
+
+    public function other(Request $request)
+    {
+        $environments = Environment::orderBy('created_at', 'desc')->get();
+        return response()->json($environments);
+    }
+
+    public function store(Request $request)
+    {
+        $environment = Environment::create($request->all());
+
+        return response()->json($environment);
+    }
+
+    public function delete($id)
+    {
+        Environment::find($id)->delete();
+        return response()->json("ok");
     }
 
 }

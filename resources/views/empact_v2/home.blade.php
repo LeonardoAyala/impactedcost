@@ -31,17 +31,7 @@
 
 <section-component classes="">
     <environment-lister centered="true" header="Ambientes disponibles" col_size="col-lg-11">
-        <!-- Item-->
-        <environment-item v-for="environment in environents" criteria="Activo hace" measure="6 horas" header="Ambiente"
-            paragraph="Lorem ipsum" notification="10 reportes nuevos"></environment-item>
-        <environment-item criteria="Activo hace" measure="6 horas" header="Ambiente" paragraph="Lorem ipsum"
-            notification="10 reportes nuevos">
-        </environment-item>
-        <environment-item v-if="!environments.lenght">
-            <div class="col-12 date-holder text-right">
-                <h3 class="text-centered secondary-font">No existen ambientes disponibles...</h3>
-            </div>
-        </environment-item>
+
         <navbar-action-item url="#" modal_target="addEnv" icon_r="fa fa-plus" header="Crear nuevo ambiente">
         </navbar-action-item>
     </environment-lister>
@@ -49,8 +39,8 @@
 
 <section-component classes="forms">
     <!-- Modal-->
-    <modal-component header="Modal" description="Lorem ipsum." object_id="addEnv">
-        <modal-body description="Lorem ipsum">
+    <!--modal-component header="Modal" description="Lorem ipsum." object_id="addEnv" description="lorem">
+        <template v-slot:modal-body>
             <form>
                 <input-item header="Nombre" type="text" placeholder="Nombre" classes="form-control"></input-item>
                 <input-item header="Descripción" type="text-area" placeholder="Descripción corta"
@@ -59,12 +49,13 @@
                 <input-item type="submit" btn_header="Crear ambiente" classes="btn btn-primary">
                 </input-item>
             </form>
-        </modal-body>
-        <modal-footer>
+        </template>
+        <template slot-scope="scope" v-slot:modal-footer >
             <button-item header="Cerrar" dismiss="modal" btn_color="secondary"></button-item>
-            <button-item header="Guardar cambios" dismiss="modal" btn_color="primary"></button-item>
-        </modal-footer>
-    </modal-component>
+            <button-item header="Guardar cambios" dismiss="modal" btn_color="primary" click="scope.ocClick"></button-item>
+        </template>
+    </modal-component-->
+    <modal-env-add></modal-env-add>
 </section-component>
 
 <!--Node Section-->

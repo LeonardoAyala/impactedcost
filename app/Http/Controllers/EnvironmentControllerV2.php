@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Environment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 use Auth;
 
@@ -12,7 +14,6 @@ class EnvironmentControllerV2 extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
     }
 
     /**
@@ -45,8 +46,24 @@ class EnvironmentControllerV2 extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //$environment = Environment::create($request->all());
+
+        //$environment = Environment::find(1)->get();
+
+        //return response()->json($environment);
+
+        $user = Auth::User();
+        $environment = Environment::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'code' => Str::random(6),
+            'password' => Str::random(6),
+            'user_id' => '6',
+        ]);
+
+        return response()->json($environment);
     }
+
 
     /**
      * Display the specified resource.
@@ -92,4 +109,12 @@ class EnvironmentControllerV2 extends Controller
     {
         //
     }
+
+    public function get(Request $request)
+    {
+        $environments = Environment::orderBy('created_at', 'desc')->get();
+        return response()->json($environments);
+    }
+
+
 }

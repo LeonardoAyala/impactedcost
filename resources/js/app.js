@@ -7,21 +7,30 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import store from './store/index';
+import VueRouter from 'vue-router';
+//import {routes} from './routes';
+import ModalEnvAdd from './components/environment/EnvironmentModalAdd.vue'
+
+Vue.use(VueRouter);
+
+const router = new VueRouter({
+    router,
+    mode: 'history'
+});
+
+import { Form, HasError, AlertError } from 'vform';
+
+window.Form = Form;
+Vue.component(HasError.name, HasError);
+Vue.component(AlertError.name, AlertError);
+
 import $ from 'jquery';
 window.$ = window.jQuery = $;
 
 
 import 'jquery-ui/ui/widgets/datepicker.js';
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
 
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('tab-item', require('./components/tabs/TabItem.vue').default);
 
@@ -31,8 +40,7 @@ Vue.component('button-complement', require('./components/form/ButtonComplement.v
 Vue.component('button-item', require('./components/form/ButtonItem.vue').default);
 Vue.component('input-item', require('./components/form/InputItem.vue').default);
 
-Vue.component('modal-footer', require('./components/form/ModalFooter.vue').default);
-Vue.component('modal-body', require('./components/form/ModalBody.vue').default);
+//Vue.component('modal-env-add', require('./components/environment/EnvironmentModalAdd.vue').default);
 Vue.component('modal-component', require('./components/form/ModalComponent.vue').default);
 
 Vue.component('navbar-action-item', require('./components/navbar/NavbarActionItem.vue').default);
@@ -60,23 +68,12 @@ Vue.component('widget-count', require('./components/CountWidget.vue').default);
 
 
 const app = new Vue({
-
     el: '#app',
-    data: function () {
-        return {
-            environments: [],
-        }
-    },
-});
-
-const other = new Vue({
-
-    el: '#div',
-    data: function () {
-        return {
-            environments: [],
-        }
-    },
+    store,
+    router,
+    components: {
+        ModalEnvAdd
+    }
 });
 
 $( ".week-picker" ).datepicker({

@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Empact - home</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -149,7 +150,7 @@
     <!-- JavaScript files-->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-    <!--script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script-->
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/popper.js/umd/popper.min.js') }}"> </script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/grasp_mobile_progress_circle-1.0.0.min.js') }}"></script>

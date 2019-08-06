@@ -1,7 +1,9 @@
 <template>
     <div class="form-group">
         <label>{{ header }}</label>
-        <input :type="type" :value="btn_header" :placeholder="placeholder" :class="classes">
+        <input  @click="clicked" v-bind:value="btn_header"
+      v-on:input="[$emit('input', $event.target.value)]"
+         :type="type"  :placeholder="placeholder" :class="classes">
     </div>
 </template>
 
@@ -20,7 +22,9 @@
 
         },
         methods: {
-
+            clicked(){
+                this.$emit('clicked');
+            },
         },
         computed: {
 

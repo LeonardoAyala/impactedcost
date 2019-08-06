@@ -1,5 +1,6 @@
 <template>
-    <button type="button" :data-dismiss="dismiss" :class="'btn btn-' + btn_color">{{ header }}</button>
+    <button type="button" @click="clicked"
+     :data-dismiss="dismiss" :class="'btn btn-' + btn_color">{{ header }}</button>
 </template>
 
 <script>
@@ -9,13 +10,16 @@
         props: [
             'header',
             'btn_color',
-            'dismiss'
+            'dismiss',
+            'value'
         ],
         data: {
 
         },
         methods: {
-
+            clicked(){
+                this.$emit('clicked');
+            }
         },
         computed: {
 

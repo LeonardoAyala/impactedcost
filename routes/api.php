@@ -16,3 +16,9 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('environment', 'EnvironmentControllerV2@store');
+
+Route::get('environment', 'EnvironmentControllerV2@get');
+
+Route::delete('environment/{id}', 'EnvironmentControllerV2@delete');
