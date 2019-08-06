@@ -1,6 +1,6 @@
 let actions = {
     createEnvironment({commit}, environment) {
-        axios.post('/api/environment', environment)
+        axios.post('/addEnvironment', environment)
             .then(res => {
                 commit('CREATE_ENVIRONMENT', res.data)
             }).catch(err => {

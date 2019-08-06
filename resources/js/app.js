@@ -19,6 +19,7 @@ const router = new VueRouter({
     mode: 'history'
 });
 
+
 import { Form, HasError, AlertError } from 'vform';
 
 window.Form = Form;

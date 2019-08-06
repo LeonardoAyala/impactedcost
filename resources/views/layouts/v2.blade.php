@@ -148,7 +148,7 @@
 
     </div>
     <!-- JavaScript files-->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/popper.js/umd/popper.min.js') }}"> </script>
@@ -161,6 +161,8 @@
     <script src="{{ asset('js/charts-home.js') }}"></script>
     <!-- Main File-->
     <script src="{{ asset('js/front.js') }}"></script>
+
+
 </body>
 
 </html>

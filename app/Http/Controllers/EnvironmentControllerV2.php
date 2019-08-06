@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Environment;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -14,6 +15,7 @@ class EnvironmentControllerV2 extends Controller
 
     public function __construct()
     {
+
     }
 
     /**
@@ -53,12 +55,13 @@ class EnvironmentControllerV2 extends Controller
         //return response()->json($environment);
 
         $user = Auth::User();
+
         $environment = Environment::create([
             'title' => $request->title,
             'description' => $request->description,
             'code' => Str::random(6),
             'password' => Str::random(6),
-            'user_id' => '6',
+            'user_id' => $user->id,
         ]);
 
         return response()->json($environment);

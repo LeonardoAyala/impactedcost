@@ -59342,7 +59342,7 @@ __webpack_require__.r(__webpack_exports__);
 var actions = {
   createEnvironment: function createEnvironment(_ref, environment) {
     var commit = _ref.commit;
-    axios.post('/api/environment', environment).then(function (res) {
+    axios.post('/addEnvironment', environment).then(function (res) {
       commit('CREATE_ENVIRONMENT', res.data);
     })["catch"](function (err) {
       console.log(err);

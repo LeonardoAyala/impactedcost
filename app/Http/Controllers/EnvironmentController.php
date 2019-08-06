@@ -98,6 +98,18 @@ class EnvironmentController extends Controller
 
     public function add(Request $request)
     {
+        $user = Auth::User();
+
+        $user = Auth::User();
+            $environment = Environment::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'code' => Str::random(6),
+                'password' => Str::random(6),
+                'user_id' => $user->id
+            ]);
+
+        return response()->json($environment);
         $rules = array(
             'title' => ['required', 'max:25'],
             'description' => ['required', 'max:100']
