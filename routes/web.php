@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('empact_v2.welcome');
 });
 
+Route::get('/register_v2', function () {
+    return view('empact_v2.register');
+});
+
 Route::resource('environment_v2', 'EnvironmentControllerV2');
 Route::get('/home_v2', 'HomeController@index_v2');
 
