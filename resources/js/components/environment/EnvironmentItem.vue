@@ -1,7 +1,7 @@
 <template>
     <li>
         <div class="row">
-            <slot>
+
             <div class="col-2 date-holder text-right">
                 <div class="icon"><i class="fas fa-layer-group"></i></div>
                 <div class="date" v-text="criteria"></div>
@@ -18,12 +18,13 @@
                 <p v-text="paragraph"></p>
 
                 <div class="CTAs">
-                    <button-complement icon="fa fa-glasses" header=" Visitar"></button-complement>
-                    <button-complement icon="fa fa-cog" header=" Opciones"></button-complement>
+                    <slot name="actions">
+                    </slot>
+
                 </div>
 
             </div>
-        </slot>
+
         </div>
     </li>
 </template>

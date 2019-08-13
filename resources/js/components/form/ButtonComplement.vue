@@ -1,6 +1,6 @@
 <template>
 
-    <a :href="link" :class="classes"><i :class="icon"> </i> {{ header }}</a>
+    <a @click="clicked" :href="link" :class="classes" data-toggle="modal" :data-target="'#' + modal_target"><i :class="icon"> </i> {{ header }}</a>
 </template>
 
 <script>
@@ -13,12 +13,15 @@
             classes: { default: 'btn btn-xs btn-dark'},
             icon: { default: 'fa fa-glasses'},
             header: String,
+            modal_target: { default: '#'},
     },
         data: {
 
         },
         methods: {
-
+            clicked(){
+                this.$emit('clicked');
+            },
         },
         computed: {
 

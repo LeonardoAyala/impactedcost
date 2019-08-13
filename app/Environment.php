@@ -27,6 +27,11 @@ class Environment extends Model
         return route("environment.show", $this->id);
     }
 
+    public function softDelete(){
+        $this->active = 0;
+        $this->save();
+    }
+
 /*
     public function getCreatedDateAttribute(){
         return $this->created_at->diffForHumans();

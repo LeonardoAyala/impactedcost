@@ -19,6 +19,9 @@
         methods: {
             clicked(){
                 this.$emit('clicked');
+            },
+            submit : function(){
+                this.$refs.form.submit()
             }
         },
         computed: {

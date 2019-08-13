@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyEnvironmentUserTable extends Migration
+class ModifyEnvironmentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class ModifyEnvironmentUserTable extends Migration
      */
     public function up()
     {
-        Schema::table('environment_user', function (Blueprint $table) {
-
+        Schema::table('environments', function (Blueprint $table) {
+            $table->boolean('active')->default(true);
+            $table->string('description', 100)->nullable()->change();
+            $table->string('password', 20)->nullable()->change();
         });
     }
 

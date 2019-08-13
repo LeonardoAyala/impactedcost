@@ -1783,6 +1783,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
   props: {
@@ -1851,6 +1852,46 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Environments",
@@ -1858,10 +1899,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.$store.dispatch('fetchEnvironments');
   },
   props: ['col_size', 'header', 'centered'],
-  data: {},
+  data: function data() {
+    return {
+      environment: {
+        id: '',
+        title: '',
+        description: '',
+        code: '',
+        password: '',
+        user_id: ''
+      }
+    };
+  },
   methods: {
+    editEnvironment: function editEnvironment(environment) {
+      var _this = this;
+
+      alert(environment.title);
+      this.$store.dispatch('updateEnvironment', environment);
+      axios.post('/environment/get/' + environment.id).then(function (res) {
+        _this.environment = res.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
     deleteEnvironment: function deleteEnvironment(environment) {
       this.$store.dispatch('deleteEnvironment', environment);
+    },
+    onOptions: function onOptions(environment) {
+      this.environment = environment;
     }
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['environments']))
@@ -1901,24 +1967,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'modal-env-add',
   mounted: function mounted() {},
-  props: ['object_id', 'header', 'paragraph'],
+  props: ['object_id', 'header', 'description'],
   data: function data() {
     return {
       environment: {
         title: '',
-        description: ''
+        description: '',
+        code: ''
       }
     };
   },
   methods: {
-    onSubmit: function onSubmit() {
-      alert(this.environment.title + this.environment.description);
-    },
     createEnvironment: function createEnvironment(environment) {
       this.$store.dispatch('createEnvironment', environment);
+    },
+    joinEnvironment: function joinEnvironment(environment) {
+      this.$store.dispatch('joinEnvironment', environment);
     }
   },
   computed: {
@@ -1956,10 +2030,17 @@ __webpack_require__.r(__webpack_exports__);
     icon: {
       "default": 'fa fa-glasses'
     },
-    header: String
+    header: String,
+    modal_target: {
+      "default": '#'
+    }
   },
   data: {},
-  methods: {},
+  methods: {
+    clicked: function clicked() {
+      this.$emit('clicked');
+    }
+  },
   computed: {}
 });
 
@@ -1986,6 +2067,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     clicked: function clicked() {
       this.$emit('clicked');
+    },
+    submit: function submit() {
+      this.$refs.form.submit();
     }
   },
   computed: {}
@@ -2013,7 +2097,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {},
-  props: ['header', 'btn_header', 'type', 'placeholder', 'classes'],
+  props: ['header', 'btn_header', 'type', 'placeholder', 'classes', 'dismiss'],
   data: {},
   methods: {
     clicked: function clicked() {
@@ -41047,58 +41131,38 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("li", [
-    _c(
-      "div",
-      { staticClass: "row" },
-      [
-        _vm._t("default", [
-          _c("div", { staticClass: "col-2 date-holder text-right" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", {
-              staticClass: "date",
-              domProps: { textContent: _vm._s(_vm.criteria) }
-            }),
-            _vm._v(" "),
-            _c("div", {
-              staticClass: "date text-info",
-              domProps: { textContent: _vm._s(_vm.measure) }
-            })
-          ]),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-2 date-holder text-right" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", {
+          staticClass: "date",
+          domProps: { textContent: _vm._s(_vm.criteria) }
+        }),
+        _vm._v(" "),
+        _c("div", {
+          staticClass: "date text-info",
+          domProps: { textContent: _vm._s(_vm.measure) }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-10" }, [
+        _c("div", { staticClass: "row content" }, [
+          _c("strong", { domProps: { textContent: _vm._s(_vm.header) } }),
           _vm._v(" "),
-          _c("div", { staticClass: "col-10" }, [
-            _c("div", { staticClass: "row content" }, [
-              _c("strong", { domProps: { textContent: _vm._s(_vm.header) } }),
-              _vm._v(" "),
-              _c("div", { staticClass: "right-column" }, [
-                _c("div", {
-                  staticClass: "badge badge-primary right",
-                  domProps: { textContent: _vm._s(_vm.notification) }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("p", { domProps: { textContent: _vm._s(_vm.paragraph) } }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "CTAs" },
-              [
-                _c("button-complement", {
-                  attrs: { icon: "fa fa-glasses", header: " Visitar" }
-                }),
-                _vm._v(" "),
-                _c("button-complement", {
-                  attrs: { icon: "fa fa-cog", header: " Opciones" }
-                })
-              ],
-              1
-            )
+          _c("div", { staticClass: "right-column" }, [
+            _c("div", {
+              staticClass: "badge badge-primary right",
+              domProps: { textContent: _vm._s(_vm.notification) }
+            })
           ])
-        ])
-      ],
-      2
-    )
+        ]),
+        _vm._v(" "),
+        _c("p", { domProps: { textContent: _vm._s(_vm.paragraph) } }),
+        _vm._v(" "),
+        _c("div", { staticClass: "CTAs" }, [_vm._t("actions")], 2)
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -41179,22 +41243,68 @@ var render = function() {
                 "ul",
                 { staticClass: "activities list-unstyled" },
                 [
-                  _vm._l(_vm.environments, function(environment) {
-                    return _c("environment-item", {
-                      key: environment.id,
-                      attrs: {
-                        data: environment,
-                        criteria: "Activo hace",
-                        measure: "6 horas",
-                        header: environment.title,
-                        paragraph: "Lorem ipsum",
-                        notification: "10 reportes nuevos"
-                      }
-                    })
-                  }),
-                  _vm._v(" "),
-                  !this.$store.getters.environments.length
-                    ? _c("environment-item", [
+                  this.$store.getters.environments.length
+                    ? _c(
+                        "div",
+                        _vm._l(_vm.environments, function(environment) {
+                          return _c("environment-item", {
+                            key: environment.id,
+                            attrs: {
+                              data: environment,
+                              criteria: "Activo hace",
+                              measure: "6 horas",
+                              header: environment.title,
+                              paragraph: "Lorem ipsum",
+                              notification: "10 reportes nuevos"
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "actions",
+                                  fn: function() {
+                                    return [
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass: "btn btn-xs btn-dark",
+                                          attrs: {
+                                            href:
+                                              "/environment/" + environment.id
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fa fa-glasses"
+                                          }),
+                                          _vm._v(" Visitar")
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("button-complement", {
+                                        attrs: {
+                                          icon: "fa fa-cog",
+                                          modal_target: "optEnv",
+                                          header: " Opciones"
+                                        },
+                                        on: {
+                                          clicked: function($event) {
+                                            return _vm.onOptions(environment)
+                                          }
+                                        }
+                                      })
+                                    ]
+                                  },
+                                  proxy: true
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          })
+                        }),
+                        1
+                      )
+                    : _c("environment-item", [
                         _c(
                           "div",
                           { staticClass: "col-12 date-holder text-right" },
@@ -41206,8 +41316,7 @@ var render = function() {
                             )
                           ]
                         )
-                      ])
-                    : _vm._e(),
+                      ]),
                   _vm._v(" "),
                   _vm._t("default")
                 ],
@@ -41216,8 +41325,157 @@ var render = function() {
             ]
           )
         ]
-      )
-    ]
+      ),
+      _vm._v(" "),
+      _c("section-component", { attrs: { classes: "forms" } }, [
+        _c(
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.editEnvironment(_vm.environment)
+              }
+            }
+          },
+          [
+            _c("modal-component", {
+              attrs: {
+                header: "Opciones",
+                description:
+                  "En esta sección se puede editar cualquier información disponible sobre el ambiente.",
+                object_id: "optEnv"
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "modal-body",
+                  fn: function() {
+                    return [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Nombre")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.environment.title,
+                              expression: "environment.title"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "placeholder" },
+                          domProps: { value: _vm.environment.title },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.environment,
+                                "title",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Descripción")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.environment.description,
+                              expression: "environment.description"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "placeholder" },
+                          domProps: { value: _vm.environment.description },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.environment,
+                                "description",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Código")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.environment.code,
+                              expression: "environment.code"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", placeholder: "placeholder" },
+                          domProps: { value: _vm.environment.code },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.environment,
+                                "code",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]
+                  },
+                  proxy: true
+                },
+                {
+                  key: "modal-footer",
+                  fn: function() {
+                    return [
+                      _c("input-item", {
+                        attrs: {
+                          type: "submit",
+                          btn_header: "Crear ambiente",
+                          classes: "btn btn-primary"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input-item", {
+                        attrs: {
+                          type: "button",
+                          dismiss: "modal",
+                          btn_header: "Cerrar",
+                          classes: "btn btn-secondary"
+                        }
+                      })
+                    ]
+                  },
+                  proxy: true
+                }
+              ])
+            })
+          ],
+          1
+        )
+      ])
+    ],
+    1
   )
 }
 var staticRenderFns = [
@@ -41266,9 +41524,9 @@ var render = function() {
     [
       _c("modal-component", {
         attrs: {
-          header: "Modal",
-          description: "Lorem ipsum.",
-          object_id: "addEnv"
+          header: _vm.header,
+          description: _vm.description,
+          object_id: _vm.object_id
         },
         scopedSlots: _vm._u([
           {
@@ -41278,6 +41536,7 @@ var render = function() {
                 _c(
                   "form",
                   {
+                    ref: "form",
                     on: {
                       submit: function($event) {
                         $event.preventDefault()
@@ -41321,7 +41580,54 @@ var render = function() {
                     _c("input-item", {
                       attrs: {
                         type: "submit",
-                        btn_header: "Crear ambiente",
+                        btn_header: "Agregar ambiente",
+                        classes: "btn btn-primary"
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("hr"),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "O únete a un ambiente ya hecho para formar parte como colaborador. Sólo usa el código del ambiente al cual quieres unirte."
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    ref: "form",
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.createEnvironment(_vm.environment)
+                      }
+                    }
+                  },
+                  [
+                    _c("input-item", {
+                      attrs: {
+                        header: "Código",
+                        type: "text",
+                        placeholder: "Código del ambiente",
+                        classes: "form-control"
+                      },
+                      model: {
+                        value: _vm.environment.code,
+                        callback: function($$v) {
+                          _vm.$set(_vm.environment, "code", $$v)
+                        },
+                        expression: "environment.code"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("input-item", {
+                      attrs: {
+                        type: "submit",
+                        btn_header: "Unirse a ambiente",
                         classes: "btn btn-primary"
                       }
                     })
@@ -41335,30 +41641,12 @@ var render = function() {
           {
             key: "modal-footer",
             fn: function() {
-              return [
-                _c("button-item", {
-                  attrs: {
-                    header: "Cerrar",
-                    dismiss: "modal",
-                    btn_color: "secondary"
-                  }
-                }),
-                _vm._v(" "),
-                _c("button-item", {
-                  attrs: { header: "Guardar cambios", btn_color: "primary" }
-                })
-              ]
+              return undefined
             },
             proxy: true
           }
         ])
-      }),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "button" } },
-        [_vm._v("Prueba")]
-      )
+      })
     ],
     1
   )
@@ -41385,10 +41673,19 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("a", { class: _vm.classes, attrs: { href: _vm.link } }, [
-    _c("i", { class: _vm.icon }),
-    _vm._v(" " + _vm._s(_vm.header))
-  ])
+  return _c(
+    "a",
+    {
+      class: _vm.classes,
+      attrs: {
+        href: _vm.link,
+        "data-toggle": "modal",
+        "data-target": "#" + _vm.modal_target
+      },
+      on: { click: _vm.clicked }
+    },
+    [_c("i", { class: _vm.icon }), _vm._v(" " + _vm._s(_vm.header))]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -41449,7 +41746,11 @@ var render = function() {
     _vm._v(" "),
     _c("input", {
       class: _vm.classes,
-      attrs: { type: _vm.type, placeholder: _vm.placeholder },
+      attrs: {
+        "data-dismiss": _vm.dismiss,
+        type: _vm.type,
+        placeholder: _vm.placeholder
+      },
       domProps: { value: _vm.btn_header },
       on: {
         click: _vm.clicked,
@@ -59342,7 +59643,7 @@ __webpack_require__.r(__webpack_exports__);
 var actions = {
   createEnvironment: function createEnvironment(_ref, environment) {
     var commit = _ref.commit;
-    axios.post('/addEnvironment', environment).then(function (res) {
+    axios.post('/environment', environment).then(function (res) {
       commit('CREATE_ENVIRONMENT', res.data);
     })["catch"](function (err) {
       console.log(err);
@@ -59350,14 +59651,22 @@ var actions = {
   },
   fetchEnvironments: function fetchEnvironments(_ref2) {
     var commit = _ref2.commit;
-    axios.get('/api/environment').then(function (res) {
+    axios.get('/environment').then(function (res) {
       commit('FETCH_ENVIRONMENTS', res.data);
     })["catch"](function (err) {
       console.log(err);
     });
   },
-  deletePost: function deletePost(_ref3, environment) {
+  updateEnvironment: function updateEnvironment(_ref3, environment) {
     var commit = _ref3.commit;
+    axios.put("/environment/".concat(environment.id), environment).then(function (res) {
+      commit('UPDATE_ENVIRONMENT', res.data.environment);
+    })["catch"](function (err) {
+      console.log(err);
+    });
+  },
+  deletePost: function deletePost(_ref4, environment) {
+    var commit = _ref4.commit;
     axios["delete"]("/api/environment/".concat(environment.id)).then(function (res) {
       if (res.data === 'ok') commit('DELETE_ENVIRONMENT', environment);
     })["catch"](function (err) {
@@ -59435,6 +59744,12 @@ var mutations = {
   FETCH_ENVIRONMENTS: function FETCH_ENVIRONMENTS(state, environments) {
     return state.environments = environments;
   },
+  UPDATE_ENVIRONMENT: function UPDATE_ENVIRONMENT(state, environment) {
+    var index = state.environments.findIndex(function (item) {
+      return item.id === environment.id;
+    });
+    Vue.set(state.environments, index, environment);
+  },
   DELETE_ENVIRONMENT: function DELETE_ENVIRONMENT(state, environment) {
     var index = state.environments.findIndex(function (item) {
       return item.id === environment.id;
@@ -59456,7 +59771,8 @@ var mutations = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 var state = {
-  environments: []
+  environments: [],
+  logged: {}
 };
 /* harmony default export */ __webpack_exports__["default"] = (state);
 

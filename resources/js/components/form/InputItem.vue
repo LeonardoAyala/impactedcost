@@ -2,7 +2,7 @@
     <div class="form-group">
         <label>{{ header }}</label>
         <input  @click="clicked" v-bind:value="btn_header"
-      v-on:input="[$emit('input', $event.target.value)]"
+      v-on:input="[$emit('input', $event.target.value)]" :data-dismiss="dismiss"
          :type="type"  :placeholder="placeholder" :class="classes">
     </div>
 </template>
@@ -16,7 +16,8 @@
             'btn_header',
             'type',
             'placeholder',
-            'classes'
+            'classes',
+            'dismiss'
         ],
         data: {
 

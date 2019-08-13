@@ -38,24 +38,7 @@
 </section-component>
 
 <section-component classes="forms">
-    <!-- Modal-->
-    <!--modal-component header="Modal" description="Lorem ipsum." object_id="addEnv" description="lorem">
-        <template v-slot:modal-body>
-            <form>
-                <input-item header="Nombre" type="text" placeholder="Nombre" classes="form-control"></input-item>
-                <input-item header="Descripción" type="text-area" placeholder="Descripción corta"
-                    classes="form-control"></input-item>
-
-                <input-item type="submit" btn_header="Crear ambiente" classes="btn btn-primary">
-                </input-item>
-            </form>
-        </template>
-        <template slot-scope="scope" v-slot:modal-footer >
-            <button-item header="Cerrar" dismiss="modal" btn_color="secondary"></button-item>
-            <button-item header="Guardar cambios" dismiss="modal" btn_color="primary" click="scope.ocClick"></button-item>
-        </template>
-    </modal-component-->
-    <modal-env-add></modal-env-add>
+    <modal-env-add header="Crear ambiente" description="Crea tu propio ambiente para administrar. Provee a los colaboradores con el código generado para puedan unirse. " object_id="addEnv"></modal-env-add>
 </section-component>
 
 <!--Node Section-->

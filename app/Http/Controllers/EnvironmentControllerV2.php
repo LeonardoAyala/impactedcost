@@ -46,26 +46,6 @@ class EnvironmentControllerV2 extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //$environment = Environment::create($request->all());
-
-        //$environment = Environment::find(1)->get();
-
-        //return response()->json($environment);
-
-        $user = Auth::User();
-
-        $environment = Environment::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'code' => Str::random(6),
-            'password' => Str::random(6),
-            'user_id' => $user->id,
-        ]);
-
-        return response()->json($environment);
-    }
 
 
     /**

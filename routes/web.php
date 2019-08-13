@@ -15,10 +15,6 @@ Route::get('/', function () {
     return view('empact_v2.welcome');
 });
 
-Route::get('/index_v2', function () {
-    return view('empact_v2.index');
-});
-
 Route::resource('environment_v2', 'EnvironmentControllerV2');
 Route::get('/home_v2', 'HomeController@index_v2');
 
@@ -26,7 +22,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//Route::resource('environment', 'EnvironmentController');
+Route::resource('environment', 'EnvironmentController');
+Route::post('environment/get/{id}', 'EnvironmentController@get');
 
 Route::resource('environment.project', 'ProjectController', [
     'except' => ['index', 'show', 'create']

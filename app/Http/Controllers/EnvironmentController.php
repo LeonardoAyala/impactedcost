@@ -85,31 +85,8 @@ class EnvironmentController extends Controller
         //
     }
 
-    public function update(Request $request, Environment $environment)
-    {
-        //
-    }
-
-    public function destroy(Environment $environment)
-    {
-
-    }
-
-
     public function add(Request $request)
     {
-        $user = Auth::User();
-
-        $user = Auth::User();
-            $environment = Environment::create([
-                'title' => $request->title,
-                'description' => $request->description,
-                'code' => Str::random(6),
-                'password' => Str::random(6),
-                'user_id' => $user->id
-            ]);
-
-        return response()->json($environment);
         $rules = array(
             'title' => ['required', 'max:25'],
             'description' => ['required', 'max:100']
@@ -207,8 +184,19 @@ class EnvironmentController extends Controller
         }
     }
 
+    public function delete($id)
+    {
+        $environment = Environment::find($id)->softDelete();
+        return response()->json("ok");
+    }
 
-    public function other(Request $request)
+    public function destroy($id)
+    {
+        Environment::find($id)->delete();
+        return response()->json("ok");
+    }
+
+    public function index(Request $request)
     {
         $environments = Environment::orderBy('created_at', 'desc')->get();
         return response()->json($environments);
@@ -216,15 +204,38 @@ class EnvironmentController extends Controller
 
     public function store(Request $request)
     {
-        $environment = Environment::create($request->all());
+        $user = Auth::User();
+        $environment = Environment::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'code' => Str::random(6),
+            'password' => Str::random(6),
+            'user_id' => $user->id
+        ]);
 
         return response()->json($environment);
     }
 
-    public function delete($id)
+    public function update(Request $request, $id)
     {
-        Environment::find($id)->delete();
-        return response()->json("ok");
+        $environment = Environment::find($id);
+
+        $environment->title = $request->title;
+        $environment->description = $request->description;
+        $environment->code = $request->code;
+        $environment->save();
+
+        return response()->json([
+            'environment' => $environment,
+            'message' => 'okay',
+        ]);
+    }
+
+    public function get($id)
+    {
+        $environment = Environment::find($id);
+
+        return response()->json($environment);
     }
 
 }

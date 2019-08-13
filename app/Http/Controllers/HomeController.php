@@ -17,20 +17,13 @@ class HomeController extends Controller
 
     public function index()
     {
-        $environments = [];
-
         $user = Auth::User();
 
         $environments = Environment::whereHas('coUsers', function ($query) use ($user) {
             $query->where('user_id', '=', $user->id);
         })->latest()->paginate(10);
 
-        return view('home')
+        return view('empact_v2.home')
         ->with(compact('environments'));
-    }
-
-    public function index_v2()
-    {
-        return view('empact_v2.home');
     }
 }

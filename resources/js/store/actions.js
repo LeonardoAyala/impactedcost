@@ -1,6 +1,6 @@
 let actions = {
     createEnvironment({commit}, environment) {
-        axios.post('/addEnvironment', environment)
+        axios.post('/environment', environment)
             .then(res => {
                 commit('CREATE_ENVIRONMENT', res.data)
             }).catch(err => {
@@ -9,9 +9,17 @@ let actions = {
 
     },
     fetchEnvironments({commit}) {
-        axios.get('/api/environment')
+        axios.get('/environment')
             .then(res => {
                 commit('FETCH_ENVIRONMENTS', res.data)
+            }).catch(err => {
+            console.log(err)
+        })
+    },
+    updateEnvironment({commit}, environment) {
+        axios.put(`/environment/${environment.id}`, environment)
+            .then(res => {
+                commit('UPDATE_ENVIRONMENT', res.data.environment)
             }).catch(err => {
             console.log(err)
         })
