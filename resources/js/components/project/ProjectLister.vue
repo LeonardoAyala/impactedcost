@@ -30,6 +30,8 @@
                             <div class="update-date"><i class="fas fa-check-circle text-primary"></i></div>
                         </div>
                     </li>
+                        <li><a data-toggle="modal" data-target="#" rel="nofollow" href="" class="dropdown-item all-notifications text-center">
+            <strong> <i class="icon"></i>Agregar proceso <i class="fa fa-plus"></i></strong></a></li>
                 </ul>
             </div>
         </div>

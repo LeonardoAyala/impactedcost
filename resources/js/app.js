@@ -36,18 +36,7 @@ window.$ = window.jQuery = $;
 
 import 'jquery-ui/ui/widgets/datepicker.js';
 
-//Cousers
-Vue.component('couser-lister', require('./components/couser/CouserLister.vue').default);
 
-//Roles
-Vue.component('role-lister', require('./components/role/RoleLister.vue').default);
-
-//Sets
-Vue.component('set-lister', require('./components/set/SetLister.vue').default);
-
-//Projects
-Vue.component('project-lister', require('./components/project/ProjectLister.vue').default);
-//Vue.component('project-item', require('./components/project/ProjectLister.vue').default);
 
 Vue.component('tab-item', require('./components/tabs/TabItem.vue').default);
 
@@ -75,6 +64,22 @@ Vue.component('environment-lister', require('./components/environment/Environmen
 Vue.component('environment-item', require('./components/environment/EnvironmentItem.vue').default);
 
 Vue.component('widget-count', require('./components/CountWidget.vue').default);
+
+//Cousers
+Vue.component('report-lister', require('./components/report/ReportLister.vue').default);
+
+//Cousers
+Vue.component('couser-lister', require('./components/couser/CouserLister.vue').default);
+
+//Roles
+Vue.component('role-lister', require('./components/role/RoleLister.vue').default);
+
+//Sets
+Vue.component('set-lister', require('./components/set/SetLister.vue').default);
+
+//Projects
+Vue.component('project-lister', require('./components/project/ProjectLister.vue').default);
+//Vue.component('project-item', require('./components/project/ProjectLister.vue').default);
 
 
 /**

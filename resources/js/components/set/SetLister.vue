@@ -4,7 +4,7 @@
                  <div id="daily-feeds" class="card updates daily-feeds">
                     <div id="feeds-header" class="card-header d-flex justify-content-between align-items-center">
                         <h2 class="h5 display"><a data-toggle="collapse" data-parent="#daily-feeds" href="#feeds-box"
-                                aria-expanded="true" aria-controls="feeds-box">Roles de colaborador </a></h2>
+                                aria-expanded="true" aria-controls="feeds-box">Sets de tareas </a></h2>
                         <div class="right-column">
                             <div class="badge badge-primary">10 messages</div><a data-toggle="collapse"
                                 data-parent="#daily-feeds" href="#feeds-box" aria-expanded="true"
@@ -27,6 +27,8 @@
                                     <div class="update-date">24<span class="month">Jan</span></div>
                                 </div>
                             </li>
+                                <li><a data-toggle="modal" data-target="#" rel="nofollow" href="" class="dropdown-item all-notifications text-center">
+            <strong> <i class="icon"></i>Agregar set <i class="fa fa-plus"></i></strong></a></li>
                         </ul>
                     </div>
                 </div>

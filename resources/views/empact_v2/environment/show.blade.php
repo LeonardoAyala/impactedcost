@@ -50,138 +50,16 @@
 <!--Node Section-->
 <section-component classes="">
     <project-lister environment_id="{{ $environment_id }}">
-
     </project-lister>
-    <div class="col-lg-6 col-md-6">
-        <!-- Daily Feed Widget-->
-        <div id="daily-feeds" class="card updates daily-feeds">
-            <div id="feeds-header" class="card-header d-flex justify-content-between align-items-center">
-                <h2 class="h5 display"><a data-toggle="collapse" data-parent="#daily-feeds" href="#feeds-box"
-                        aria-expanded="true" aria-controls="feeds-box">Reportes recientes</a></h2>
-                <div class="right-column">
-                    <div class="badge badge-primary">10 messages</div>
-                    <a data-toggle="collapse" data-parent="#daily-feeds" href="#feeds-box" aria-expanded="true"
-                        aria-controls="feeds-box"><i class="fa fa-angle-down"></i></a>
-                </div>
-            </div>
-            <div id="feeds-box" role="tabpanel" class="collapse show">
-                <div class="feed-box">
-                    <ul class="feed-elements list-unstyled">
-                        <!-- List-->
-                        <li class="clearfix">
-                            <div class="feed d-flex justify-content-between">
-                                <div class="feed-body d-flex justify-content-between"><a href="#"
-                                        class="feed-profile"><img src="img/avatar-5.jpg" alt="person"
-                                            class="img-fluid rounded-circle"></a>
-                                    <div class="content">
-                                        <strong>Aria Smith</strong>
-                                        <small>Posted a new blog </small>
-                                        <div class="full-date"><small>Today 5:60 pm - 12.06.2014</small></div>
-
-                                    </div>
-
-                                </div>
-                                <div class="date"><small>5min ago</small></div>
-                            </div>
-                        </li>
-                        <!-- List-->
-                        <li class="clearfix">
-                            <div class="feed d-flex justify-content-between">
-                                <div class="feed-body d-flex justify-content-between"><a href="#" class="feed-profile">
-                                        <img src="img/avatar-2.jpg" alt="person" class="img-fluid rounded-circle"></a>
-                                    <div class="content"><strong>Frank Williams</strong>
-                                        <small>Posted a new blog </small>
-                                        <div class="full-date"><small>Today 5:60 pm - 12.06.2014</small></div>
-
-                                        <div class="CTAs"><a href="#" class="btn btn-xs btn-dark"><i
-                                                    class="fa fa-thumbs-up"> </i>Like</a><a href="#"
-                                                class="btn btn-xs btn-dark"><i class="fa fa-heart"> </i>Love</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="right-col text-right">
-                                    <div class="update-date">24<span class="month">Jan</span></div>
-                                    <div class="date"><small>5min ago</small></div>
-                                </div>
-                            </div>
-                        </li>
-                        <!-- List-->
-                        <li class="clearfix">
-                            <div class="feed d-flex justify-content-between">
-                                <div class="feed-body d-flex justify-content-between"><a href="#"
-                                        class="feed-profile"><img src="img/avatar-3.jpg" alt="person"
-                                            class="img-fluid rounded-circle"></a>
-                                    <div class="content"><strong>Ashley Wood</strong><small>Posted a new blog
-                                        </small>
-                                        <div class="full-date"><small>Today 5:60 pm - 12.06.2014</small></div>
-                                    </div>
-                                </div>
-                                <div class="date"><small>5min ago</small></div>
-                            </div>
-                        </li>
-                        <!-- List-->
-                        <li class="clearfix">
-                            <div class="feed d-flex justify-content-between">
-                                <div class="feed-body d-flex justify-content-between"><a href="#"
-                                        class="feed-profile"><img src="img/avatar-1.jpg" alt="person"
-                                            class="img-fluid rounded-circle"></a>
-                                    <div class="content"><strong>Jason Doe</strong><small>Posted a new blog
-                                        </small>
-                                        <div class="full-date"><small>Today 5:60 pm - 12.06.2014</small></div>
-                                    </div>
-                                </div>
-
-                                <div class="right-col text-right">
-                                    <div class="update-date">24<span class="month">Jan</span>
-                                    </div>
-                                    <div class="date"><small>5min ago</small>
-                                        <a data-toggle="collapse" data-target="#comment" aria-expanded="true"
-                                            aria-controls="feeds-box"><i class="fa fa-angle-down"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="message-card collapse" id="comment">
-                                <small>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                    industry. Lorem Ipsum has been the industry's standard dummy text ever since
-                                    the 1500s. Over the years, sometimes by accident, sometimes on purpose
-                                    (injected humour and the like).</small>
-                                <div class="CTAs pull-right">
-                                    <a href="#" class="btn btn-xs btn-dark"><i class="fa fa-eye"> </i>Ver</a>
-                                    <a href="#" class="btn btn-xs btn-dark"><i class="fa fa-cog"> </i>Op.</a>
-                                </div>
-                            </div>
-
-
-                        </li>
-                        <!-- List-->
-                        <li class="clearfix">
-                            <div class="feed d-flex justify-content-between">
-                                <div class="feed-body d-flex justify-content-between"><a href="#"
-                                        class="feed-profile"><img src="img/avatar-6.jpg" alt="person"
-                                            class="img-fluid rounded-circle"></a>
-                                    <div class="content"><strong>Sam Martinez</strong><small>Posted a new blog
-                                        </small>
-                                        <div class="full-date"><small>Today 5:60 pm - 12.06.2014</small></div>
-                                    </div>
-                                </div>
-                                <div class="date"><small>5min ago</small></div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- Daily Feed Widget End-->
-    </div>
+    <report-lister environment_id="{{ $environment_id }}" photo="{{ asset('img/placeholder.png') }}">
+    </report-lister>
 </section-component>
 
 <!-- Updates Section -->
 <section-component classes=" mb-30px">
         <set-lister environment_id="{{ $environment_id }}"></set-lister>
         <role-lister environment_id="{{ $environment_id }}"></role-lister>
-        <couser-lister environment_id="{{ $environment_id }}"></couser-lister>
+        <couser-lister environment_id="{{ $environment_id }}" photo="{{ asset('img/placeholder.png') }}"></couser-lister>
 </section-component>
 
 <!-- Header Section-->
@@ -222,10 +100,6 @@
                             <input type="checkbox" id="list-7" name="list-7" class="form-control-custom">
                             <label for="list-7">Similique sunt in culpa qui officia</label>
                         </li>
-                        <li class="d-flex align-items-center">
-                            <input type="checkbox" id="list-8" name="list-8" class="form-control-custom">
-                            <label for="list-8">Ed ut perspiciatis unde omnis iste</label>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -246,51 +120,6 @@
                     <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor amet officiis</p>
                     <div class="line-chart">
                         <canvas id="lineCahrt"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Statistics Section-->
-<section class="statistics">
-    <div class="container-fluid">
-        <div class="row d-flex">
-            <div class="col-lg-4">
-                <!-- Income-->
-                <div class="card income text-center">
-                    <div class="icon"><i class="icon-line-chart"></i></div>
-                    <div class="number">126,418</div><strong class="text-primary">All Income</strong>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do.</p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <!-- Monthly Usage-->
-                <div class="card data-usage">
-                    <h2 class="display h4">Monthly Usage</h2>
-                    <div class="row d-flex align-items-center">
-                        <div class="col-sm-6">
-                            <div id="progress-circle" class="d-flex align-items-center justify-content-center"></div>
-                        </div>
-                        <div class="col-sm-6"><strong class="text-primary">80.56 Gb</strong><small>Current
-                                Plan</small><span>100 Gb Monthly</span></div>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <!-- User Actibity-->
-                <div class="card user-activity">
-                    <h2 class="display h4">User Activity</h2>
-                    <div class="number">210</div>
-                    <h3 class="h4 display">Social Users</h3>
-                    <div class="progress">
-                        <div role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
-                            aria-valuemax="100" class="progress-bar progress-bar bg-primary"></div>
-                    </div>
-                    <div class="page-statistics d-flex justify-content-between">
-                        <div class="page-statistics-left"><span>Pages Visits</span><strong>230</strong></div>
-                        <div class="page-statistics-right"><span>New Visits</span><strong>73.4%</strong></div>
                     </div>
                 </div>
             </div>
