@@ -15,13 +15,16 @@ class CreateEnvironmentUser extends Migration
     {
         Schema::create('environment_user', function (Blueprint $table) {
             //$table->bigIncrements('id');
+
+            //Joins
             $table->bigInteger('environment_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
             $table->boolean('administrator')->default(false);
 
-            $table->timestamps();
-
+            //Constrains
             $table->primary(['environment_id', 'user_id']);
+
+            $table->timestamps();
         });
     }
 

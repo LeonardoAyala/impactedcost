@@ -1,4 +1,6 @@
 let actions = {
+
+    //Environment
     createEnvironment({commit}, environment) {
         axios.post('/environment', environment)
             .then(res => {
@@ -6,7 +8,14 @@ let actions = {
             }).catch(err => {
             console.log(err)
         })
-
+    },
+    joinEnvironment({commit}, environment) {
+        axios.post('/environment/join', environment)
+            .then(res => {
+                commit('JOIN_ENVIRONMENT', res.data.environment)
+            }).catch(err => {
+            console.log(err)
+        })
     },
     fetchEnvironments({commit}) {
         axios.get('/environment')
@@ -32,7 +41,17 @@ let actions = {
             }).catch(err => {
             console.log(err)
         })
-    }
+    },
+
+    //Projects
+    fetchProjects({commit}) {
+        axios.get('/project')
+            .then(res => {
+                commit('FETCH_PROJECTS', res.data)
+            }).catch(err => {
+            console.log(err)
+        })
+    },
 }
 
 export default actions

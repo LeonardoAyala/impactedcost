@@ -14,15 +14,25 @@ class CreateEnvironmentsTable extends Migration
     public function up()
     {
         Schema::create('environments', function (Blueprint $table) {
+            //ID
             $table->bigIncrements('id');
+
+            //Base info
             $table->string('title');
             $table->mediumText('description');
             $table->string('code');
             $table->string('password');
-            $table->bigInteger('user_id')->unsigned();
-            $table->timestamps();
 
+            //Soft deletes
+            $table->boolean('active')->default(false);
+
+            //Joins
+            $table->bigInteger('user_id')->unsigned();
+
+            //Constrains
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->timestamps();
         });
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTasksTable extends Migration
+class CreateActivitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,24 @@ class CreateTasksTable extends Migration
      */
     public function up()
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('activities', function (Blueprint $table) {
             //Id
             $table->bigIncrements('id');
 
             //Base info
-            $table->string('name', 30)->nullable();
+            $table->date('date');
+            $table->integer('hours')->unsigned();
             $table->string('description', 100)->nullable();
-            $table->boolean('complete')->default(true);
 
             //Soft deletes
             $table->boolean('active')->default(true);
 
             //Joins
-            $table->bigInteger('set_id')->unsigned()->nullable();
-            $table->bigInteger('parent_task_id')->unsigned()->nullable();
+            $table->bigInteger('project_id')->unsigned()->nullable();
+            $table->bigInteger('report_id')->unsigned();
 
-            $table->bigInteger('previous_task_id')->unsigned()->nullable();
-            $table->bigInteger('next_task_id')->unsigned()->nullable();
+            //Constraints
+            $table->foreign('report_id')->references('id')->on('reports')->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -43,6 +43,6 @@ class CreateTasksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('activities');
     }
 }

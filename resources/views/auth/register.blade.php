@@ -24,7 +24,7 @@
           </div>
           <div class="form-group-material">
                 <input id="password-confirm" name="password_confirmation" type="password" required data-msg="Please enter your password" class="input-material login-input">
-                <label for="password-confirm" class="label-material">Confrimación de contraseña        </label>
+                <label for="password-confirm" class="label-material">Confirmación de contraseña        </label>
               </div>
           <div class="form-group text-center">
             <input id="register" type="submit" value="Registrarse" class="btn btn-primary">

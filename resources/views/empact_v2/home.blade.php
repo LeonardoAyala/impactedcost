@@ -18,16 +18,55 @@
     </ul>
 </div>
 
-<!-- Counts Section -->
-<section-component classes="dashboard-counts section-padding">
-    <!-- Count item widget-->
-    <widget-count header="Colabo- radores" time="Últimos 7 días" number="05" icon="far fa-user"></widget-count>
-    <widget-count header="Procesos activos" time="En total" number="10" icon="icon-padnote"></widget-count>
-    <widget-count header="Nuevos Reportes" time="Últimos 7 días" number="04" icon="icon-check"></widget-count>
-    <widget-count header="Horas útiles" time="Último més" number="07" icon="icon-bill"></widget-count>
-    <widget-count header="Presu- puesto" time="En horas" number="92" icon="icon-list"></widget-count>
-    <widget-count header="Produc- tividad" time="En total" number="70%" icon="icon-list-1"></widget-count>
-</section-component>
+<br>
+
+<!-- Statistics Section-->
+<section class="statistics">
+    <div class="container-fluid">
+        <div class="row d-flex">
+            <div class="col-lg-4">
+                <!-- Income-->
+                <div class="card income text-center">
+                    <div class="icon"><i class="icon-line-chart"></i></div>
+                    <div class="number">126,418</div><strong class="text-primary">All Income</strong>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Monthly Usage-->
+                <div class="card data-usage">
+                    <h2 class="display h4">Monthly Usage</h2>
+                    <div class="row d-flex align-items-center">
+                        <div class="col-sm-6">
+                            <div id="progress-circle" class="d-flex align-items-center justify-content-center"></div>
+                        </div>
+                        <div class="col-sm-6"><strong class="text-primary">80.56 Gb</strong><small>Current
+                                Plan</small><span>100 Gb Monthly</span></div>
+                    </div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- User Actibity-->
+                <div class="card user-activity">
+                    <h2 class="display h4">User Activity</h2>
+                    <div class="number">210</div>
+                    <h3 class="h4 display">Social Users</h3>
+                    <div class="progress">
+                        <div role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                            aria-valuemax="100" class="progress-bar progress-bar bg-primary"></div>
+                    </div>
+                    <div class="page-statistics d-flex justify-content-between">
+                        <div class="page-statistics-left"><span>Pages Visits</span><strong>230</strong></div>
+                        <div class="page-statistics-right"><span>New Visits</span><strong>73.4%</strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<br>
 
 <section-component classes="">
     <environment-lister centered="true" header="Ambientes disponibles" col_size="col-lg-11">
@@ -330,51 +369,7 @@
         </div>
     </div>
 </section>
-<!-- Statistics Section-->
-<section class="statistics">
-    <div class="container-fluid">
-        <div class="row d-flex">
-            <div class="col-lg-4">
-                <!-- Income-->
-                <div class="card income text-center">
-                    <div class="icon"><i class="icon-line-chart"></i></div>
-                    <div class="number">126,418</div><strong class="text-primary">All Income</strong>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do.</p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <!-- Monthly Usage-->
-                <div class="card data-usage">
-                    <h2 class="display h4">Monthly Usage</h2>
-                    <div class="row d-flex align-items-center">
-                        <div class="col-sm-6">
-                            <div id="progress-circle" class="d-flex align-items-center justify-content-center"></div>
-                        </div>
-                        <div class="col-sm-6"><strong class="text-primary">80.56 Gb</strong><small>Current
-                                Plan</small><span>100 Gb Monthly</span></div>
-                    </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing.</p>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <!-- User Actibity-->
-                <div class="card user-activity">
-                    <h2 class="display h4">User Activity</h2>
-                    <div class="number">210</div>
-                    <h3 class="h4 display">Social Users</h3>
-                    <div class="progress">
-                        <div role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0"
-                            aria-valuemax="100" class="progress-bar progress-bar bg-primary"></div>
-                    </div>
-                    <div class="page-statistics d-flex justify-content-between">
-                        <div class="page-statistics-left"><span>Pages Visits</span><strong>230</strong></div>
-                        <div class="page-statistics-right"><span>New Visits</span><strong>73.4%</strong></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+
 <!-- Updates Section -->
 <section class="mt-30px mb-30px">
     <div class="container-fluid">

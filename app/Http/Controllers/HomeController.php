@@ -12,10 +12,15 @@ class HomeController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
-    public function index()
+    public function welcome()
+    {
+        return view('empact_v2.welcome');
+    }
+
+    public function home()
     {
         $user = Auth::User();
 

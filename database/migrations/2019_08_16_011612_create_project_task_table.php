@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRolesTable extends Migration
+class CreateProjectTaskTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,22 @@ class CreateRolesTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles', function (Blueprint $table) {
-            //Id
-            $table->bigIncrements('id');
+        Schema::create('project_task', function (Blueprint $table) {
+            //$table->bigIncrements('id');
 
             //Base info
-            $table->string('title', 30);
-            $table->string('description', 30)->nullable();
+            $table->date('initial_date')->nullable();
+            $table->date('final_date')->nullable();
 
             //Soft deletes
             $table->boolean('active')->default(true);
 
             //Joins
-            $table->bigInteger('environment_id')->unsigned();
+            $table->bigInteger('project_id')->unsigned();
+            $table->bigInteger('task_id')->unsigned();
 
             //Constrains
-            $table->foreign('environment_id')->references('id')->on('environments')->onDelete('cascade');
+            $table->primary(['project_id', 'task_id']);
 
             $table->timestamps();
         });
@@ -41,6 +41,6 @@ class CreateRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles');
+        Schema::dropIfExists('project_task');
     }
 }

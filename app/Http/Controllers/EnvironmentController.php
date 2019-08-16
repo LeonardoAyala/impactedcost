@@ -27,9 +27,53 @@ class EnvironmentController extends Controller
         $this->middleware('auth');
     }
 
+    //Axios consumable
+    public function index(Request $request)
+    {
+        $user = Auth::User();
+
+        $environments = $user->coEnvironments()->orderBy('created_at', 'desc')->get();
+        return response()->json($environments);
+    }
+
+    //Axios consumable
+    public function store(Request $request)
+    {
+        $user = Auth::User();
+        $environment = Environment::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'code' => Str::random(6),
+            'password' => Str::random(6),
+            'user_id' => $user->id
+        ]);
+
+        Salary::create([
+            'environment_id' => $environment->id,
+            'user_id' => $user->id
+        ]);
+
+        Productivity::create([
+            'environment_id' => $environment->id,
+            'user_id' => $user->id
+        ]);
+
+        /*
+        $join = $user->coEnvironments()->find($environment->id);
+        $join->pivot->administrator = true;
+        $join->pivot->save();
+        */
+        // or
+        //$user->coEnvironments()->updateExistingPivot($environment->id, ['administrator'=> true]);
+
+        $user->coEnvironments()->attach($environment, ['administrator' => 1]);
+
+        return response()->json($environment);
+    }
+
+    //Viewable
     public function show(Environment $environment)
     {
-
         $this->authorize('view', $environment);
 
         $user = Auth::User();
@@ -70,7 +114,7 @@ class EnvironmentController extends Controller
             $query->where('environment_id', '=', $environment->id);
         })->get();
         */
-
+/*
         return view('environments.show')
         ->with(compact('environment'))
         ->with(compact('coUsers'))
@@ -78,13 +122,91 @@ class EnvironmentController extends Controller
         ->with(compact('reports'))
         ->with(compact('project_categories'))
         ->with(compact('admin'));
+        */
+
+        return view('empact_v2.environment.show');
     }
 
+    //Viewable
     public function edit(Environment $environment)
     {
         //
     }
 
+    //Axios consumable
+    public function update(Request $request, $id)
+    {
+        $environment = Environment::find($id);
+
+        $environment->title = $request->title;
+        $environment->description = $request->description;
+        $environment->code = $request->code;
+        $environment->save();
+
+        return response()->json([
+            'environment' => $environment,
+            'message' => 'okay',
+        ]);
+    }
+
+    //Axios consumable
+    public function delete($id)
+    {
+        $environment = Environment::find($id)->softDelete();
+
+        //Agregar romper salario, productividades y env_user
+
+        return response()->json("ok");
+    }
+
+    //Axios consumable
+    public function destroy($id)
+    {
+        Environment::find($id)->delete();
+        return response()->json("ok");
+    }
+
+    ////Consumable Extras
+
+    public function get($id)
+    {
+        $environment = Environment::find($id);
+
+        return response()->json($environment);
+    }
+
+    public function join(Request $request)
+    {
+        $user = Auth::User();
+
+        $environment = Environment::where('code', '=', $request->code)->first();
+
+        if(isset($environment) && (null === $user->coEnvironments()->find($environment->id)))
+        {
+            $user->coEnvironments()->attach($environment);
+
+            Salary::create([
+                'environment_id' => $environment->id,
+                'user_id' => $user->id
+            ]);
+
+            Productivity::create([
+                'environment_id' => $environment->id,
+                'user_id' => $user->id
+            ]);
+
+        return response()->json([
+            'environment' => $environment,
+            'message' => 'Success',
+        ]);
+        } else{
+            return response()->json([
+                'message' => 'Failed',
+            ]);
+        }
+    }
+
+    ////Obsoletes
     public function add(Request $request)
     {
         $rules = array(
@@ -133,109 +255,5 @@ class EnvironmentController extends Controller
 
         }
   }
-
-  public function change (Request $request){
-    $environment = Environment::find ($request->id);
-
-    $user = $environment->user->name;
-
-    $environment->title = $request->title;
-    $environment->description = $request->description;
-    $environment->code = $request->code;
-    $environment->password = $request->password;
-    $environment->save();
-    return response()->json([
-        'environment' => $environment,
-        'url' => $environment->url,
-        'user' => $user
-    ]);
-  }
-
-    public function join (Request $request){
-        $this->validate($request ,[
-            'code' => 'required',
-            'password' => 'required'
-        ]);
-
-        $user = Auth::User();
-        $environment = Environment::where('code', '=', $request->code)->where('password', '=', $request->password)->first();
-
-        if(isset($environment))
-        {
-            $user->coEnvironments()->attach($environment);
-
-            $salary = Salary::create([
-                'environment_id' => $environment->id,
-                'user_id' => $user->id
-            ]);
-
-            $productivity = Productivity::create([
-                'environment_id' => $environment->id,
-                'user_id' => $user->id
-            ]);
-
-            return response()->json([
-                'environment' => $environment,
-                'url' => $environment->url,
-                'user' => $environment->user
-            ]);
-
-            return Response::json(array('errors'=> $validator->getMessageBag()->toarray()));
-        }
-    }
-
-    public function delete($id)
-    {
-        $environment = Environment::find($id)->softDelete();
-        return response()->json("ok");
-    }
-
-    public function destroy($id)
-    {
-        Environment::find($id)->delete();
-        return response()->json("ok");
-    }
-
-    public function index(Request $request)
-    {
-        $environments = Environment::orderBy('created_at', 'desc')->get();
-        return response()->json($environments);
-    }
-
-    public function store(Request $request)
-    {
-        $user = Auth::User();
-        $environment = Environment::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'code' => Str::random(6),
-            'password' => Str::random(6),
-            'user_id' => $user->id
-        ]);
-
-        return response()->json($environment);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $environment = Environment::find($id);
-
-        $environment->title = $request->title;
-        $environment->description = $request->description;
-        $environment->code = $request->code;
-        $environment->save();
-
-        return response()->json([
-            'environment' => $environment,
-            'message' => 'okay',
-        ]);
-    }
-
-    public function get($id)
-    {
-        $environment = Environment::find($id);
-
-        return response()->json($environment);
-    }
 
 }

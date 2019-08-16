@@ -14,7 +14,7 @@
                         <hr>
                         <p>O únete a un ambiente ya hecho para formar parte como colaborador. Sólo usa el código del ambiente al cual quieres unirte.</p>
 
-        <form ref="form" v-on:submit.prevent="createEnvironment(environment)">
+        <form ref="form" v-on:submit.prevent="joinEnvironment(environment)">
 
                     <input-item v-model="environment.code" header="Código" type="text"
                         placeholder="Código del ambiente" classes="form-control"></input-item>
@@ -24,6 +24,8 @@
                 <template v-slot:modal-footer>
                     <!--input-item type="button" dismiss="modal" btn_header="Cerrar" classes="btn btn-secondary" /-->
                 </template>
+                                    <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span
+                            aria-hidden="true" v-el:my-btn>×</span></button>
             </modal-component>
     </div>
 </template>
@@ -50,7 +52,9 @@
         },
         methods: {
             createEnvironment(environment) {
-                this.$store.dispatch('createEnvironment', environment);
+                //$('#' + this.object_id).modal('dismiss');
+  this.$els.myBtn.click()
+                //this.$store.dispatch('createEnvironment', environment);
             },
             joinEnvironment(environment) {
                 this.$store.dispatch('joinEnvironment', environment);

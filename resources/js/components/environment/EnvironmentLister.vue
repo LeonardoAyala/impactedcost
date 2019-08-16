@@ -100,14 +100,14 @@
         },
         methods: {
             editEnvironment(environment) {
-                alert(environment.title);
                 this.$store.dispatch('updateEnvironment', environment);
-
+                /*
                 axios.post('/environment/get/' + environment.id).then(res => {
                     this.environment = res.data;
                 }).catch(err => {
                     console.log(err)
                 })
+                */
             },
             deleteEnvironment(environment) {
                 this.$store.dispatch('deleteEnvironment', environment)

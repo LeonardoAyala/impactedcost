@@ -14,8 +14,12 @@ class CreateProjectCategoriesTable extends Migration
     public function up()
     {
         Schema::create('project_categories', function (Blueprint $table) {
+            //Id
             $table->bigIncrements('id');
+
+            //Base info
             $table->string('name')->unique();
+
             $table->timestamps();
         });
     }

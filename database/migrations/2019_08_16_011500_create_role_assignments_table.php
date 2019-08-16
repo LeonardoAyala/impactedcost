@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReportsTable extends Migration
+class CreateRoleAssignmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,27 +13,24 @@ class CreateReportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reports', function (Blueprint $table) {
+        Schema::create('role_assignments', function (Blueprint $table) {
             //Id
             $table->bigIncrements('id');
 
-            //Base info
-            $table->date('initial_date')->nullable();
-            $table->date('final_date')->nullable();
-
             //Soft delete
-            $table->boolean('active')->default(false);
+            $table->boolean('active')->default(true);
 
             //Joins
-            $table->bigInteger('environment_id')->unsigned();
+            $table->bigInteger('role_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('project_id')->unsigned();
 
             //Constrains
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('environment_id')->references('id')->on('environments')->onDelete('cascade');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
 
             $table->timestamps();
-
         });
     }
 
@@ -44,6 +41,6 @@ class CreateReportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reports');
+        Schema::dropIfExists('role_assignments');
     }
 }

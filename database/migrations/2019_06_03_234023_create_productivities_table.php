@@ -14,11 +14,17 @@ class CreateProductivitiesTable extends Migration
     public function up()
     {
         Schema::create('productivities', function (Blueprint $table) {
+            //Id
             $table->bigIncrements('id');
-            $table->bigInteger('environment_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned();
+
+            //Base info
             $table->float('productivity', 2, 2)->default(0);
 
+            //Joins
+            $table->bigInteger('environment_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
+
+            //Constraints
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('environment_id')->references('id')->on('environments')->onDelete('cascade');
 

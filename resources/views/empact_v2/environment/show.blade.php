@@ -5,7 +5,7 @@
 <div class="breadcrumb-holder">
     <div class="container-fluid">
         <ul class="breadcrumb">
-            <breadcrumb-item link="{{ url('home_v2') }}" header="Home"></breadcrumb-item>
+            <breadcrumb-item link="{{ route('home') }}" header="Home"></breadcrumb-item>
             <breadcrumb-item header="Ambiente"></breadcrumb-item>
             <breadcrumb-item header="1"></breadcrumb-item>
         </ul>
@@ -49,108 +49,9 @@
 
 <!--Node Section-->
 <section-component classes="">
-    <div class="col-lg-6 col-md-12">
-        <!-- Recent Updates Widget          -->
-        <div id="new-updates" class="card updates recent-updated">
-            <div id="updates-header" class="card-header d-flex justify-content-between align-items-center">
-                <h2 class="h5 display"><a data-toggle="collapse" data-parent="#new-updates" href="#updates-box"
-                        aria-expanded="true" aria-controls="updates-box">Procesos disponibles</a></h2><a
-                    data-toggle="collapse" data-parent="#new-updates" href="#updates-box" aria-expanded="true"
-                    aria-controls="updates-box"><i class="fa fa-angle-down"></i></a>
-            </div>
-            <div id="updates-box" role="tabpanel" class="collapse show">
-                <ul class="news list-unstyled">
-                    <!-- Item-->
-                    <li class="d-flex justify-content-between">
-                        <div class="left-col d-flex">
-                            <div class="icon"><i class="fas fa-project-diagram"></i></div>
-                            <div class="title"><strong>Lorem ipsum dolor sit amet.</strong>
+    <project-lister>
 
-
-                                            <div class="badge badge-primary">Text</div>
-
-
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
-                                    <div class="CTAs">
-                                            <button-complement icon="fa fa-glasses" header=" Visitar"></button-complement>
-                                            <button-complement icon="fa fa-cog" header=" Opciones"></button-complement>
-                                        </div>
-                            </div>
-                        </div>
-                        <div class="right-col text-right ">
-                            <div class="update-date"><i class="fas fa-check-circle text-primary"></i></div>
-                        </div>
-                    </li>
-                    <!-- Item-->
-                    <li class="d-flex justify-content-between">
-                        <div class="left-col d-flex">
-                            <div class="icon"><i class="icon-rss-feed"></i></div>
-                            <div class="title"><strong>Lorem ipsum dolor sit amet.</strong>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor.</p>
-                            </div>
-                        </div>
-                        <div class="right-col text-right">
-                            <div class="update-date">24<span class="month">Jan</span></div>
-                        </div>
-                    </li>
-                    <!-- Item-->
-                    <li class="d-flex justify-content-between">
-                        <div class="left-col d-flex">
-                            <div class="icon"><i class="icon-rss-feed"></i></div>
-                            <div class="title"><strong>Lorem ipsum dolor sit amet.</strong>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor.</p>
-                            </div>
-                        </div>
-                        <div class="right-col text-right">
-                            <div class="update-date">24<span class="month">Jan</span></div>
-                        </div>
-                    </li>
-                    <!-- Item-->
-                    <li class="d-flex justify-content-between">
-                        <div class="left-col d-flex">
-                            <div class="icon"><i class="icon-rss-feed"></i></div>
-                            <div class="title"><strong>Lorem ipsum dolor sit amet.</strong>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor.</p>
-                            </div>
-                        </div>
-                        <div class="right-col text-right">
-                            <div class="update-date">24<span class="month">Jan</span></div>
-                        </div>
-                    </li>
-                    <!-- Item-->
-                    <li class="d-flex justify-content-between">
-                        <div class="left-col d-flex">
-                            <div class="icon"><i class="icon-rss-feed"></i></div>
-                            <div class="title"><strong>Lorem ipsum dolor sit amet.</strong>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor.</p>
-                            </div>
-                        </div>
-                        <div class="right-col text-right">
-                            <div class="update-date">24<span class="month">Jan</span></div>
-                        </div>
-                    </li>
-                    <!-- Item-->
-                    <li class="d-flex justify-content-between">
-                        <div class="left-col d-flex">
-                            <div class="icon"><i class="icon-rss-feed"></i></div>
-                            <div class="title"><strong>Lorem ipsum dolor sit amet.</strong>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                    tempor.</p>
-                            </div>
-                        </div>
-                        <div class="right-col text-right">
-                            <div class="update-date">24<span class="month">Jan</span></div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <!-- Recent Updates Widget End-->
-    </div>
+    </project-lister>
     <div class="col-lg-6 col-md-6">
         <!-- Daily Feed Widget-->
         <div id="daily-feeds" class="card updates daily-feeds">

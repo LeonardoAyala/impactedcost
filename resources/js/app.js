@@ -4,13 +4,17 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+//require('./bootstrap');
+
+window.axios = require('axios');
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 window.Vue = require('vue');
 import store from './store/index';
 import VueRouter from 'vue-router';
 //import {routes} from './routes';
-import ModalEnvAdd from './components/environment/EnvironmentModalAdd.vue'
+//import ModalEnvAdd from './components/environment/EnvironmentModalAdd.vue'
 
 Vue.use(VueRouter);
 
@@ -32,6 +36,9 @@ window.$ = window.jQuery = $;
 
 import 'jquery-ui/ui/widgets/datepicker.js';
 
+//Projects
+Vue.component('project-lister', require('./components/project/ProjectLister.vue').default);
+//Vue.component('project-item', require('./components/project/ProjectLister.vue').default);
 
 Vue.component('tab-item', require('./components/tabs/TabItem.vue').default);
 
@@ -41,7 +48,7 @@ Vue.component('button-complement', require('./components/form/ButtonComplement.v
 Vue.component('button-item', require('./components/form/ButtonItem.vue').default);
 Vue.component('input-item', require('./components/form/InputItem.vue').default);
 
-//Vue.component('modal-env-add', require('./components/environment/EnvironmentModalAdd.vue').default);
+Vue.component('modal-env-add', require('./components/environment/EnvironmentModalAdd.vue').default);
 Vue.component('modal-component', require('./components/form/ModalComponent.vue').default);
 
 Vue.component('navbar-action-item', require('./components/navbar/NavbarActionItem.vue').default);
@@ -73,7 +80,6 @@ const app = new Vue({
     store,
     router,
     components: {
-        ModalEnvAdd
     }
 });
 

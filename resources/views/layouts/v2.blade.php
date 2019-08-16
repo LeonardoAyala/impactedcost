@@ -59,7 +59,7 @@
                 </div>
                 <!-- Sidebar Navigation Menus-->
                 <navigation-menu header="Panel de control">
-                    <navigation-item url="{{ url('home_v2') }}" icon="fa fa-home" header="Home"></navigation-item>
+                    <navigation-item url="{{ route('home') }}" icon="fa fa-home" header="Home"></navigation-item>
                     <navigation-dropdown object_id="test" icon="fa fa-layer-group" header="Ambientes">
                         <navigation-item url="{{ url('forms_v2') }}" header="Ver todas las opciones."></navigation-item>
                     </navigation-dropdown>
@@ -82,7 +82,7 @@
                         <div class="navbar-holder d-flex align-items-center justify-content-between">
                             <div class="navbar-header"><a id="toggle-btn" href="#" class="menu-btn"><i
                                         class="icon-bars">
-                                    </i></a><a href="{{ url('home_v2') }}" class="navbar-brand">
+                                    </i></a><a href="{{ route('home') }}" class="navbar-brand">
                                     <div class="brand-text d-none d-md-inline-block"><strong
                                             class="text-primary">Empact</strong></div>
                                 </a></div>
@@ -161,9 +161,9 @@
     <script src="{{ asset('vendor/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <script src="{{ asset('js/charts-home.js') }}"></script>
+
     <!-- Main File-->
     <script src="{{ asset('js/front.js') }}"></script>
-
 
 </body>
 

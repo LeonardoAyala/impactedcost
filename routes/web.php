@@ -11,28 +11,23 @@
 |
 */
 
-Route::get('/', function () {
-    return view('empact_v2.welcome');
-});
+//Home & Welcome
+Route::get('/home', 'HomeController@home')->name('home');
+Route::get('/', 'HomeController@welcome');
 
-Route::get('/register_v2', function () {
-    return view('empact_v2.register');
-});
-
-Route::resource('environment_v2', 'EnvironmentControllerV2');
-Route::get('/home_v2', 'HomeController@index_v2');
-
+//Auth routes
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
+//Environment routes
 Route::resource('environment', 'EnvironmentController');
 Route::post('environment/get/{id}', 'EnvironmentController@get');
+Route::post('environment/join', 'EnvironmentController@join');
+Route::post('environment/delete/{id}', 'EnvironmentController@delete');
 
-Route::resource('environment.project', 'ProjectController', [
-    'except' => ['index', 'show', 'create']
-]);
+//Project routes
+Route::resource('environment.project', 'ProjectController');
 
+//Report routes
 Route::resource('environment.report', 'ReportController');
 
 Route::POST('environment/{environment}/report/addDay','DayController@store');
