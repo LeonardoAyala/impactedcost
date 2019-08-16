@@ -11,12 +11,17 @@ class ProjectController extends Controller
 {
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth');
     }
 
-    public function index()
+    //Axios consumable
+    public function index($id)
     {
-        //
+        $environment = Environment::find($id);
+
+        $projects = $environment->projects()->orderBy('created_at', 'desc')->get();
+
+        return response()->json($projects);
     }
 
     public function create(Environment $environment)
@@ -67,9 +72,26 @@ class ProjectController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function show(Project $project)
+    public function show($environment_id,Project $project)
     {
-        //
+        //$this->authorize('view', $project->environment());
+
+        /*
+        $reports = Report::whereHas('project', function ($query) use ($environment) {
+            $query->where('environment_id', '=', $environment->id);
+        })->get();
+        */
+/*
+        return view('environments.show')
+        ->with(compact('environment'))
+        ->with(compact('coUsers'))
+        ->with(compact('projects'))
+        ->with(compact('reports'))
+        ->with(compact('project_categories'))
+        ->with(compact('admin'));
+        */
+
+        return view('empact_v2.project.show')->with(compact('environment_id'));
     }
 
     public function edit(Project $project)

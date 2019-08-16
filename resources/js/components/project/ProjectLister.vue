@@ -11,17 +11,17 @@
             <div id="updates-box" role="tabpanel" class="collapse show">
                 <ul class="news list-unstyled">
                     <!-- Item-->
-                    <li v-for="environment in environments" v-bind:data="environment"
-                            v-bind:key="environment.id" class="d-flex justify-content-between">
+                    <li v-for="project in projects" v-bind:data="project"
+                            v-bind:key="project.id" class="d-flex justify-content-between">
                         <div class="left-col d-flex">
                             <div class="icon"><i class="fas fa-project-diagram"></i></div>
-                            <div class="title"><strong>Lorem ipsum dolor sit amet.</strong>
+                            <div class="title"><strong>{{ project.title}}</strong>
 
                                             <div class="badge badge-primary">Text</div>
 
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor.</p>
+                                <p>{{project.description}}</p>
                                     <div class="CTAs">
-                                            <button-complement icon="fa fa-glasses" header=" Visitar"></button-complement>
+                                            <a :href="'/environment/' + environment_id + '/project/' + project.id" class="btn btn-xs btn-dark"><i class="fa fa-glasses"> </i> Visitar</a>
                                             <button-complement icon="fa fa-cog" header=" Opciones"></button-complement>
                                         </div>
                             </div>
@@ -44,48 +44,54 @@
     } from 'vuex';
 
     export default {
-        name: "Environments",
+        name: "Projects",
         mounted() {
-            this.$store.dispatch('fetchEnvironments');
+            this.$store.dispatch('fetchProjects', this.environment_id);
         },
         props: [
             'col_size',
             'header',
             'centered',
+            'environment_id'
         ],
         data: function () {
             return {
-                environment: {
+                project: {
                     id: '',
-                    title: '',
-                    description: '',
                     code: '',
-                    password: '',
-                    user_id: ''
+                    title: '',
+                    project_category_id: '',
+                    description: '',
+                    initial_date: '',
+                    project_id: '',
+                    complete: '',
+                    archived: '',
+                    expected_budget: '',
+                    active: '',
                 },
             }
         },
         methods: {
-            editEnvironment(environment) {
-                this.$store.dispatch('updateEnvironment', environment);
+            editEnvironment(project) {
+                this.$store.dispatch('updateEnvironment', project);
                 /*
-                axios.post('/environment/get/' + environment.id).then(res => {
-                    this.environment = res.data;
+                axios.post('/project/get/' + project.id).then(res => {
+                    this.project = res.data;
                 }).catch(err => {
                     console.log(err)
                 })
                 */
             },
-            deleteEnvironment(environment) {
-                this.$store.dispatch('deleteEnvironment', environment)
+            deleteEnvironment(project) {
+                this.$store.dispatch('deleteEnvironment', project)
             },
-            onOptions(environment) {
-                this.environment = environment;
+            onOptions(project) {
+                this.project = project;
             }
         },
         computed: {
             ...mapGetters([
-                'environments'
+                'projects'
             ])
         }
     }

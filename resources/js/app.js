@@ -36,6 +36,15 @@ window.$ = window.jQuery = $;
 
 import 'jquery-ui/ui/widgets/datepicker.js';
 
+//Cousers
+Vue.component('couser-lister', require('./components/couser/CouserLister.vue').default);
+
+//Roles
+Vue.component('role-lister', require('./components/role/RoleLister.vue').default);
+
+//Sets
+Vue.component('set-lister', require('./components/set/SetLister.vue').default);
+
 //Projects
 Vue.component('project-lister', require('./components/project/ProjectLister.vue').default);
 //Vue.component('project-item', require('./components/project/ProjectLister.vue').default);

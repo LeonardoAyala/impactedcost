@@ -23,6 +23,10 @@ class Environment extends Model
         return $this->hasMany(Project::class);
     }
 
+    public function sets(){
+        return $this->hasMany(Set::class);
+    }
+
     public function getUrlAttribute(){
         return route("environment.show", $this->id);
     }

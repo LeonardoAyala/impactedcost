@@ -124,7 +124,10 @@ class EnvironmentController extends Controller
         ->with(compact('admin'));
         */
 
-        return view('empact_v2.environment.show');
+        $environment_id = $environment->id;
+
+        return view('empact_v2.environment.show')
+        ->with(compact('environment_id'));
     }
 
     //Viewable

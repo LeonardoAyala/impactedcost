@@ -1,9 +1,12 @@
 let state = {
     environments: [
     ],
-    logged: {
-
-    },
+    projects: [
+    ],
+    sets: [
+    ],
+    tasks: [
+    ],
 }
 
 export default state
