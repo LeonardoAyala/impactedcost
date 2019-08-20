@@ -23,6 +23,10 @@ class Environment extends Model
         return $this->hasMany(Project::class);
     }
 
+    public function project_categories(){
+        return $this->hasMany(ProjectCategory::class);
+    }
+
     public function sets(){
         return $this->hasMany(Set::class);
     }

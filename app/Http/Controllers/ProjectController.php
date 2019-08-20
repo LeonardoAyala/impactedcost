@@ -2,10 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Project;
-use App\Environment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+use Validator;
+use Response;
+use Illuminate\Support\Facades\Input;
+
+use App\Environment;
+use App\Project;
+use App\Report;
+use App\User;
+use App\Salary;
+use App\ProjectCategory;
+use App\Productivity;
+
 use Auth;
+
 
 class ProjectController extends Controller
 {
@@ -29,14 +42,22 @@ class ProjectController extends Controller
         return view('projects.create', compact('environment'));
     }
 
-    public function store(Environment $environment ,Request $request)
+    public function store(Environment $environment, Request $request)
     {
-        $this->validate($request ,[
+
+        $validation = $this->validate($request ,[
             'title' => ['required', 'max:25'],
-            'description' => ['required', 'max:100'],
-            'code' => ['required', 'max:10'],
-            'initial_date' => ['required', 'date', 'date_format:d-m-Y']
+            'description' => ['max:100'],
+            'code' => ['max:20'],
         ]);
+
+        if($request->validation){
+            if(isset($validation)){
+                return response()->json([
+                    'message' => 'good',
+                ]);
+            }
+        }
 
         /*
         $rules = [
@@ -45,25 +66,22 @@ class ProjectController extends Controller
         ];
         */
 
+
         $date = strtotime($request->initial_date);
 
-
-        $user = Auth::User();
         $project = Project::create([
             'code' => $request->code,
             'title' => $request->title,
+            'project_category_id' => '1',
             'description' => $request->description,
             'initial_date' => date('Y/m/d', $date),
-            'environment_id' => $environment->id
+            'environment_id' => $environment->id,
+            'expected_budget' => $request->expected_budget,
         ]);
-/*
-        $table->string('code')->unique();
-        $table->string('title');
-        $table->mediumText('description');
-        $table->date('initial_date');
-        $table->bigInteger('environment_id')->unsigned();
-*/
-        return redirect('environment/'.$environment->id);
+
+        return response()->json([
+            'project' => $project,
+        ]);
     }
 
     /**

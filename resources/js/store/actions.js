@@ -79,10 +79,9 @@ let actions = {
     },
 
     //Projects
-    createProject({commit}, environment_id, project) {
-        axios.post(`/environment/${environment_id}/project`, project)
-            .then(res => {
-                commit('CREATE_PROJECT', res.data)
+    createProject({commit}, {environment_id, project}) {
+        axios.post(`/environment/${environment_id}/project`, project).then(res => {
+                commit('CREATE_PROJECT', res.data.project)
             }).catch(err => {
             console.log(err)
         })
@@ -108,6 +107,51 @@ let actions = {
             .then(res => {
                 if (res.data === 'ok')
                     commit('DELETE_PROJECT', project)
+            }).catch(err => {
+            console.log(err)
+        })
+    },
+
+    //Tasks
+    createTask({commit}, environment_id, set_id, task) {
+        axios.post(`/environment/${environment_id}/set/${set_id}`, task)
+            .then(res => {
+                commit('CREATE_TASK', res.data)
+            }).catch(err => {
+            console.log(err)
+        })
+    },
+    fetchTask({commit}, environment_id, set_id) {
+        axios.get(`/environment/${environment_id}/set/${set_id}`)
+            .then(res => {
+                commit('FETCH_TASKS', res.data)
+            }).catch(err => {
+            console.log(err)
+        })
+    },
+    updateTask({commit}, environment_id, set_id, task) {
+        axios.put(`/environment/${environment_id}/set/${set_id}/task/${task_id}`, task)
+            .then(res => {
+                commit('UPDATE_TASK', res.data.task)
+            }).catch(err => {
+            console.log(err)
+        })
+    },
+    deleteTask({commit}, environment_id, set_id, task) {
+        axios.delete(`/environment/${environment_id}/set/${set_id}/task/${task.id}`)
+            .then(res => {
+                if (res.data === 'ok')
+                    commit('DELETE_TASK', task)
+            }).catch(err => {
+            console.log(err)
+        })
+    },
+
+    //ProjectCategories
+    fetchProjectCategories({commit}, environment_id, set_id) {
+        axios.get(`/environment/${environment_id}/project_category`)
+            .then(res => {
+                commit('FETCH_PROJECT_CATEGORIES', res.data)
             }).catch(err => {
             console.log(err)
         })

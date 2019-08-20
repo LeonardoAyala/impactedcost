@@ -7,6 +7,8 @@ let state = {
     ],
     tasks: [
     ],
+    project_categories: [
+    ],
 }
 
 export default state

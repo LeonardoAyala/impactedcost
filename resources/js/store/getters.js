@@ -13,7 +13,10 @@ let getters = {
     },
     cousers: state => {
         return state.projects
-    }
+    },
+    roles: state => {
+        return state.project_categories
+    },
 }
 
 export default  getters

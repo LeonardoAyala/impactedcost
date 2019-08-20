@@ -20,6 +20,10 @@ class CreateProjectCategoriesTable extends Migration
             //Base info
             $table->string('name')->unique();
 
+            //Soft delete
+            $table->boolean('active')->default(true);
+
+
             $table->timestamps();
         });
     }

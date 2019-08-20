@@ -33,11 +33,6 @@ Vue.component(AlertError.name, AlertError);
 import $ from 'jquery';
 window.$ = window.jQuery = $;
 
-
-import 'jquery-ui/ui/widgets/datepicker.js';
-
-
-
 Vue.component('tab-item', require('./components/tabs/TabItem.vue').default);
 
 Vue.component('breadcrumb-item', require('./components/breadcrumb/BreadcrumbItem.vue').default);
@@ -76,6 +71,7 @@ Vue.component('role-lister', require('./components/role/RoleLister.vue').default
 
 //Sets
 Vue.component('set-lister', require('./components/set/SetLister.vue').default);
+Vue.component('modal-set-add', require('./components/set/SetModalAdd.vue').default);
 
 //Projects
 Vue.component('project-lister', require('./components/project/ProjectLister.vue').default);
@@ -95,13 +91,5 @@ const app = new Vue({
     router,
     components: {
     }
-});
-
-$( ".week-picker" ).datepicker({
-    dateFormat: "dd-mm-yy",
-    showOtherMonths: true,
-    selectOtherMonths: true,
-    changeMonth: true,
-    changeYear: true
 });
 

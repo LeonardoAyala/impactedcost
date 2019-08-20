@@ -81,5 +81,10 @@ let mutations = {
         let index = state.cousers.findIndex(item => item.id === couser.id)
         state.cousers.splice(index, 1)
     },
+
+    //Categories
+    FETCH_PROJECT_CATEGORIES(state, project_categories) {
+        return state.project_categories = project_categories
+    },
 }
 export default mutations

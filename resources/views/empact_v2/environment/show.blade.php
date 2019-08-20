@@ -11,8 +11,8 @@
         </ul>
     </div>
     <ul class="nav nav-tabs justify-content-center">
-        <tab-item link="#" header="Notificaciones" active="true"></tab-item>
-        <tab-item link="#" header="Notificaciones"></tab-item>
+        <tab-item link="#" header="Dashboard" active="true"></tab-item>
+        <tab-item link="#" header="Configuración"></tab-item>
     </ul>
 </div>
 
@@ -53,6 +53,10 @@
     </project-lister>
     <report-lister environment_id="{{ $environment_id }}" photo="{{ asset('img/placeholder.png') }}">
     </report-lister>
+</section-component>
+
+<section-component classes="forms">
+    <modal-set-add header="Crear ambiente" description="Crea tu propio ambiente para administrar. Provee a los colaboradores con el código generado para puedan unirse. " object_id="addSet"></modal-env-add>
 </section-component>
 
 <!-- Updates Section -->

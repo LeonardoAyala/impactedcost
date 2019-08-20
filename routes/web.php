@@ -18,6 +18,9 @@ Route::get('/', 'HomeController@welcome');
 //Auth routes
 Auth::routes();
 
+
+////////High Priorities
+
 //Environment routes
 Route::resource('environment', 'EnvironmentController');
 Route::post('environment/get/{id}', 'EnvironmentController@get');
@@ -32,6 +35,20 @@ Route::resource('environment.report', 'ReportController');
 
 //Set routes
 Route::resource('environment.set', 'SetController');
+
+//ProjectCategories routes
+Route::resource('environment.project_category', 'ProjectCategoryController');
+
+//Roles routes
+
+//Task routes
+
+//Reports routes
+
+//Activities routes
+
+//Cousers routes
+
 
 Route::POST('environment/{environment}/report/addDay','DayController@store');
 Route::POST('environment/{environment}/report/editDay','DayController@update');

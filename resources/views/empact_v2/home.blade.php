@@ -70,7 +70,6 @@
 
 <section-component classes="">
     <environment-lister centered="true" header="Ambientes disponibles" col_size="col-lg-11">
-
         <navbar-action-item url="#" modal_target="addEnv" icon_r="fa fa-plus" header="Crear nuevo ambiente">
         </navbar-action-item>
     </environment-lister>

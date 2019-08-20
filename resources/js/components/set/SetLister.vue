@@ -27,8 +27,7 @@
                                     <div class="update-date">24<span class="month">Jan</span></div>
                                 </div>
                             </li>
-                                <li><a data-toggle="modal" data-target="#" rel="nofollow" href="" class="dropdown-item all-notifications text-center">
-            <strong> <i class="icon"></i>Agregar set <i class="fa fa-plus"></i></strong></a></li>
+        <navbar-action-item url="#" modal_target="addEnv" icon_r="fa fa-plus" header="Crear nuevo set"/>
                         </ul>
                     </div>
                 </div>
@@ -51,7 +50,8 @@
             'col_size',
             'header',
             'centered',
-            'environment_id'
+            'environment_id',
+            'object_id'
         ],
         data: function () {
             return {
